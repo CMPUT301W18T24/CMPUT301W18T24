@@ -1,1 +1,3 @@
-# CMPUT301W18T24
+# TaskMagic
+
+Contributors: ssyan, fanjie, yuandi, yipu1, hyusuf, harrold
