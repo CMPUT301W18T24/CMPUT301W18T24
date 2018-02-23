@@ -67,42 +67,6 @@ public class UserTest extends ActivityInstrumentationTestCase2 {
         assertEquals(user.getFirstName(), photo2);
     }
 
-    public void testAddTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "Requested");
-
-        String firstname = "firstname";
-        String lastname = "lastname";
-        String email = "user@ua.ca";
-        String username = "username";
-        String password = "password";
-        int phoneNumber = 123456789;
-        Photo photo = new Photo();
-        User user = new User(firstname, lastname, email, username, password, phoneNumber, photo);
-
-        user.addTask(task);
-        assertTrue(user.getTasksList().contains(task));
-
-    }
-
-    public void testRemoveTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "Requested");
-
-        String firstname = "firstname";
-        String lastname = "lastname";
-        String email = "user@ua.ca";
-        String username = "username";
-        String password = "password";
-        int phoneNumber = 123456789;
-        Photo photo = new Photo();
-        User user = new User(firstname, lastname, email, username, password, phoneNumber, photo);
-
-        user.addTask(task);
-        assertTrue(user.getTasksList().contains(task));
-        user.removeTask(task.getID());
-        assertFalse(user.getTasksList().contains(task));
-
-    }
-
     public void testGetTasksList() {
         ArrayList<Task> taskList = new ArrayList<Task>();
         Task taskA = new Task(1,"TaskA", "Creating a task.", "Requested");
