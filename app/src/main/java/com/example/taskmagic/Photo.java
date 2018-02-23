@@ -14,6 +14,8 @@ public class Photo {
 
     protected Bitmap image = null;
 
+    //private String encodedPhoto;      /*probably comes with base64*/
+
     public Photo(Bitmap image) {
         resizeImage(image);
         this.image = image;

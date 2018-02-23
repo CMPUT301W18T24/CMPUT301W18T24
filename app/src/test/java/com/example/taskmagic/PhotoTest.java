@@ -10,13 +10,13 @@ import android.test.ActivityInstrumentationTestCase2;
 public class PhotoTest extends ActivityInstrumentationTestCase2 {
 
     public PhotoTest() {
-        super(com.example.taskmagic.Photo.class);
+        super(com.example.taskmagic.MainActivity.class);
     }
 
-    //public void      test the constructor
+    /*test the constructor?*/
 
     public void testGetImage() throws Exception {
-        Bitmap image = null;
+        Bitmap image = null; /*or maybe have a tester bitmap in res?*/
 
         Photo photo = new Photo(image);
 
@@ -28,7 +28,7 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
         // int originalSize = get original size of image
 
         //------------------------
-        //place holders for now
+        //place holders until
         int originalSize = 1;
         int newSize = 2;
         //------------------------
@@ -37,6 +37,6 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
         //Photo photo = new Photo(image);
         //int newSize = photo.image get size
 
-        assertFalse(originalSize == newSize);
+        assertFalse(originalSize == newSize); /*check placeholder variables*/
     }
 }
