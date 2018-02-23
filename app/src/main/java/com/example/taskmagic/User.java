@@ -97,12 +97,8 @@ class User {
         myTasks.add(task);
     }
 
-    public int getTasksSize() {
-        return myTasks.size();
-    }
-
-    //Removes a task from user's task list
-    public void removeTask(int taskID) {
+    public void removeTask(Task task) {
+        myTasks.remove(task);
     }
 
 }

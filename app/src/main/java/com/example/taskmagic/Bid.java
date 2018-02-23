@@ -7,9 +7,9 @@ package com.example.taskmagic;
 class Bid {
     private int taskID;
     private String status;
-    private int amount;
+    private float amount;
 
-    public Bid(int taskID, String status, int amount) {
+    public Bid(int taskID, String status, float amount) {
         this.taskID = taskID;
         this.status = status;
         this.amount = amount;
