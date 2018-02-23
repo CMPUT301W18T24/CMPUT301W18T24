@@ -15,7 +15,7 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testAddBid() {
         BidList bidList= new BidList();
-        Bid bid = new Bid(1,"Bidded", 100.00f);
+        Bid bid = new Bid(1, 100.00f, "user1");
 
         bidList.add(bid);
         assertTrue(bidList.hasBid(bid));
@@ -23,7 +23,7 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testRemoveBid() {
         BidList bidList= new BidList();
-        Bid bid = new Bid(1,"Bidded", 100.00f);
+        Bid bid = new Bid(1, 100.00f, "user1");
 
         bidList.add(bid);
         assertTrue(bidList.hasBid(bid));
@@ -33,7 +33,7 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testHasBid() {
         BidList bidList= new BidList();
-        Bid bid = new Bid(1,"Bidded", 100.00f);
+        Bid bid = new Bid(1, 100.00f, "user1");
 
         bidList.add(bid);
         assertEquals(bidList.getBid(0), bid);
@@ -41,8 +41,8 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testGetBid() {
         BidList bidList= new BidList();
-        Bid bid1 = new Bid(1,"Bidded", 100.00f);
-        Bid bid2 = new Bid(2,"Bidded", 30.00f);
+        Bid bid1 = new Bid(1, 100.00f, "user1");
+        Bid bid2 = new Bid(2, 30.00f, "user2");
 
         bidList.add(bid1);
         bidList.add(bid2);
@@ -52,9 +52,9 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testGetBidList() {
         ArrayList<Bid> bids = new ArrayList<Bid>();
-        Bid bidA = new Bid(1,"Bidded", 100.00f);
-        Bid bidB = new Bid(2,"Bidded", 30.00f);
-        Bid bidC = new Bid(3,"Bidded", 50.00f);
+        Bid bidA = new Bid(1, 100.00f, "user1");
+        Bid bidB = new Bid(2, 30.00f, "user2");
+        Bid bidC = new Bid(3, 50.00f, "user3");
         BidList bidList = new BidList();
 
         bidList.add(bidA);
@@ -68,9 +68,9 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testGetCount() {
-        Bid bidA = new Bid(1,"Bidded", 100.00f);
-        Bid bidB = new Bid(2,"Bidded", 30.00f);
-        Bid bidC = new Bid(3,"Bidded", 50.00f);
+        Bid bidA = new Bid(1, 100.00f, "user1");
+        Bid bidB = new Bid(2, 30.00f, "user2");
+        Bid bidC = new Bid(3, 50.00f, "user3");
         BidList bidList = new BidList();
 
         bidList.add(bidA);

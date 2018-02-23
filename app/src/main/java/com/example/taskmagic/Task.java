@@ -10,15 +10,14 @@ class Task {
     private int id;
     private String title;
     private String description;
-    private String status;
+    private String status = "Requested";
     private ArrayList<Photo> photos = new ArrayList<Photo>();
     private BidList bids = new BidList();
 
-    public Task(int id, String title, String description, String status) {
+    public Task(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.status = status;
     }
 
     public Task(int id, String title, String description, String status, ArrayList<Photo> photos) {
@@ -47,5 +46,26 @@ class Task {
 
     public Bid getLowestBid() {
         return bids.getLowestBid();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void acceptBid(Bid bid) {
+        if (bids.hasBid(bid)) {
+            this.setStatus("Assigned");
+            bid.setBidStatus("Accepted");
+        }
+    }
+
+    public void declineBid(Bid bid) {
+        if (bids.hasBid(bid)) {
+            bid.setBidStatus("Declined");
+        }
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

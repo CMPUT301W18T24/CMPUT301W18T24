@@ -14,9 +14,9 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testGetCount() {
-        Task taskA = new Task(1,"TaskA", "Creating a task.", "Requested");
-        Task taskB = new Task(2,"TaskB", "Creating a task.", "Requested");
-        Task taskC = new Task(2,"TaskC", "Creating a task.", "Requested");
+        Task taskA = new Task(1,"TaskA", "Creating a task.");
+        Task taskB = new Task(2,"TaskB", "Creating a task.");
+        Task taskC = new Task(2,"TaskC", "Creating a task.");
 
         TaskList taskList = new TaskList();
         taskList.add(taskA);
@@ -29,7 +29,7 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAddTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "Requested");
+        Task task = new Task(1,"TaskA", "Creating a task.");
         TaskList taskList = new TaskList();
 
         taskList.add(task);
@@ -38,7 +38,7 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testRemoveTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "Requested");
+        Task task = new Task(1,"TaskA", "Creating a task.");
         TaskList taskList = new TaskList();
 
         taskList.add(task);
@@ -50,7 +50,7 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testGetTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "Requested");
+        Task task = new Task(1,"TaskA", "Creating a task.");
         TaskList taskList = new TaskList();
 
         taskList.add(task);
@@ -59,9 +59,9 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
 
     public void testGetTaskList() {
         ArrayList<Task> tasks = new ArrayList<Task>();
-        Task taskA = new Task(1,"TaskA", "Creating a task.", "Requested");
-        Task taskB = new Task(2,"TaskB", "Creating a task.", "Requested");
-        Task taskC = new Task(3,"TaskC", "Creating a task.", "Requested");
+        Task taskA = new Task(1,"TaskA", "Creating a task.");
+        Task taskB = new Task(2,"TaskB", "Creating a task.");
+        Task taskC = new Task(3,"TaskC", "Creating a task.");
         TaskList taskList = new TaskList();
 
         taskList.add(taskA);
@@ -75,7 +75,7 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testHasTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "Requested");
+        Task task = new Task(1,"TaskA", "Creating a task.");
         TaskList taskList = new TaskList();
 
         assertFalse(taskList.hasTask(task));
