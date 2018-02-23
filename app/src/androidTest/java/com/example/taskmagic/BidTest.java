@@ -6,8 +6,16 @@ import android.test.ActivityInstrumentationTestCase2;
  * Created by Yipu on 22/02/2018.
  */
 
-public class TaskTest extends ActivityInstrumentationTestCase2 {
-    public TaskTest() {
+public class BidTest extends ActivityInstrumentationTestCase2 {
+    public BidTest() {
         super(MainActivity.class);
+    }
+
+    public void testAcceptBid() {
+
+    }
+
+    public void testDeclineBid() {
+
     }
 }

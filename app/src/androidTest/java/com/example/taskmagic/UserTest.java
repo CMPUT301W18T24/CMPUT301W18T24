@@ -64,7 +64,7 @@ public class UserTest extends ActivityInstrumentationTestCase2 {
         user.setPhoneNumber(newPhoneNumber);
         assertEquals(user.getPhoneNumber(), newPhoneNumber);
         user.setPhoto(photo2);
-        assertEquals(user.getFirstName(), photo2);
+        assertEquals(user.getPhoto(), photo2);
     }
 
     public void testGetTasksList() {

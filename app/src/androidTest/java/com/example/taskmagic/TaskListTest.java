@@ -53,6 +53,7 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
         Task task = new Task(1,"TaskA", "Creating a task.", "Requested");
         TaskList taskList = new TaskList();
 
+        taskList.add(task);
         assertEquals(taskList.getTask(0).getID(), task.getID());
     }
 

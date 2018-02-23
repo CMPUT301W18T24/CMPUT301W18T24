@@ -12,7 +12,7 @@ class Task {
     private String description;
     private String status;
     private ArrayList<Photo> photos = new ArrayList<Photo>();
-    private ArrayList<Bid> bids = new ArrayList<Bid>();
+    private BidList bids = new BidList();
 
     public Task(int id, String title, String description, String status) {
         this.id = id;
@@ -34,11 +34,18 @@ class Task {
     }
 
     public int getBidsSize() {
-        return bids.size();
+        return bids.getCount();
     }
 
     public int getID() {
         return id;
     }
 
+    public BidList getBids() {
+        return bids;
+    }
+
+    public Bid getLowestBid() {
+        return bids.getLowestBid();
+    }
 }
