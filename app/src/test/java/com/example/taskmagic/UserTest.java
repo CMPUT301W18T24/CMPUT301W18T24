@@ -2,6 +2,8 @@ package com.example.taskmagic;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import java.util.ArrayList;
+
 /**
  * Created by Yipu on 21/02/2018.
  */
@@ -66,7 +68,8 @@ public class UserTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAddTask() {
-        Task task = new Task();
+        Task task = new Task(1,"TaskA", "Creating a task.", "Requested");
+
         String firstname = "firstname";
         String lastname = "lastname";
         String email = "user@ua.ca";
@@ -76,7 +79,46 @@ public class UserTest extends ActivityInstrumentationTestCase2 {
         Photo photo = new Photo();
         User user = new User(firstname, lastname, email, username, password, phoneNumber, photo);
 
+        user.addTask(task);
+        assertTrue(user.getTasksList().contains(task));
 
+    }
+
+    public void testRemoveTask() {
+        Task task = new Task(1,"TaskA", "Creating a task.", "Requested");
+
+        String firstname = "firstname";
+        String lastname = "lastname";
+        String email = "user@ua.ca";
+        String username = "username";
+        String password = "password";
+        int phoneNumber = 123456789;
+        Photo photo = new Photo();
+        User user = new User(firstname, lastname, email, username, password, phoneNumber, photo);
+
+        user.addTask(task);
+        assertTrue(user.getTasksList().contains(task));
+        user.removeTask(task.getID());
+        assertFalse(user.getTasksList().contains(task));
+
+    }
+
+    public void testGetTasksList() {
+        ArrayList<Task> taskList = new ArrayList<Task>();
+        Task taskA = new Task(1,"TaskA", "Creating a task.", "Requested");
+        Task taskB = new Task(2,"TaskB", "Creating a task.", "Requested");
+        Task taskC = new Task(2,"TaskC", "Creating a task.", "Requested");
+        User user = new User("firstname", "lastname", "user@ua.ca",
+                "username", "password", 123456789, new Photo());
+
+        user.addTask(taskA);
+        taskList.add(taskA);
+        user.addTask(taskB);
+        taskList.add(taskB);
+        user.addTask(taskC);
+        taskList.add(taskC);
+
+        assertEquals(user.getTasksList(), taskList);
     }
 
 }

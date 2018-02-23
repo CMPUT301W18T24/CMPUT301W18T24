@@ -25,7 +25,7 @@ class User {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.photo = photo;
-        this.myBids = new ArrayList<Task>();
+        this.myBids = new ArrayList<Bid>();
         this.myTasks = new ArrayList<Task>();
     }
 
@@ -93,20 +93,16 @@ class User {
         return myTasks;
     }
 
-    public void addBid(Bid bid) {
-        myBids.add(bid);
-    }
-
     public void addTask(Task task) {
         myTasks.add(task);
     }
 
-    public int getBidsSize() {
-        return myBids.size();
+    public int getTasksSize() {
+        return myTasks.size();
     }
 
-    public int getTaskSize() {
-        return myTasks.size();
+    //Removes a task from user's task list
+    public void removeTask(int taskID) {
     }
 
 }
