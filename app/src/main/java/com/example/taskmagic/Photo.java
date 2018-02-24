@@ -23,7 +23,7 @@ public class Photo {
 
     public Bitmap getImage() {
         return image;
-    }
+    } /*might need to resize for returning; might not*/
 
     private void resizeImage(Bitmap image) {
         //this method will resize the given thumbnail and set this.image as the resized one

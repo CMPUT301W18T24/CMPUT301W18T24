@@ -14,21 +14,29 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
     }
 
     /*test the constructor?*/
+    public void testPhoto() {
+        Bitmap image = null;
+        Photo newPhoto = new Photo(image);
+
+        assertNotNull(newPhoto.image);
+    }
 
     public void testGetImage() throws Exception {
         Bitmap image = null; /*or maybe have a tester bitmap in res?*/
 
         Photo photo = new Photo(image);
 
-        assertNotNull(photo.image);
+        Bitmap anotherImage = photo.getImage();
+
+        assertNotNull(anotherImage);
     }
 
-    public void testResizeImage() {
+    public void testResizeImage() {         /*need to throw exception??*/
         //Bitmap image = get a bitmap image of w/e size
         // int originalSize = get original size of image
 
         //------------------------
-        //place holders until
+        //place holders until code is implemented
         int originalSize = 1;
         int newSize = 2;
         //------------------------
