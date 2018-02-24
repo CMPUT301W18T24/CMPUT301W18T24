@@ -21,12 +21,17 @@ public class Photo {
         this.image = image;
     }
 
+    public Photo() {
+        this.image = null;
+    }
+
     public Bitmap getImage() {
         return image;
     } /*might need to resize for returning; might not*/
 
     private void resizeImage(Bitmap image) {
-        //this method will resize the given thumbnail and set this.image as the resized one
+        //this method will resize the given Bitmap and set this.image as the resized one
         //check out base64 and bitmapfactory
     }
+
 }

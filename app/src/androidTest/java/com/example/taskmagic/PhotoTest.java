@@ -14,7 +14,7 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
     }
 
     /*test the constructor?*/
-    public void testPhoto() {
+    public void testAddPhoto() {
         Bitmap image = null;
         Photo newPhoto = new Photo(image);
 

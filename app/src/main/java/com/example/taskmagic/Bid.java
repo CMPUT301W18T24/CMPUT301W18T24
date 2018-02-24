@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
  * Created by Yipu on 22/02/2018.
  */
 
-class Bid{
+class Bid {
     private int taskID;
     private String status;      //One of "Processing", "Accepted" or "Declined".
     private float amount;
