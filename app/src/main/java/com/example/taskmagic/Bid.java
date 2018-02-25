@@ -47,5 +47,4 @@ class Bid {
         setBidStatus("Declined");
         //implementation later
     }
-
 }
