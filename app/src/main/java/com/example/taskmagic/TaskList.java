@@ -9,9 +9,7 @@ import java.util.ArrayList;
 class TaskList {
     private ArrayList<Task> tasks = new ArrayList<Task>();
 
-    public void add(Task task) {
-        tasks.add(task);
-    }
+    public void add(Task task) { tasks.add(task); }
 
     public void remove(Task task) {
         tasks.remove(task);
