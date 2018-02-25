@@ -18,7 +18,8 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
         Bitmap image = null;
         Photo newPhoto = new Photo(image);
 
-        assertNotNull(newPhoto.image);
+        //assertNotNull(newPhoto.image);
+        assertNull(newPhoto.image);
     }
 
     public void testGetImage() throws Exception {
