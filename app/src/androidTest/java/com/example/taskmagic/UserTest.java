@@ -69,9 +69,9 @@ public class UserTest extends ActivityInstrumentationTestCase2 {
 
     public void testGetTasksList() {
         ArrayList<Task> taskList = new ArrayList<Task>();
-        Task taskA = new Task(1,"TaskA", "Creating a task.");
-        Task taskB = new Task(2,"TaskB", "Creating a task.");
-        Task taskC = new Task(2,"TaskC", "Creating a task.");
+        Task taskA = new Task(1,"TaskA", "Creating a task.", "requeste1");
+        Task taskB = new Task(2,"TaskB", "Creating a task.", "requeste2");
+        Task taskC = new Task(2,"TaskC", "Creating a task.", "requeste3");
         User user = new User("firstname", "lastname", "user@ua.ca",
                 "username", "password", 123456789, new Photo());
 

@@ -10,17 +10,18 @@ class Task {
     private int id;
     private String title;
     private String description;
+    private String requester;
     private String status = "Requested";
     private ArrayList<Photo> photos = new ArrayList<Photo>();
     private BidList bids = new BidList();
 
-    public Task(int id, String title, String description) {
+    public Task(int id, String title, String description, String requester) {
         this.id = id;
         this.title = title;
         this.description = description;
     }
 
-    public Task(int id, String title, String description, String status, ArrayList<Photo> photos) {
+    public Task(int id, String title, String description, String requester, String status, ArrayList<Photo> photos) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -67,5 +68,13 @@ class Task {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRequester() {
+        return requester;
+    }
+
+    public void setRequester(String requester) {
+        this.requester = requester;
     }
 }

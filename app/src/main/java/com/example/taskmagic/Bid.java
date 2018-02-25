@@ -38,4 +38,7 @@ class Bid {
         return status;
     }
 
+    public String getProvider() {
+        return provider;
+    }
 }
