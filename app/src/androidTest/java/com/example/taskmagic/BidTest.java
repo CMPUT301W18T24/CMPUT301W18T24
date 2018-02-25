@@ -11,11 +11,15 @@ public class BidTest extends ActivityInstrumentationTestCase2 {
         super(MainActivity.class);
     }
 
-    public void testAcceptBid() {
+    public void testSetStatus() {
+        Bid bid = new Bid(1, 50.00f, "user");
+
+        assertEquals(bid.getStatus(), "Processing");
+        bid.setBidStatus("Accepted");
+        assertEquals(bid.getStatus(), "Accepted");
+        bid.setBidStatus("Declined");
+        assertEquals(bid.getStatus(), "Declined");
 
     }
 
-    public void testDeclineBid() {
-
-    }
 }
