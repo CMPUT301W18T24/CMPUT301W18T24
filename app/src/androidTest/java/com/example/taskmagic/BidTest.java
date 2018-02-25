@@ -12,10 +12,26 @@ public class BidTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAcceptBid() {
+        int testTaskID = 123;
+        float testAmount = 456.00f;
+        String testProvider = "Provider Test";
 
+        Bid newBid = new Bid(testTaskID, testAmount, testProvider);
+        assertEquals(newBid.getStatus(), "Processing");
+
+        newBid.acceptBid();
+        assertEquals(newBid.getStatus(), "Accepted");
     }
 
     public void testDeclineBid() {
+        int testTaskID = 123;
+        float testAmount = 456.00f;
+        String testProvider = "Provider Test";
 
+        Bid newBid = new Bid(testTaskID, testAmount, testProvider);
+        assertEquals(newBid.getStatus(), "Processing");
+
+        newBid.acceptBid();
+        assertEquals(newBid.getStatus(), "Declined");
     }
 }

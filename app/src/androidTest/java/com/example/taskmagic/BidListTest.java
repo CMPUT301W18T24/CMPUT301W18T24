@@ -79,4 +79,23 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
         assertEquals(bidList.getCount(), 3);
     }
+
+    public void testGetLowestBid() {
+        ArrayList<Bid> bids = new ArrayList<Bid>();
+        Bid bid1 = new Bid(1, 100.00f, "user1");
+        Bid bid2 = new Bid(2, 20.00f, "user2");
+        Bid bid3 = new Bid(3, 150.00f, "user3");
+        Bid bid4 = new Bid(4, 70.00f, "user4");
+
+        Bid lowestBid = bid2;
+
+        bids.add(bid1);
+        bids.add(bid2);
+        bids.add(bid3);
+        bids.add(bid4);
+
+        assertNotSame(bids.get(0), lowestBid);
+
+        //assertSame(bids.getLowestBid(), lowestBid);       /*I don't get what is wrong please check*/
+    }
 }

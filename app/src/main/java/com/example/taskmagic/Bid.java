@@ -19,7 +19,7 @@ class Bid {
         this.provider = provider;
     }
 
-    public Bid(int taskID, float amount,String provider) {
+    public Bid(int taskID, float amount, String provider) {
         this.taskID = taskID;
         this.status = "Processing";
         this.amount = amount;
@@ -30,15 +30,22 @@ class Bid {
         this.status = status;
     }
 
+    public void setAmount(float amount) { this.amount = amount; }
+
     public float getBidAmount() {
         return this.amount;
     }
 
-    public String getStatus() {
-        return status;
+    public String getStatus() { return status;  }
+
+    public void acceptBid() {
+        setBidStatus("Accepted");
+        //implementation later
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void declineBid() {
+        setBidStatus("Declined");
+        //implementation later
     }
+
 }
