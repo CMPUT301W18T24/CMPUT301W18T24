@@ -7,19 +7,19 @@ import java.util.ArrayList;
  */
 
 class TaskList {
-    private ArrayList<Task> tasks = new ArrayList<Task>();
+    private ArrayList<UserTask> tasks = new ArrayList<UserTask>();
 
-    public void add(Task task) { tasks.add(task); }
+    public void add(UserTask task) { tasks.add(task); }
 
-    public void remove(Task task) {
+    public void remove(UserTask task) {
         tasks.remove(task);
     }
 
-    public Boolean hasTask(Task task) {
+    public Boolean hasTask(UserTask task) {
         return tasks.contains(task);
     }
 
-    public Task getTask(int index) {
+    public UserTask getTask(int index) {
         if (index < tasks.size()) {
             return tasks.get(index);
         }
@@ -28,7 +28,7 @@ class TaskList {
         }
     }
 
-    public ArrayList<Task> getTaskList() {
+    public ArrayList<UserTask> getTaskList() {
         return tasks;
     }
 

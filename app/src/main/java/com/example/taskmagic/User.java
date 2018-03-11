@@ -6,35 +6,39 @@ import java.util.ArrayList;
  * Created by Yipu on 21/02/2018.
  */
 
-class User {
-    private String firstName;
-    private String lastName;
+public class User {
+    private String id;
+    private String fullName;
     private String emailAddress;
     private String userName;
     private String password;
-    private int phoneNumber;
+    private String phoneNumber;
     private Photo photo;
-    private ArrayList<Task> myTasks = new ArrayList<Task>();
-    private ArrayList<Bid> myBids = new ArrayList<Bid>();
 
-    public User(String firstName, String lastName, String emailAddress, String userName, String password, int phoneNumber, Photo photo) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+
+    public User(){
+    }
+
+    public User(String fullName, String emailAddress, String userName, String password, String phoneNumber, Photo photo) {
+        this.fullName=fullName;
         this.emailAddress = emailAddress;
         this.userName = userName;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.photo = photo;
-        this.myBids = new ArrayList<Bid>();
-        this.myTasks = new ArrayList<Task>();
+
     }
 
-    public String getFirstName() {
-        return firstName;
+    public User(String fullName, String emailAddress, String userName, String password, String phoneNumber) {
+        this.fullName=fullName;
+        this.emailAddress = emailAddress;
+        this.userName = userName;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFullName(){
+        return fullName;
     }
 
     public String getEmailAddress() {
@@ -49,7 +53,7 @@ class User {
         return password;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -57,12 +61,8 @@ class User {
         return photo;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+       this.fullName=fullName;
     }
 
     public void setEmailAddress(String emailAddress) {
@@ -77,28 +77,19 @@ class User {
         this.password = password;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
     public void setPhoto(Photo photo) {
         this.photo = photo;
     }
-
-    public ArrayList<Bid> getBidsList() {
-        return myBids;
+    public void setId(String id){
+        this.id=id;
+    }
+    public String getId(){
+        return id;
     }
 
-    public ArrayList<Task> getTasksList() {
-        return myTasks;
-    }
-
-    public void addTask(Task task) {
-        myTasks.add(task);
-    }
-
-    public void removeTask(Task task) {
-        myTasks.remove(task);
-    }
 
 }
