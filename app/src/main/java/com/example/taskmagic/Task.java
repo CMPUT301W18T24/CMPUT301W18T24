@@ -33,6 +33,22 @@ class Task {
         bids.add(bid);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ArrayList<Photo> getPhotos() {
+        return photos;
+    }
+
     public int getBidsSize() {
         return bids.getCount();
     }
