@@ -12,7 +12,7 @@ public class BidTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAcceptBid() {
-        int testTaskID = 123;
+        String testTaskID = "123";
         float testAmount = 456.00f;
         String testProvider = "Provider Test";
 
@@ -24,7 +24,7 @@ public class BidTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testDeclineBid() {
-        int testTaskID = 123;
+        String testTaskID = "123";
         float testAmount = 456.00f;
         String testProvider = "Provider Test";
 
@@ -33,7 +33,7 @@ public class BidTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testSetStatus() {
-        Bid bid = new Bid(1, 50.00f, "user");
+        Bid bid = new Bid("1", 50.00f, "user");
 
         assertEquals(bid.getStatus(), "Processing");
         bid.setBidStatus("Accepted");
