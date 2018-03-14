@@ -29,6 +29,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     public static final int GALLERY_REQUEST = 20;
     public static final int CAMERA_REQUEST = 21;
+    public static final int LOCATION_REQUEST = 31;
 
     private UserTask task;
 /*    private FireBaseManager fmanager;
@@ -62,16 +63,22 @@ public class CreateTaskActivity extends AppCompatActivity {
         titleField = findViewById(R.id.task_title);
         descriptionField = findViewById(R.id.task_description);
 
+        /**
+         * On press of button, map opens up and allows user to pin point a location
+         */
         addLocationButton = findViewById(R.id.set_location_button);
         addLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent locationIntent = new Intent(thisActivity, MapActivity.class);
-                startActivity(locationIntent);                                       //maybe startActivityForResult
-                //add location here
+                startActivityForResult(locationIntent, LOCATION_REQUEST);
+                // location is processed in onActivityResult()
             }
         });
 
+        /**
+         * On press of button, camera opens up and allows user to take a snapshot
+         */
         openCameraButton = findViewById(R.id.camera_button);
         openCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +88,9 @@ public class CreateTaskActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * On press of button, gallery opens up and allows user to pick 1 photo to attach to task
+         */
         openGalleryButton = findViewById(R.id.gallery_button);
         openGalleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +99,9 @@ public class CreateTaskActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * On press of button, the task is uploaded onto database
+         */
         postTaskButton = findViewById(R.id.post_task_button);
         postTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +110,8 @@ public class CreateTaskActivity extends AppCompatActivity {
                 newDescription = descriptionField.getText().toString();
                 UserTask newTask = new UserTask(taskID, newTitle, newDescription,
                                                 taskRequester, photo, bids);
+
+                //consider checking field correction
 
                 //package newTask and send to wherever.
                 fmanager.addTask(newTask);
