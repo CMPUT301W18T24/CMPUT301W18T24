@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by hyusuf on 2018-03-08.
  */
 
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends AppCompatActivity{
     private EditText mUserName;
     private EditText mPassWord;
     private EditText mEmail;

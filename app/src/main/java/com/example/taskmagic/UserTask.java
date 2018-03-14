@@ -1,21 +1,65 @@
 package com.example.taskmagic;
 
+import android.location.Location;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Yipu on 21/02/2018.
  */
 
-public class UserTask {
+public class UserTask implements Serializable {
     private String id;
     private String title;
     private String description;
     private String status="Requested";
     private String requester;
-    private Photo photo;
+    private String provider;
+    private Location location;
+    private ArrayList<String> photoUris;
 
     public UserTask(){
 
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public ArrayList<String> getPhotoUris() {
+        return photoUris;
+    }
+    public void addUri(String Uri){
+        photoUris.add(Uri);
+    }
+    public void editUri(String old_uri,String newUri){
+        for(int i=0;i<photoUris.size();i++){
+            String uri= photoUris.get(i);
+            if (uri==old_uri){
+                photoUris.set(i,newUri);
+            }
+        }
+    }
+    public void deleteUri(String old_uri){
+        for(int i=0;i<photoUris.size();i++){
+            String uri= photoUris.get(i);
+            if (uri==old_uri){
+                photoUris.remove(i);
+            }
+        }
     }
 
     public UserTask(String title, String description, String userid) {
@@ -52,13 +96,6 @@ public class UserTask {
         return requester;
     }
 
-    public Photo getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
-    }
 
     public void setRequester(String requester) {
         this.requester = requester;

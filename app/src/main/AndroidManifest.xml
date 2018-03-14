@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.taskmagic">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -10,15 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeFeed" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".HomeFeed"
+            android:theme="@style/AppTheme"
+            android:label="Home Feed"
+            android:layout_gravity="center"/>
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"/>
+        <activity android:name=".ViewPhotoActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".MapActivity" />
+        <activity android:name=".EditTaskActivity" />
+        <activity android:name=".CreateBidActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

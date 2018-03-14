@@ -1,6 +1,13 @@
 package com.example.taskmagic;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
+import android.util.Log;
+
+import java.io.IOException;
 
 /**
  * Created by Harrold on 2018-02-21.
@@ -8,30 +15,72 @@ import android.graphics.Bitmap;
  * This photo will take in a Bitmap object as a parameter and resize it to specified size.
  */
 
-public class Photo {
+public class Photo extends AsyncTask<Uri,Integer,byte[]> {
 
-    final int photoSize = 65536;
+    private static final int photoSize = 65536;
 
-    protected Bitmap image = null;
+    protected Bitmap image;
+    private final static String TAG="Photo class";
+    public Context context;
 
     //private String encodedPhoto;      /*probably comes with base64*/
 
-    public Photo(Bitmap image) {
-        resizeImage(image);
-        this.image = image;
+    public Photo(Bitmap bitmap, Context context) {
+        if(bitmap!=null) {
+            this.image = bitmap;
+            this.context=context;
+        }
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected void onPostExecute(byte[] bytes) {
+        super.onPostExecute(bytes);
+    }
+
+    @Override
+    protected byte[] doInBackground(Uri... uris) {
+        if (image==null){
+            try{
+                image= MediaStore.Images.Media.getBitmap(context.getContentResolver(),uris[0]);
+            }
+            catch (IOException e){
+                Log.d(TAG, "doInBackground: IOException"+e.getMessage());
+
+            }
+        }
+        return new byte[0];
     }
 
     public Photo() {
         this.image = null;
     }
 
+
     public Bitmap getImage() {
         return image;
     } /*might need to resize for returning; might not*/
 
-    private void resizeImage(Bitmap image) {
-        //this method will resize the given Bitmap and set this.image as the resized one
-        //check out base64 and bitmapfactory
-    }
+    public Bitmap resize(Bitmap bitmap){
+        int width = image.getWidth();
+        int height = image.getHeight();
 
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = photoSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = photoSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
 }
+
+
+
+

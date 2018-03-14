@@ -1,101 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.8"
-    android:background="@drawable/magic"
-    tools:context="com.example.taskmagic.MainActivity"
+    android:background="@drawable/pic"
     tools:layout_editor_absoluteY="25dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/anton"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="TaskMagic"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24dp" />
 
     <EditText
         android:id="@+id/editTextEmail"
-        android:layout_width="307dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="110dp"
-        android:backgroundTint="@android:color/darker_gray"
-        android:ems="10"
+        android:layout_gravity="center"
+        android:padding="10dp"
         android:hint="Email"
-        android:inputType="textPersonName"
-        android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+        android:textColor="@android:color/white"
+        android:inputType="textPersonName"
+        />
 
     <EditText
         android:id="@+id/editTextpassword"
-        android:layout_width="310dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@android:color/darker_gray"
-        android:ems="10"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
         android:hint="Password"
-        android:inputType="textPassword"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        android:inputType="textPassword"
+        />
 
     <Button
         android:id="@+id/buttonlogin"
-        android:layout_width="315dp"
-        android:layout_height="46dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="SIGN IN"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextpassword" />
-
-    <TextView
-        android:id="@+id/textViewNewUser"
-        android:layout_width="67dp"
-        android:layout_height="23dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:text="New User?"
-        android:textColor="@android:color/background_light"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonlogin" />
-
-    <TextView
-        android:id="@+id/textViewForgot"
-        android:layout_width="115dp"
-        android:layout_height="27dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Forgot Password"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNewUser" />
-
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:text="TaskMagic"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="#C5CAE9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/white"
+        android:text="Login" />
+        <TextView
+            android:id="@+id/textViewNewUser"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:text="New User?"
+            android:textColor="@android:color/background_light"
+            android:textSize="14sp"
+            android:gravity="center"
+            />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/textViewForgot"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Forgot Password"
+            android:textColor="@android:color/background_light"
+            />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

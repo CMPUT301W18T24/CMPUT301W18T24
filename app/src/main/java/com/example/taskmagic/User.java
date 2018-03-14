@@ -13,19 +13,19 @@ public class User {
     private String userName;
     private String password;
     private String phoneNumber;
-    private Photo photo;
+    private String photoUri;
 
 
     public User(){
     }
 
-    public User(String fullName, String emailAddress, String userName, String password, String phoneNumber, Photo photo) {
+    public User(String fullName, String emailAddress, String userName, String password, String phoneNumber, String photo) {
         this.fullName=fullName;
         this.emailAddress = emailAddress;
         this.userName = userName;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.photo = photo;
+        this.photoUri = photo;
 
     }
 
@@ -57,8 +57,8 @@ public class User {
         return phoneNumber;
     }
 
-    public Photo getPhoto() {
-        return photo;
+    public String getphotoUri() {
+        return photoUri;
     }
 
     public void setFullName(String fullName) {
@@ -81,8 +81,8 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setPhotoUri(String uri) {
+        this.photoUri = uri;
     }
     public void setId(String id){
         this.id=id;
