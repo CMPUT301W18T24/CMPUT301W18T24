@@ -1,71 +1,111 @@
 package com.example.taskmagic;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-
+import com.google.android.gms.tasks.*;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
+    private EditText mEmail;
+    private EditText mPassword;
+    private String email;
+    private String password;
+    private Button mLogin;
+    private FirebaseAuth mAuth;
+    private TextView register;
+    private DatabaseReference datbase;
+    private ProgressDialog progress;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
-    Toolbar toolbar;
-    ViewPager pager;
-    ViewPagerAdapter adapter;
-    SlidingTabLayout tabs;
-    CharSequence Titles[]={"Feed","Inventory","User"};
-    int Numboftabs =3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mainmenu);
-        // Creating The Toolbar and setting it as the Toolbar for the activity
+        setContentView(R.layout.activity_main);
+        mEmail=(EditText)findViewById(R.id.editTextEmail);
+        mPassword=(EditText)findViewById(R.id.editTextpassword);
+        mLogin=(Button) findViewById(R.id.buttonlogin);
+        register=(TextView)findViewById(R.id.textViewNewUser);
+        mAuth=FirebaseAuth.getInstance();
+        progress=new ProgressDialog(this);
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
 
-
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
-
-        // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
-
-        // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
-        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
-
-        // Setting Custom Color for the Scroll bar indicator of the Tab View
-        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+        mAuthListener=new FirebaseAuth.AuthStateListener() {
             @Override
-            public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.tabsScrollColor);
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(mAuth.getCurrentUser()!=null){
+                    UserSingleton singleton=UserSingleton.getInstance();
+                    singleton.setAuth(mAuth);
+                    startActivity(new Intent(getApplicationContext(),HomeFeed.class));
+                    Log.d("Main", "onAuthStateChanged: "+singleton.getmAuth());
+                }
+            }
+        };
+
+
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                email=mEmail.getText().toString();
+                password=mPassword.getText().toString();
+                login(email,password);
             }
         });
 
-        // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(pager);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+            }
+        });
+
+
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_menu, menu);
-        return true;
+    protected void onStart() {
+        super.onStart();
+        mAuth.signOut();
+        mAuth.addAuthStateListener(mAuthListener);
+
     }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    protected void onResume() {
+        super.onResume();
+    }
+    // This function logs the user into the app
+    public void login(String email,String password){
+        progress.setMessage("Please Wait");
+        progress.show();
+        Log.d("login", "login: "+ email +password);
+        (mAuth.signInWithEmailAndPassword(email,password)).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    progress.dismiss();
+                    Toast.makeText(getApplicationContext(),"SignIn Sucessful",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    progress.dismiss();
+                    Toast.makeText(getApplicationContext(),"Login Error",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

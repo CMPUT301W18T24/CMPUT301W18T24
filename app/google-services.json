@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "987620502741",
+    "firebase_url": "https://taskmagic-52000.firebaseio.com",
+    "project_id": "taskmagic-52000",
+    "storage_bucket": "taskmagic-52000.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987620502741:android:42f18a2e5550fe08",
+        "android_client_info": {
+          "package_name": "com.example.taskmagic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987620502741-7vs2nfnlcemio8bq4096niv2ku7riab3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiNgYJs18zAP7dwiJcNgSYgG-eo-tPxmU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

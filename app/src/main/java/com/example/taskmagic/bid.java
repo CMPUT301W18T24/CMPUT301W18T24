@@ -1,33 +1,67 @@
 package com.example.taskmagic;
 
+import android.support.annotation.NonNull;
+
 /**
- * Created by wuyuandi on 2018/2/21.
+ * Created by Yipu on 22/02/2018.
  */
-public class bid {
 
+class Bid {
+    private String taskID;
+    private boolean accepted;
+    private boolean declined;
+    private double amount;
+    private String provider;
 
-    private User RequesterID;
-    private double price;
+    public Bid(){
 
-
-    bid(User bidder,Double price){
-        this.bidder=bidder;
-        this.price=price;
-    }
-    public double getPrice() {
-        return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-    public int getRequesterID() {
-        return RequesterID;
+
+    public Bid(String taskID, double amount, String provider) {
+        this.taskID = taskID;
+        this.amount = amount;
+        this.provider = provider;
+        this.accepted=false;
+        this.declined=false;
     }
 
-    public void setRequesterID(User RequesterID) {
-        this.RequesterID = RequesterID;
+
+    public String getTaskID() {
+        return taskID;
     }
 
+    public void setTaskID(String taskID) {
+        this.taskID = taskID;
+    }
+
+    public void setAmount(float amount) { this.amount = amount; }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+    public boolean isDeclined(){
+        return declined;
+
+    }
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public void setDeclined(boolean declined) {
+        this.declined = declined;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 
 }
