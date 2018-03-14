@@ -1,6 +1,9 @@
 package com.example.taskmagic;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Yipu on 21/02/2018.
@@ -12,6 +15,7 @@ public class UserTask {
     private String description;
     private String status="Requested";
     private String requester;
+    private String date;
     private Photo photo;
     private BidList bids;
 
@@ -28,6 +32,8 @@ public class UserTask {
         this.requester = userID;
         this.photo = photo;
         this.bids = bids;
+        // https://stackoverflow.com/questions/8654990/how-can-i-get-current-date-in-android -> 2018-Mar-13
+        this.date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
     }
 
     public String getDescription() {
@@ -76,5 +82,9 @@ public class UserTask {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

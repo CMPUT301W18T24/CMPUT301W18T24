@@ -31,9 +31,9 @@ public class CreateTaskActivity extends AppCompatActivity {
     public static final int CAMERA_REQUEST = 21;
 
     private UserTask task;
-    private FireBaseManager fmanager;
+/*    private FireBaseManager fmanager;
     private DatabaseReference db;
-    private FirebaseAuth auth;
+    private FirebaseAuth auth; */
 
     private FireBaseManager fmanager;
     private DatabaseReference db;
@@ -107,6 +107,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     }
 
     /**
+     * This method executes when openGallery button is clicked.
      * https://www.youtube.com/watch?v=wBuWqqBWziU -> 13-Mar-2018
      */
     public void onGalleryButtonClick(View view) {
@@ -128,6 +129,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     }
 
     /**
+     * This method handles results; handles return photos.
      * https://www.youtube.com/watch?v=wBuWqqBWziU -> 13-Mar-2018
      */
     @Override
