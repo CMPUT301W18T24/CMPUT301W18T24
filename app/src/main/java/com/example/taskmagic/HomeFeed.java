@@ -54,9 +54,10 @@ public class HomeFeed extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 task = new UserTask("Need for a drive", "I need a drive from UofA to WEM at 4 pm.", "User001");
-                task.setRequester(singleton.getUserId());
+                task.setRequester(singleton.getUserId().toString());
+                task.setId("1");
                 Intent intent = new Intent(getApplicationContext(), ViewTaskActivity.class);
-                intent.putExtra("task",1);
+                intent.putExtra("task",task);
                 startActivity(intent);
             }
         });
@@ -64,10 +65,11 @@ public class HomeFeed extends AppCompatActivity {
         buttonNotMyTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                task = new UserTask("Need for a drive", "I need a drive from UofA to WEM at 4 pm.", "User001");
-//                task.setRequester("1");
+                task = new UserTask("TaskB", "I need a book", "User0091");
+                task.setRequester("James");
+                task.setId("2");
                 Intent intent = new Intent(getApplicationContext(), ViewTaskActivity.class);
-                intent.putExtra("task",2);
+                intent.putExtra("task",task);
                 startActivity(intent);
 
             }
