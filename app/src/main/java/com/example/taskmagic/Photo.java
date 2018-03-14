@@ -25,6 +25,11 @@ public class Photo {
         this.image = null;
     }
 
+    public void setBitmap(Bitmap bitmap) {
+        resizeImage(bitmap);
+        this.image = bitmap;
+    }
+
     public Bitmap getImage() {
         return image;
     } /*might need to resize for returning; might not*/

@@ -13,15 +13,21 @@ public class UserTask {
     private String status="Requested";
     private String requester;
     private Photo photo;
+    private BidList bids;
 
     public UserTask(){
 
     }
 
-    public UserTask(String title, String description, String userid) {
+    //new UserTask(whatIsID, newTitle, newDescription, taskRequester, defaultStatus, photos, bids);
+
+    public UserTask(String taskID, String title, String description, String userID, Photo photo, BidList bids) {
+        this.id = taskID;
         this.title = title;
         this.description = description;
-        this.requester=userid;
+        this.requester = userID;
+        this.photo = photo;
+        this.bids = bids;
     }
 
     public String getDescription() {
