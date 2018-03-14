@@ -7,47 +7,61 @@ import android.support.annotation.NonNull;
  */
 
 class Bid {
-    private int taskID;
-    private String status;      //One of "Processing", "Accepted" or "Declined".
-    private float amount;
+    private String taskID;
+    private boolean accepted;
+    private boolean declined;
+    private double amount;
     private String provider;
 
-    public Bid(int taskID, float amount, String provider, String status) {
-        this.taskID = taskID;
-        this.status = status;
-        this.amount = amount;
-        this.provider = provider;
+    public Bid(){
+
     }
 
-    public Bid(int taskID, float amount, String provider) {
+
+    public Bid(String taskID, double amount, String provider) {
         this.taskID = taskID;
-        this.status = "Processing";
         this.amount = amount;
         this.provider = provider;
+        this.accepted=false;
+        this.declined=false;
     }
 
-    public void setBidStatus(String status){
-        this.status = status;
+
+    public String getTaskID() {
+        return taskID;
+    }
+
+    public void setTaskID(String taskID) {
+        this.taskID = taskID;
     }
 
     public void setAmount(float amount) { this.amount = amount; }
 
-    public float getBidAmount() {
-        return this.amount;
+    public boolean isAccepted() {
+        return accepted;
+    }
+    public boolean isDeclined(){
+        return declined;
+
+    }
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 
-    public String getStatus() { return status;  }
-
-    public void acceptBid() {
-        setBidStatus("Accepted");
-        //implementation later
+    public void setDeclined(boolean declined) {
+        this.declined = declined;
     }
 
     public String getProvider() {
         return provider;
     }
-    public void declineBid() {
-        setBidStatus("Declined");
-        //implementation later
+
+    public double getAmount() {
+        return amount;
     }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
 }

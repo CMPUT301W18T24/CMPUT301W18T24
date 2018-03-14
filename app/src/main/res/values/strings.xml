@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">TaskMagic</string>
-    <string name="confirm">confirm</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
     <string name="enterAmount">Please enter an amount:</string>
+    <string name="confirm">cconfirm</string>
     <string name="cancel">cancel</string>
-    <string name="taskTitle">Title</string>
-    <string name="taskDescription">Description</string>
+    <string name="date">date</string>
 </resources>
