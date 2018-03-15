@@ -1,5 +1,7 @@
 package com.example.taskmagic;
 
+import android.net.Uri;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,8 +18,7 @@ public class UserTask {
     private String status="Requested";
     private String requester;
     private String date;
-    private Photo photo;
-    private BidList bids;
+    private Uri photoUri;
 
     public UserTask(){
 
@@ -25,13 +26,12 @@ public class UserTask {
 
     //new UserTask(whatIsID, newTitle, newDescription, taskRequester, defaultStatus, photos, bids);
 
-    public UserTask(String taskID, String title, String description, String userID, Photo photo, BidList bids) {
-        this.id = taskID;
+    public UserTask(String title, String description, String userID, Uri photo) {
+        this.id = null;
         this.title = title;
         this.description = description;
         this.requester = userID;
-        this.photo = photo;
-        this.bids = bids;
+        this.photoUri = photo; // if this is anything like BidsList, photo can just contain owner ID which can be retrieved *******
         // https://stackoverflow.com/questions/8654990/how-can-i-get-current-date-in-android -> 2018-Mar-13
         this.date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
     }
@@ -64,12 +64,12 @@ public class UserTask {
         return requester;
     }
 
-    public Photo getPhoto() {
-        return photo;
+    public Uri getPhotoUri() {
+        return photoUri;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setPhotoUri(Uri photoUri) {
+        this.photoUri = photoUri;
     }
 
     public void setRequester(String requester) {

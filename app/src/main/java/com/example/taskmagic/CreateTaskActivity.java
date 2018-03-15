@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -40,11 +42,10 @@ public class CreateTaskActivity extends AppCompatActivity {
     private DatabaseReference db;
     private FirebaseAuth auth;
 
-    private String taskID;
     private String newTitle;
     private String newDescription;
     private String taskRequester;
-    private Photo photo = new Photo();
+    private Uri photoUri;
     private BidList bids = new BidList();
 
     private EditText titleField;
@@ -106,15 +107,21 @@ public class CreateTaskActivity extends AppCompatActivity {
         postTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UserSingleton singleton = UserSingleton.getInstance();
+
                 newTitle = titleField.getText().toString();
                 newDescription = descriptionField.getText().toString();
-                UserTask newTask = new UserTask(taskID, newTitle, newDescription,
-                                                taskRequester, photo, bids);
+                taskRequester = singleton.getUserId();
+                if (photoUri == null) { //set photoUri to default photo
+                }
+
+                UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, photoUri);
 
                 //consider checking field correction
 
                 //package newTask and send to wherever.
                 fmanager.addTask(newTask);
+                //
 
                 finish();
             }
@@ -152,13 +159,26 @@ public class CreateTaskActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            // if we are here, everything processed successfully
 
+            EncodingFactory encodingFactory = new EncodingFactory();
+
+            /**
+             * process CAMERA_REQUEST returns
+             */
             if (requestCode == CAMERA_REQUEST) {
                 Bitmap cameraBitmap = (Bitmap) data.getExtras().get("data");
-                photo.setBitmap(cameraBitmap);
+
+                // https://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
+                String encoded = encodingFactory.takeBitmap(cameraBitmap);
+
+                //save encoded to storage??
+                //take Uri and save ---> photoUri = ???
+
             }
 
+            /**
+             * process GALLERY_REQUEST returns
+             */
             else if (requestCode == GALLERY_REQUEST) {
                 //if we are here, we are hearing back from the image gallery
                 //the address of the image on the SD card
@@ -171,10 +191,14 @@ public class CreateTaskActivity extends AppCompatActivity {
                     inputStream = getContentResolver().openInputStream(imageURI);
 
                     // get a bitmap from a stream
-                    Bitmap imageBitmap = BitmapFactory.decodeStream(inputStream);
+                    Bitmap galleryBitmap = BitmapFactory.decodeStream(inputStream);
 
-                    // create new Photo from bitmap
-                    photo.setBitmap(imageBitmap);
+                    String encoded = encodingFactory.takeBitmap(galleryBitmap);
+
+                    //store byteArray encoded into firebase
+                    //get Uri and save ---> photoUri = ???
+                    //save to database?
+
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();

@@ -51,7 +51,7 @@ public class MyTasksListAdapter extends BaseAdapter {
         taskTitle.setText(tasksList.get(position).getTitle());
         taskRequester.setText(tasksList.get(position).getRequester());
         date.setText(tasksList.get(position).getDate());
-        taskThumb.setImageBitmap(tasksList.get(position).getPhoto().getImage());
+        //taskThumb.setImageBitmap(tasksList.get(position).getPhoto().getImage());
 
         v.setTag(tasksList.get(position).getId());
 
