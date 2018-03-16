@@ -1,8 +1,11 @@
 package com.example.taskmagic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +30,19 @@ public class HomeFeed extends AppCompatActivity {
         Log.d("homefeed", "onCreate: "+singleton.getmAuth()+ db);
         fmanager=new FireBaseManager(singleton.getmAuth(),db,getApplicationContext());
         //fmanager.addBid(bid);
-        //listener(singleton.getUserId());
+        //
+
+        /**
+         * testing for AddTask
+         */
+        Button addTaskButton = findViewById(R.id.addTask);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeFeed.this, CreateTaskActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }

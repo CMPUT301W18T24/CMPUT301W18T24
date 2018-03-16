@@ -11,13 +11,12 @@ import java.io.ByteArrayOutputStream;
 
 public class EncodingFactory {
 
-    public String takeBitmap(Bitmap bitmap) {
+    public byte[] takeBitmap(Bitmap bitmap) {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, outputStream);
         byte[] byteArray = outputStream .toByteArray();
-        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-        return encoded;
+        return byteArray;
     }
 }

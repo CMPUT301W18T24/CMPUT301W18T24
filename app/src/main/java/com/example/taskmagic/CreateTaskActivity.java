@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
@@ -15,8 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -33,20 +39,19 @@ public class CreateTaskActivity extends AppCompatActivity {
     public static final int CAMERA_REQUEST = 21;
     public static final int LOCATION_REQUEST = 31;
 
-    private UserTask task;
-/*    private FireBaseManager fmanager;
-    private DatabaseReference db;
-    private FirebaseAuth auth; */
-
     private FireBaseManager fmanager;
     private DatabaseReference db;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReference();
     private FirebaseAuth auth;
+
+    private String storageTag = "images";
+
 
     private String newTitle;
     private String newDescription;
     private String taskRequester;
     private Uri photoUri;
-    private BidList bids = new BidList();
 
     private EditText titleField;
     private EditText descriptionField;
@@ -112,6 +117,7 @@ public class CreateTaskActivity extends AppCompatActivity {
                 newTitle = titleField.getText().toString();
                 newDescription = descriptionField.getText().toString();
                 taskRequester = singleton.getUserId();
+
                 if (photoUri == null) { //set photoUri to default photo
                 }
 
@@ -119,9 +125,8 @@ public class CreateTaskActivity extends AppCompatActivity {
 
                 //consider checking field correction
 
-                //package newTask and send to wherever.
+                // save task to database; also save photo to storage
                 fmanager.addTask(newTask);
-                //
 
                 finish();
             }
@@ -136,17 +141,11 @@ public class CreateTaskActivity extends AppCompatActivity {
         // invoke the image gallery using an implicit intent.
         Intent galleryIntent = new Intent(Intent.ACTION_PICK);
 
-        // data location
         File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String pictureDirectoryPath = pictureDirectory.getPath();
-
-        //get URI representation
         Uri data = Uri.parse(pictureDirectoryPath);
-
-        // set data and type, get all files of that type
         galleryIntent.setDataAndType(data, "image/*");
 
-        // invoke activity and get something back from it
         startActivityForResult(galleryIntent, GALLERY_REQUEST);
     }
 
@@ -162,6 +161,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
             EncodingFactory encodingFactory = new EncodingFactory();
 
+
             /**
              * process CAMERA_REQUEST returns
              */
@@ -169,36 +169,42 @@ public class CreateTaskActivity extends AppCompatActivity {
                 Bitmap cameraBitmap = (Bitmap) data.getExtras().get("data");
 
                 // https://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
-                String encoded = encodingFactory.takeBitmap(cameraBitmap);
+                byte[] encoded = encodingFactory.takeBitmap(cameraBitmap);
 
-                //save encoded to storage??
-                //take Uri and save ---> photoUri = ???
+                UploadTask uploadTask = storageRef.putBytes(encoded);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(CreateTaskActivity.this, "Upload Successful", Toast.LENGTH_LONG).show();
 
+                        photoUri = storageRef.child(storageTag).getDownloadUrl().getResult();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(CreateTaskActivity.this, "Upload Failure" + e, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
 
             /**
              * process GALLERY_REQUEST returns
              */
             else if (requestCode == GALLERY_REQUEST) {
-                //if we are here, we are hearing back from the image gallery
-                //the address of the image on the SD card
                 Uri imageURI = data.getData();
 
-                //declare a stream to read the image data from the SD card.
+                // declare a stream to read the image data from the SD card.
                 InputStream inputStream;
+
 
                 try {
                     inputStream = getContentResolver().openInputStream(imageURI);
-
-                    // get a bitmap from a stream
                     Bitmap galleryBitmap = BitmapFactory.decodeStream(inputStream);
 
-                    String encoded = encodingFactory.takeBitmap(galleryBitmap);
+                    byte[] encoded = encodingFactory.takeBitmap(galleryBitmap);
 
                     //store byteArray encoded into firebase
-                    //get Uri and save ---> photoUri = ???
-                    //save to database?
-
+                    photoUri = storageRef.child(storageTag).getDownloadUrl().getResult();
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
