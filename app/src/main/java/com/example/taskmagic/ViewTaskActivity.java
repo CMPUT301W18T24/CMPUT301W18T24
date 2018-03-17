@@ -68,6 +68,7 @@ public class ViewTaskActivity extends AppCompatActivity {
             @Override
             public void onEnsure(String title, String date, String description) {
                 //UPDATE EDITING
+                 editTask(title, date, description);
             }
         });
         initView();
@@ -91,6 +92,14 @@ public class ViewTaskActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    
+    private void editTask(String title, String date, String description) {
+        task.setDate(date);
+        task.setTitle(title);
+        task.setDescription(description);
+        initView();
+        fmanager.editTask(task);
     }
 
     private void initView() {
