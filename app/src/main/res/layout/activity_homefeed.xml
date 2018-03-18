@@ -8,4 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Task" />
+
+    <Button
+        android:id="@+id/myTasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View My Tasks" />
 </LinearLayout>

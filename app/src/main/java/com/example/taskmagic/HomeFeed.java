@@ -21,6 +21,10 @@ public class HomeFeed extends AppCompatActivity {
     private FireBaseManager fmanager;
     private DatabaseReference db;
     private FirebaseAuth auth;
+
+    private Button addTaskButton;
+    private Button myTasksButton;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homefeed);
@@ -35,11 +39,20 @@ public class HomeFeed extends AppCompatActivity {
         /**
          * testing for AddTask
          */
-        Button addTaskButton = findViewById(R.id.addTask);
+        addTaskButton = findViewById(R.id.addTask);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeFeed.this, CreateTaskActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        myTasksButton = findViewById(R.id.myTasks);
+        myTasksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeFeed.this, MyTasksActivity.class);
                 startActivity(intent);
             }
         });
