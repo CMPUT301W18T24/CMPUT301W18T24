@@ -41,7 +41,7 @@ public class MyTasksActivity extends AppCompatActivity {
         UserSingleton singleton = UserSingleton.getInstance();
         userId = singleton.getUserId();
 
-        DatabaseReference ref = db.child(taskTag).getRef();
+        DatabaseReference ref = db.child(taskTag);
         Query query = ref.orderByChild("requester").equalTo(userId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

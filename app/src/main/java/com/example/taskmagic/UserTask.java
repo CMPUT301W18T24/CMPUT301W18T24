@@ -18,7 +18,7 @@ public class UserTask {
     private String status="Requested";
     private String requester;
     private String date;
-    private Uri photoUri;
+    private String photoUri;
 
     public UserTask(){
 
@@ -26,8 +26,8 @@ public class UserTask {
 
     //new UserTask(whatIsID, newTitle, newDescription, taskRequester, defaultStatus, photos, bids);
 
-    public UserTask(String title, String description, String userID, Uri photo) {
-        this.id = null;
+    public UserTask(String title, String description, String userID, String photo) {
+        this.id = "-1";
         this.title = title;
         this.description = description;
         this.requester = userID;
@@ -64,11 +64,11 @@ public class UserTask {
         return requester;
     }
 
-    public Uri getPhotoUri() {
+    public String getPhotoUri() {
         return photoUri;
     }
 
-    public void setPhotoUri(Uri photoUri) {
+    public void setPhotoUri(String photoUri) {
         this.photoUri = photoUri;
     }
 

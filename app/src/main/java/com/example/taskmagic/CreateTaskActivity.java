@@ -11,15 +11,18 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -47,6 +50,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
     private FirebaseAuth auth;
+    private UserSingleton singleton = UserSingleton.getInstance();
 
     private String storageTag = "images";
     private String uuid = java.util.UUID.randomUUID().toString();
@@ -55,7 +59,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private String newDescription;
     private String taskRequester;
     private byte[] photoBArray;
-    private Uri photoUri;
+    private String photoUri;
 
     private EditText titleField;
     private EditText descriptionField;
@@ -63,6 +67,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private Button openCameraButton;
     private Button openGalleryButton;
     private Button postTaskButton;
+    private ImageView thumbnail;
 
     private CreateTaskActivity thisActivity = this;
 
@@ -72,6 +77,10 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         titleField = findViewById(R.id.task_title);
         descriptionField = findViewById(R.id.task_description);
+        thumbnail = findViewById(R.id.thumbnail);
+
+        db = FirebaseDatabase.getInstance().getReference();
+        fmanager = new FireBaseManager(singleton.getmAuth(), db, getApplicationContext());
 
         /**
          * On press of button, map opens up and allows user to pin point a location
@@ -116,7 +125,6 @@ public class CreateTaskActivity extends AppCompatActivity {
         postTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserSingleton singleton = UserSingleton.getInstance();
 
                 newTitle = titleField.getText().toString();
                 newDescription = descriptionField.getText().toString();
@@ -193,15 +201,16 @@ public class CreateTaskActivity extends AppCompatActivity {
                 uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //handle failures
                         Toast.makeText(thisActivity, "Upload unsuccessful.", Toast.LENGTH_SHORT).show();
                     }
                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        photoUri = taskSnapshot.getDownloadUrl();
+                        photoUri = taskSnapshot.getDownloadUrl().toString();
                     }
                 });
+
+                thumbnail.setImageBitmap(cameraBitmap);
             }
 
             /**
@@ -232,9 +241,11 @@ public class CreateTaskActivity extends AppCompatActivity {
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            photoUri = taskSnapshot.getDownloadUrl();
+                            photoUri = taskSnapshot.getDownloadUrl().toString();
                         }
                     });
+
+                    thumbnail.setImageBitmap(galleryBitmap);
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
