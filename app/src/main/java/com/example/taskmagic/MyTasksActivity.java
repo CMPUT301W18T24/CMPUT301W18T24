@@ -14,6 +14,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -26,6 +27,7 @@ public class MyTasksActivity extends AppCompatActivity {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
     private FirebaseAuth auth;
+    private UserSingleton singleton = UserSingleton.getInstance();
     private String taskTag = "task";
 
     private String userId;
@@ -37,6 +39,14 @@ public class MyTasksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_tasks);
+
+        db = FirebaseDatabase.getInstance().getReference();
+        fmanager = new FireBaseManager(singleton.getmAuth(), db, getApplicationContext());
+
+        /* -----------------------------------------------------
+           here we get tasks of the user from Firebase database.
+           -----------------------------------------------------
+
 
         UserSingleton singleton = UserSingleton.getInstance();
         userId = singleton.getUserId();
@@ -58,7 +68,7 @@ public class MyTasksActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        }); */
 
         tasksListView = findViewById(R.id.myTasksList);
         adapter = new MyTasksListAdapter(tasksListView.getContext(), myTasks.getTaskList());

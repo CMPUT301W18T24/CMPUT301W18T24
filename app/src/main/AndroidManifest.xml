@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".HomeFeed" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".MyTasksActivity"></activity>
+        <activity android:name=".MyTasksActivity"/>
+        <activity android:name=".CreateTaskActivity"></activity>
     </application>
 
 </manifest>
