@@ -113,7 +113,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    UserTask task=dataSnapshot.getValue(UserTask.class);
+                    UserTask task=ds.getValue(UserTask.class);
                     taskList.add(task);
                 }
                 listener.onSuccess(taskList);

@@ -3,6 +3,7 @@ package com.example.taskmagic;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,43 +44,36 @@ public class MyTasksActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance().getReference();
         fmanager = new FireBaseManager(singleton.getmAuth(), db, getApplicationContext());
 
-        /* -----------------------------------------------------
-           here we get tasks of the user from Firebase database.
-           -----------------------------------------------------
-
-
-        UserSingleton singleton = UserSingleton.getInstance();
-        userId = singleton.getUserId();
-
-        DatabaseReference ref = db.child(taskTag);
-        Query query = ref.orderByChild("requester").equalTo(userId);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot uTask : dataSnapshot.getChildren()) {
-                        UserTask userTask = uTask.getValue(UserTask.class);
-                        myTasks.add(userTask);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        }); */
+        listener(singleton.getUserId());
 
         tasksListView = findViewById(R.id.myTasksList);
-        adapter = new MyTasksListAdapter(tasksListView.getContext(), myTasks.getTaskList());
-        tasksListView.setAdapter(adapter);
 
+        /**
+         * This allows user to click on individual item and see the corresponding task details view
+         */
         tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+/*
                 Intent taskDetailIntent = new Intent(MyTasksActivity.this, ViewTaskActivity.class);
                 startActivity(taskDetailIntent);
+*/
+            }
+        });
+    }
+
+    private void listener(final String requester) {
+        fmanager.getMyTaskData(requester, new onGetMyTaskListener() {
+            @Override
+            public void onSuccess(TaskList taskList) {
+                myTasks = taskList;
+                adapter = new MyTasksListAdapter(tasksListView.getContext(), myTasks);
+                tasksListView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onFailure(String message) {
 
             }
         });

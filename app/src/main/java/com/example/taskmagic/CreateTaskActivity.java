@@ -44,6 +44,8 @@ public class CreateTaskActivity extends AppCompatActivity {
     public static final int GALLERY_REQUEST = 20;
     public static final int CAMERA_REQUEST = 21;
     public static final int LOCATION_REQUEST = 31;
+    public static final int maxHeight = 255;
+    public static final int maxWidth = 255;
 
     private FireBaseManager fmanager;
     private DatabaseReference db;
@@ -171,6 +173,7 @@ public class CreateTaskActivity extends AppCompatActivity {
              */
             if (requestCode == CAMERA_REQUEST) {
                 Bitmap cameraBitmap = (Bitmap) data.getExtras().get("data");
+                cameraBitmap = Bitmap.createScaledBitmap(cameraBitmap, maxWidth, maxHeight, true);
                 // https://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 cameraBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
@@ -206,6 +209,7 @@ public class CreateTaskActivity extends AppCompatActivity {
                     inputStream = getContentResolver().openInputStream(imageUri);
 
                     Bitmap galleryBitmap = BitmapFactory.decodeStream(inputStream);
+                    galleryBitmap = Bitmap.createScaledBitmap(galleryBitmap, maxWidth, maxHeight, true);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     galleryBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                     photoBArray = baos.toByteArray();
