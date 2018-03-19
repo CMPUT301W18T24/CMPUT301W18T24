@@ -50,7 +50,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyBkbNWep-DR_Tan-Ea4CdzuI-2qs94iJR4" />
 
         <activity
             android:name=".MapsActivity"
@@ -62,10 +62,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <permission
-        android:name="com.example.wuyuandi.myapplication.permission.MAPS_RECEIVE"
+        android:name="com.example.taskmagic.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.wuyuandi.myapplication.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.example.taskmagic.permission.MAPS_RECEIVE" />
     <uses-permission android:name="com.google.android.providers.gsf.permissions.READ_GSERVICES" />
 
     <uses-feature

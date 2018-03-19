@@ -81,12 +81,6 @@ public class EditDialog extends Dialog {
                         descriptionText.setError("Non empty!");
                     }
                 }
-                assigned_frag assigned_frag=new assigned_frag()
-                context.getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.Layout_container, nextFrag,"findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
-
             }
 
         });
