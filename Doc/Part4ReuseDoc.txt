@@ -1,0 +1,43 @@
+Firebase Setup for Listeners:
+https://stackoverflow.com/questions/33776195/how-to-keep-track-of-listeners-in-firebase-on-android
+Accessed March 19, 2018
+
+Firebase Backend Tutorial:
+https://www.sitepoint.com/creating-a-cloud-backend-for-your-android-app-using-firebase/
+Accessed March 19, 2018
+
+Firebase User Registration:
+https://www.youtube.com/watch?v=0NFwF7L-YA8
+Accessed March 19, 2018
+
+Bottom Navigation Menu Activity:
+https://stackoverflow.com/questions/41740632/how-to-change-activity-on-bottom-navigation-button-click
+Accessed March 19, 2018
+
+Android Bottom Navigation Menu Setup:
+https://www.youtube.com/watch?v=EbcdMxAIr54
+Accessed March 19, 2018
+
+Google Map API Tutorial:
+https://github.com/wuyuandi/AndroidClassroomTraining/blob/master/Projects/Maps/MapsApp/app/src/main/java/com/vivianaranha/mapsapp/MainActivity.java
+Accessed March 19, 2018
+
+Google Map API Error:
+https://stackoverflow.com/questions/40055893/ensure-that-the-google-maps-android-api-v2-is-enabled-i-am-getting-this-error
+Accessed March 19, 2018
+
+Android Google Basic Map:
+https://www.youtube.com/watch?v=lchyOhPREh4&t=485s
+Accessed March 19, 2018
+
+Google Map Features Tutorial:
+https://www.youtube.com/watch?v=Z3mKhMkdUFk
+Accessed March 19, 2018
+
+Google Map Marker Tutorial:
+https://www.youtube.com/watch?v=k253ec4m33A
+Accessed March 19, 2018
+
+Android API Documentation:
+https://developers.google.com/maps/documentation/android-api/start
+Accessed March 19, 2018
