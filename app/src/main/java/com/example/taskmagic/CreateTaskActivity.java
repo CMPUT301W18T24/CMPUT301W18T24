@@ -138,7 +138,11 @@ public class CreateTaskActivity extends AppCompatActivity {
                 Log.d("UserTask created", newTask.getTitle() + db + storageRef + fmanager);
                 fmanager.addTask(newTask);
 
-                finish();
+                Intent intent = new Intent(thisActivity, HomeFeed.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                thisActivity.startActivity(intent);
+                //go back to homeFeed
+                //https://stackoverflow.com/questions/14059810/go-back-to-mainactivity-when-ok-pressed-in-alertdialog-in-android
             }
         });
     }
