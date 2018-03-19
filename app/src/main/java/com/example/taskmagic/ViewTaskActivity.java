@@ -67,6 +67,8 @@ public class ViewTaskActivity extends AppCompatActivity {
             taskOwenr = false;
             Log.d("viewtask", "onCreate: "+task.getRequester()+singleton.getUserId());
         }
+
+        // @See BidDialog.java
         final BidDialog bidDialog = new BidDialog(this, task, new BidDialog.onDialogListener() {
             @Override
             public void onEnsure(String amount) {
@@ -75,6 +77,7 @@ public class ViewTaskActivity extends AppCompatActivity {
             }
         });
 
+        // @See EditDialog.java
         final EditDialog editDialog = new EditDialog(this, date, task, new EditDialog.onDialogListener() {
             @Override
             public void onEnsure(String title, String date, String description) {
@@ -87,7 +90,9 @@ public class ViewTaskActivity extends AppCompatActivity {
             }
         });
         initView();
-
+        /**
+        * Depending if User is the task owner, the Button will either Edit task or add Bid
+        */
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +114,9 @@ public class ViewTaskActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * This button allows the User to view geolocation of the Task
+         */
         button_viewLocation.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -118,6 +126,9 @@ public class ViewTaskActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initialize the View of the activity, sets Task details into respective fields
+     */
     private void initView() {
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
@@ -134,6 +145,10 @@ public class ViewTaskActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Allows user to add a bid on current task
+     * @param bid
+     */
     private void bidOnTask(Bid bid) {
         mProgress.setMessage("Adding");
         mProgress.show();

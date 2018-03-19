@@ -39,7 +39,11 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     private Context context;
     private FirebaseAuth.AuthStateListener listener;
 
-
+    /**
+     * Constructor creates a manager that handles upload and download to database
+     * @param user
+     * @param context
+     */
     public FireBaseManager(FirebaseAuth user, Context context) {
         this.mAuth = user;
         this.database = FirebaseDatabase.getInstance().getReference();
@@ -72,8 +76,10 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
 
     }
 
-
-    //successfully adds a Task to FireBase Database under user login
+    /**
+     * successfully adds a Task to FireBase Database under user login
+     * @param task
+     */
     public void addTask(UserTask task) {
         DatabaseReference mRef=database.child(taskTag);
         String taskId=mRef.push().getKey();
@@ -90,6 +96,11 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
             }
         });
     }
+
+    /**
+     * successfully edit a Task in FireBase Database under user login
+     * @param task
+     */
     public void editTask(UserTask task){
         database.child(taskTag).child(task.getId()).setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -103,6 +114,11 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
             }
         });
     }
+
+    /**
+     * successfully removes a Task to FireBase Database under user login
+     * @param taskId
+     */
     public void removeTask(String taskId){
         database.child(taskTag).child(taskId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -117,7 +133,10 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
         });
     }
 
-    //can be used for edit profile
+    /**
+     * Helper function for edit profile
+     * @param user
+     */
     public void saveProfile(User user) {
         database.child(userTag).child(user.getId()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -127,7 +146,12 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
             }
         });
     }
-    // retrieves userinfo from database
+
+    /**
+     * retrieves user info from database
+     * @param userid
+     * @param listener
+     */
     public void getUserInfo(final String userid ,final OnGetUserInfoListener listener) {
         database.child(userTag).child(userid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -145,8 +169,11 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     //public void getSpecificTaskData(final taskid)
 
 
-
-    //This function asychronously retrieves logged in user Tasks from the Database
+    /**
+     * This function asychronously retrieves logged in user Tasks from the Database
+     * @param requestor
+     * @param listener
+     */
     public void getMyTaskData(final String requestor, final onGetMyTaskListener listener) {
         final TaskList taskList = new TaskList();
         database.child(taskTag).addValueEventListener(new ValueEventListener() {
@@ -167,6 +194,11 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
             }
         });
     }
+
+    /**
+     *
+     * @param bid
+     */
     // successfully adds a bid to the database
     public void addBid(final Bid bid){
         database.child(bidTag).child(bid.getTaskID()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -193,6 +225,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
                         taskList.add(task);
                     }
                 }
+                Log.d("List Created", "yoo");
                 listener.onSuccess(taskList);
             }
 

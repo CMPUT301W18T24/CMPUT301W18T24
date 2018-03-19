@@ -29,7 +29,6 @@
         <activity android:name=".ViewPhotoActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".NotificationActivity" />
-        <activity android:name=".MapActivity" />
         <activity android:name=".EditTaskActivity" />
         <activity android:name=".CreateBidActivity" />
         <activity android:name=".ViewProfileActivity"
@@ -50,7 +49,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyBL-h6gtoER5iQukOoBL0yyE_QCU4jHOqs" />
 
         <activity
             android:name=".MapsActivity"

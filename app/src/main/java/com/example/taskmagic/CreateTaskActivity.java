@@ -36,6 +36,7 @@ import java.io.InputStream;
 import java.util.UUID;
 
 /**
+ * This activity is where information is entered to make a new UserTask.
  * Created by hyusuf on 2018-03-11.
  */
 

@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This is used to display UserTask information onto a specified ListView
  * Created by Harrold on 2018-03-13.
  * Derived from https://www.youtube.com/watch?v=YMJSBHAZsso -> 2018-Mar-13
  */
-
 public class MyTasksListAdapter extends BaseAdapter {
 
     private Context mContext;
@@ -26,21 +26,42 @@ public class MyTasksListAdapter extends BaseAdapter {
         this.tasksList = tasksList;
     }
 
+    /**
+     * This returns the size of the object's array
+     * @return size of array
+     */
     @Override
     public int getCount() {
         return tasksList.getCount();
     }
 
+    /**
+     * Get item at speecified position
+     * @param position in array
+     * @return UserTask at position
+     */
     @Override
     public Object getItem(int position) {
         return tasksList.getTask(position);
     }
 
+    /**
+     * Get the index of current item.
+     * @param position
+     * @return position
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     * Get the view with the information of UserTask at positiion.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return View
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = View.inflate(mContext, R.layout.my_task_list_item, null);

@@ -20,7 +20,12 @@ class Bid implements Serializable {
 
     public Bid(){}
 
-
+    /**
+     * Constructor of Bid
+     * @param taskID
+     * @param amount
+     * @param provider
+     */
     public Bid(String taskID, double amount, String provider) {
         this.taskID = taskID;
         this.amount = amount;
@@ -30,18 +35,32 @@ class Bid implements Serializable {
         this.status = "Processing";
     }
 
-
-
+    /**
+     * Returns the Id of the Task that current Bid belongs to
+     * @return Id String of Task
+     */
     public String getTaskID() {
         return taskID;
     }
 
+    /**
+     * Changes the Task that the Bid is associated to
+     * @param taskID
+     */
     public void setTaskID(String taskID) {
         this.taskID = taskID;
     }
 
+    /**
+     * Changes the amount of the Bid
+     * @param amount
+     */
     public void setAmount(float amount) { this.amount = amount; }
 
+    /**
+     * returns status: accepted/declined
+     * @return Boolean
+     */
     public boolean isAccepted() {
         return accepted;
     }
@@ -67,18 +86,31 @@ class Bid implements Serializable {
         updateStatus();
     } */
 
+    /**
+     * Returns the Id String if the Bidder
+     * @return Id String of provider
+     */
     public String getProvider() {
         return provider;
     }
 
+    /**
+     * Returns the amount of the Bid
+     * @return String
+     */
     public double getAmount() {
         return amount;
     }
 
+    /**
+     * Changes the associated provider
+     * @param provider
+     */
     public void setProvider(String provider) {
         this.provider = provider;
     }
 
+/*
     private void updateStatus() {
         if (accepted && !declined) {
             this.status = "Accepted";
@@ -87,16 +119,27 @@ class Bid implements Serializable {
         } else if (accepted && declined) {
             Log.d("Status Error", "Double status.");
         }
-    }
+    }*/
 
+    /**
+     * Takes a String and changes the status of current Bid into the String
+     * @param status
+     */
     public void setBidStatus(String status) {
         this.status = status;
     }
 
+    /**
+     * @see setBidStatus()
+     * @return status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Changes status of Bid to be Accepted
+     */
     public void acceptBid() {
         this.accepted = true;
         setBidStatus("Accepted");

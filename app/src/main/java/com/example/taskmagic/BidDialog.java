@@ -18,10 +18,17 @@ public class BidDialog extends Dialog {
     private onDialogListener listener;
     private UserTask task;
 
+    // This interface sends the amount value back
     public interface onDialogListener {
         void onEnsure(String amount);
     }
 
+    /**
+     * This constructor creates a dialogue and displays the details of a UserTask
+     * @param context
+     * @param task
+     * @param listener
+     */
     public BidDialog(@NonNull Context context,UserTask task, onDialogListener listener) {
         super(context);
         this.context = context;
@@ -43,6 +50,9 @@ public class BidDialog extends Dialog {
         setListener();
     }
 
+    /**
+     * This method initializes the dialogue and sets the task details into the TextViews
+     */
     private void initView() {
         title = findViewById(R.id.textView_titleContent);
         description = findViewById(R.id.textView_descriptionContent);
@@ -54,6 +64,12 @@ public class BidDialog extends Dialog {
         description.setText(task.getDescription());
     }
 
+    /**
+     * This method has two Buttons:
+     *      Clicking the confirm button gets the amount value from user input and reset editText
+     *      Clicking the cancel button resets the amount value
+     *      Both buttons dismisses dialogue
+     */
     private void setListener() {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
