@@ -1,5 +1,6 @@
 package com.example.taskmagic;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -55,6 +56,7 @@ public class EditDialog extends Dialog {
 
         confirmButton = findViewById(R.id.button_edit1);
         cancelButton = findViewById(R.id.button_edit2);
+
     }
 
     private void setListener() {
@@ -79,6 +81,12 @@ public class EditDialog extends Dialog {
                         descriptionText.setError("Non empty!");
                     }
                 }
+                assigned_frag assigned_frag=new assigned_frag()
+                context.getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.Layout_container, nextFrag,"findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+
             }
 
         });

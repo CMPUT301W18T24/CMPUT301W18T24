@@ -9,15 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
- * Created by hyusuf on 2018-03-12.
+ * Created by hyusuf on 2018-03-19.
  */
 
-public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHolder> {
+public class RequestedTaskAdapter extends RecyclerView.Adapter<RequestedTaskAdapter.ViewHolder> {
     private TaskList taskList;
     private Context context;
     private UserTask chosenTask;
@@ -34,7 +31,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
     }
 
 
-    public HomeFeedAdapter(TaskList taskList, Context context) {
+    public RequestedTaskAdapter(TaskList taskList, Context context) {
         this.taskList = taskList;
         this.context = context;
     }
@@ -60,20 +57,24 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
                 //creating a popup menu
                 PopupMenu popup = new PopupMenu(context, holder.textOption);
                 //inflating menu from xml resource
-                popup.inflate(R.menu.cardview_menu);
+                popup.inflate(R.menu.viewrequested_menu);
                 //adding click listener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             // triggered when edit popup button clicked
-                            case R.id.mnu_item_view:
+                            case R.id.mnu_item_edit:
                                 chosenTask= taskList.getTask(position);
                                 Intent myIntent = new Intent(context, ViewTaskActivity.class);
                                 myIntent.putExtra("UserTask",chosenTask);
                                 context.startActivity(myIntent);
                                 break;
                             // triggered when delete popup button clicked
+                            case R.id.mnu_item_viewbids:
+                                break;
+                            case R.id.mnu_item_delete:
+                                break;
 
                         }
                         return false;

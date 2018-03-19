@@ -33,7 +33,7 @@ public class requested_frag extends Fragment {
         fmanager.getMyTaskData(requestor, new onGetMyTaskListener() {
             @Override
             public void onSuccess(TaskList taskList) {
-                Log.d("Succes", "onSuccess: "+taskList.getCount());
+                Log.d("Success", "onSuccess: "+taskList.getCount());
                 updateView(taskList);
             }
 
@@ -46,7 +46,8 @@ public class requested_frag extends Fragment {
 
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter=new HomeFeedAdapter(taskList,getActivity());
+        adapter=new RequestedTaskAdapter(taskList,getActivity());
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

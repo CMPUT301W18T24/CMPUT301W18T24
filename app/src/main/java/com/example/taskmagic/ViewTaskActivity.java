@@ -48,7 +48,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         mProgress = new ProgressDialog(this);
 
-        task = (UserTask) getIntent().getSerializableExtra("task");
+        task = (UserTask) getIntent().getSerializableExtra("UserTask");
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fireworks);
 
         Button button_viewLocation = (Button) findViewById(R.id.button_viewLocation);
@@ -59,6 +59,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         descriptionText = (TextView) findViewById(R.id.textView_descriptionContent);
         dateText = (TextView) findViewById(R.id.textView_dateContent);
         photo = (ImageView) findViewById(R.id.imageView1);
+
 
         if (task.getRequester().equals(singleton.getUserId())) {
             taskOwenr = true;

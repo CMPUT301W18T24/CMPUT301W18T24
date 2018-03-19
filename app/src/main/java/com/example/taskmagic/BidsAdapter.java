@@ -55,23 +55,16 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
                 //creating a popup menu
                 PopupMenu popup = new PopupMenu(context, holder.textOption);
                 //inflating menu from xml resource
-                popup.inflate(R.menu.cardview_menu);
+                popup.inflate(R.menu.viewbid_menu);
                 //adding click listener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             // triggered when edit popup button clicked
-                            case R.id.mnu_item_view:
-                                chosenBid= bidList.getBid(position);
-                                Intent myIntent = new Intent(context, ViewTaskActivity.class);
-                                myIntent.putExtra("Bid",chosenBid);
-                                context.startActivity(myIntent);
+                            case R.id.mnu_item_viewbid:
                                 break;
                             // triggered when delete popup button clicked
-                            case R.id.mnu_item_Bid:
-                                chosenBid= bidList.getBid(position);
-                                break;
                         }
                         return false;
                     }
