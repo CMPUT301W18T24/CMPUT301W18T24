@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 if(mAuth.getCurrentUser()!=null){
                     UserSingleton singleton=UserSingleton.getInstance();
                     singleton.setAuth(mAuth);
-                    startActivity(new Intent(getApplicationContext(),HomeFeed.class));
+                    startActivity(new Intent(getApplicationContext(),ViewProfileActivity.class));
                     Log.d("Main", "onAuthStateChanged: "+singleton.getmAuth());
                 }
             }

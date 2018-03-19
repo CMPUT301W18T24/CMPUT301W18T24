@@ -1,8 +1,10 @@
 package com.example.taskmagic;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
-
 import java.text.SimpleDateFormat;
+import android.location.Location;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -11,27 +13,23 @@ import java.util.Locale;
  * Created by Yipu on 21/02/2018.
  */
 
-public class UserTask {
+public class UserTask implements Serializable {
     private String id;
     private String title;
     private String description;
     private String status="Requested";
     private String requester;
     private String date;
-    private Uri photoUri;
+    private String photoUriString;
 
     public UserTask(){
 
     }
-
-    //new UserTask(whatIsID, newTitle, newDescription, taskRequester, defaultStatus, photos, bids);
-
-    public UserTask(String title, String description, String userID, Uri photo) {
-        this.id = null;
+    public UserTask(String title, String description, String userID, String photo) {
         this.title = title;
         this.description = description;
         this.requester = userID;
-        this.photoUri = photo; // if this is anything like BidsList, photo can just contain owner ID which can be retrieved *******
+        this.photoUriString = photo; // if this is anything like BidsList, photo can just contain owner ID which can be retrieved *******
         // https://stackoverflow.com/questions/8654990/how-can-i-get-current-date-in-android -> 2018-Mar-13
         this.date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
     }
@@ -64,13 +62,14 @@ public class UserTask {
         return requester;
     }
 
-    public Uri getPhotoUri() {
-        return photoUri;
+    public String getPhotoUriString() {
+        return photoUriString;
     }
 
-    public void setPhotoUri(Uri photoUri) {
-        this.photoUri = photoUri;
+    public void setPhotoUriString(String photoUri) {
+        this.photoUriString = photoUri;
     }
+
 
     public void setRequester(String requester) {
         this.requester = requester;

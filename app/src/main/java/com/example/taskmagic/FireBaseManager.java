@@ -3,6 +3,7 @@ package com.example.taskmagic;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -17,6 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
@@ -27,7 +31,7 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
  * Created by hyusuf on 2018-03-08.
  */
 
-public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListener {
+public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener {
     private FirebaseAuth mAuth;
     private DatabaseReference database;
 
@@ -40,9 +44,9 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     private FirebaseAuth.AuthStateListener listener;
     private static UserTask task;
 
-    public FireBaseManager(FirebaseAuth user, DatabaseReference db, Context context) {
+    public FireBaseManager(FirebaseAuth user, Context context) {
         this.mAuth = user;
-        this.database = db;
+        this.database = FirebaseDatabase.getInstance().getReference();
         this.context = context;
         this.task=new UserTask();
 
@@ -59,6 +63,12 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     }
 
     @Override
+    public void onSuccess(UserTask task) {
+
+    }
+
+
+    @Override
     public void onFailure(String message) {
 
     }
@@ -66,13 +76,44 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
 
     //successfully adds a Task to FireBase Database under user login
     public void addTask(UserTask task) {
-        DatabaseReference mRef=database.child(taskTag).child(task.getRequester());
+        DatabaseReference mRef=database.child(taskTag);
         String taskId=mRef.push().getKey();
         task.setId(taskId);
         mRef.child(taskId).setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Profile Successfully Saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Succesfully added Task", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    public void editTask(UserTask task){
+        database.child(taskTag).child(task.getId()).setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Succesfully edited Task", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    public void removeTask(String taskId){
+        database.child(taskTag).child(taskId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Succesfully removed task", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -92,8 +133,8 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
         database.child(userTag).child(userid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               User user=dataSnapshot.getValue(User.class);
-               listener.onSuccess(user);
+                User user=dataSnapshot.getValue(User.class);
+                listener.onSuccess(user);
 
             }
             @Override
@@ -113,7 +154,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    UserTask task=dataSnapshot.getValue(UserTask.class);
+                    UserTask task=ds.getValue(UserTask.class);
                     taskList.add(task);
                 }
                 listener.onSuccess(taskList);
@@ -135,11 +176,50 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
         });
 
     }
+    // this function retrieves all requested task in the database for home Feed
+    public void getRequestedTasks(final String requestor,final OnGetAllTaskReqListener listener){
+        final TaskList taskList = new TaskList();
+        database.child(taskTag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    UserTask task=ds.getValue(UserTask.class);
+                    Log.d("get requested", "onDataChange: "+task.getId());
+                    if (task.getRequester().equals(requestor) || task.getStatus().equals("done")|| task.getStatus().equals("assigned")){
+                        continue;
+                    }
+                    else{
+                        taskList.add(task);
+                    }
+                }
+                listener.onSuccess(taskList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
+    }
+    public void getTaskInfo(final String taskId ,final OnGetATaskListener listener) {
+        database.child(taskTag).child(taskId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserTask task=dataSnapshot.getValue(UserTask.class);
+                listener.onSuccess(task);
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
+    }
+
 
 
 
 }
-
 
 
 
