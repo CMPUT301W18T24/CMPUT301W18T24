@@ -129,27 +129,10 @@ public class CreateTaskActivity extends AppCompatActivity {
                 newTitle = titleField.getText().toString();
                 newDescription = descriptionField.getText().toString();
                 taskRequester = singleton.getUserId();
-/*
-                // get reference to storage/child/file_name.png ***
-                UploadTask uploadTask = [the_reference].putBytes(photoBArray);
-                // uploadTask listeners
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // failure things here
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // success things here
-                    }
-                });
-                // set photoUri to ^ Uri
-                photoUri = get the Uri here
-                        */
 
                 // save userTask to database
-                UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, photoUri);     //consider checking field correction
+                UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, photoUri);
+                Log.d("UserTask created", newTask.getTitle() + db + storageRef + fmanager);
                 fmanager.addTask(newTask);
 
                 finish();
@@ -195,7 +178,6 @@ public class CreateTaskActivity extends AppCompatActivity {
 
 
                 StorageReference imageRef = storageRef.child(storageTag + "/" + uuid + ".png");
-                //StorageReference imageRef = storageRef.child(storageTag + "/" + imageUri.getLastPathSegment());
 
                 UploadTask uploadTask = imageRef.putBytes(photoBArray);
                 uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -229,13 +211,11 @@ public class CreateTaskActivity extends AppCompatActivity {
                     photoBArray = baos.toByteArray();
 
                     StorageReference imageRef = storageRef.child(storageTag + "/" + uuid + ".png");
-                    //StorageReference imageRef = storageRef.child("images/" + imageUri.getLastPathSegment());
 
                     UploadTask uploadTask = imageRef.putBytes(photoBArray);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            // handle failures here
                             Toast.makeText(thisActivity, "Upload unsuccessful.", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

@@ -88,9 +88,4 @@ public class UserTask {
     public String getDate() {
         return date;
     }
-
-    public Uri getPhotoUri() {
-        Uri uri = Uri.parse(this.photoUriString);
-        return uri;
-    }
 }
