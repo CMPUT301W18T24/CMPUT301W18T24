@@ -17,7 +17,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -34,9 +33,6 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener {
     private FirebaseAuth mAuth;
     private DatabaseReference database;
-
-    private StorageReference storage;
-
     private String taskTag = "task";
     private String userTag = "users";
     private String bidTag="bids";
@@ -220,10 +216,3 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
 
 
 }
-
-
-
-
-
-
-

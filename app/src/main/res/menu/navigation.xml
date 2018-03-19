@@ -18,7 +18,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:enabled="true"
         android:icon="@drawable/ic_add"
         android:title="Add Task"
-        app:showAsAction="always"/>
+        android:showAsAction="always" />
     <item
         android:id="@+id/search"
         android:enabled="true"

@@ -16,10 +16,6 @@ class Bid {
 
     private String status;
 
-    public Bid(){
-
-    }
-
 
     public Bid(String taskID, double amount, String provider) {
         this.taskID = taskID;
@@ -29,6 +25,7 @@ class Bid {
         this.declined=false;
         this.status = "Processing";
     }
+
 
 
     public String getTaskID() {
@@ -48,9 +45,17 @@ class Bid {
         return declined;
 
     }
+
  /*   public void setAccepted(boolean accepted) {
         this.accepted = accepted;
         updateStatus();
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public void setDeclined(boolean declined) {
+        this.declined = declined;
     }
 
     public void setDeclined(boolean declined) {

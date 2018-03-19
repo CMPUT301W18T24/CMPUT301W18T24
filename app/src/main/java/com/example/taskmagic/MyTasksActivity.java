@@ -42,7 +42,7 @@ public class MyTasksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_tasks);
 
         db = FirebaseDatabase.getInstance().getReference();
-        fmanager = new FireBaseManager(singleton.getmAuth(), db, getApplicationContext());
+        fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
 
         listener(singleton.getUserId());
 

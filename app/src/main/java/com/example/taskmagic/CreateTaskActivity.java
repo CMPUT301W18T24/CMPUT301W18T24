@@ -82,7 +82,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         thumbnail = findViewById(R.id.thumbnail);
 
         db = FirebaseDatabase.getInstance().getReference();
-        fmanager = new FireBaseManager(singleton.getmAuth(), db, getApplicationContext());
+        fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
 
         /**
          * On press of button, map opens up and allows user to pin point a location

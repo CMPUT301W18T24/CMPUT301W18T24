@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">TaskMagic</string>
-
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="enterAmount">Please enter an amount:</string>
+    <string name="confirm">cconfirm</string>
+    <string name="cancel">cancel</string>
+    <string name="date">date</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -14,6 +14,7 @@ public class User {
     private String password;
     private String phoneNumber;
     private String photoUri;
+    private Photo photo;
 
 
     public User(){
