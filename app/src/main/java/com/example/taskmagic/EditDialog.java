@@ -97,6 +97,11 @@ public class EditDialog extends Dialog {
                     }
                 }
             }
+            Intent intent = new Intent(context, HomeFeed.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivity(intent);
+            //go back to homeFeed
+            //https://stackoverflow.com/questions/14059810/go-back-to-mainactivity-when-ok-pressed-in-alertdialog-in-android
 
         });
 
