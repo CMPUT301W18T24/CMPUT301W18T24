@@ -30,7 +30,7 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
  * Created by hyusuf on 2018-03-08.
  */
 
-public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener {
+public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsList,OnGetAssignedTaskListener {
     private FirebaseAuth mAuth;
     private DatabaseReference database;
     private String taskTag = "task";
@@ -63,6 +63,10 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
 
     }
 
+    @Override
+    public void onSuccess(BidList Bids) {
+
+    }
 
     @Override
     public void onFailure(String message) {
@@ -181,7 +185,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     UserTask task=ds.getValue(UserTask.class);
                     Log.d("get requested", "onDataChange: "+task.getId());
-                    if (task.getRequester().equals(requestor) || task.getStatus().equals("done")|| task.getStatus().equals("assigned")){
+                    if (task.getRequester().equals(requestor)|| task.getStatus().equals("done")|| task.getStatus().equals("assigned")){
                         continue;
                     }
                     else{
@@ -205,6 +209,49 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
                 listener.onSuccess(task);
 
             }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
+    }
+
+   public void getBidsList(final String provider,final OnGetBidsList listener){
+        final BidList bidList = new BidList();
+        database.child(bidTag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    Bid bid=ds.getValue(Bid.class);
+                    if (bid.getProvider().equals(provider)){
+                        bidList.add(bid);
+                    }
+
+                }
+                listener.onSuccess(bidList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
+    }
+    public void getAssignedTasks(final String provider,final OnGetAssignedTaskListener listener){
+        final TaskList taskList = new TaskList();
+        database.child(taskTag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    UserTask task=ds.getValue(UserTask.class);
+                    if (task.getProvider().equals(provider) && task.getStatus().equals("Assigned")){
+                        taskList.add(task);
+                    }
+
+                }
+                listener.onSuccess(taskList);
+            }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 listener.onFailure(databaseError.toString());

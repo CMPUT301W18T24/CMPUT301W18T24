@@ -59,10 +59,9 @@ public class HomeFeed extends AppCompatActivity {
 
             @Override
             public void onFailure(String message) {
-                Log.d("listener", "onFailure: "+message);
+
             }
         });
-
     }
 
     public void updateView(TaskList taskList){
