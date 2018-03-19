@@ -13,7 +13,7 @@
             android:typeface="normal"
             android:textSize="25sp"/>
 
-        <TextView
+        <EditText
             android:id="@+id/editTextUserName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -22,8 +22,8 @@
             android:background="#E0E0E0"
             android:padding="10dp" />
 
-        <TextView
-            android:id="@+id/editTextfName"
+        <EditText
+            android:id="@+id/editTextfullName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -31,7 +31,7 @@
             android:background="#E0E0E0"
             android:padding="10dp" />
 
-        <TextView
+        <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -41,12 +41,29 @@
             android:padding="10dp" />
 
         <EditText
+            android:id="@+id/EditTextpassword"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="#E0E0E0"
-            android:hint="Profile Comments"
+            android:padding="10dp"
+            android:password="true" />
+
+        <EditText
+            android:id="@+id/EditTextphoneNumber"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#E0E0E0"
             android:padding="10dp" />
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="176dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Save" />
 
 </LinearLayout>

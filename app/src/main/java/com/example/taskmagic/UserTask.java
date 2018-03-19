@@ -31,7 +31,9 @@ public class UserTask implements Serializable {
     private String uri;
     private ArrayList<String> photoUris;
 
-    //new UserTask(whatIsID, newTitle, newDescription, taskRequester, defaultStatus, photos, bids);
+    public UserTask(){
+
+    }
 
     public UserTask(String title, String description, String userID, String photo) {
         this.id = "-1";
@@ -107,5 +109,21 @@ public class UserTask implements Serializable {
 
     public boolean allowBidding() {
         return !assigned;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 }

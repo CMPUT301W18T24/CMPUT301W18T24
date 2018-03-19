@@ -3,18 +3,22 @@ package com.example.taskmagic;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.io.Serializable;
+
 /**
  * Created by Yipu on 22/02/2018.
  */
 
-class Bid {
+class Bid implements Serializable {
     private String taskID;
     private boolean accepted;
     private boolean declined;
     private double amount;
     private String provider;
-
+    private String taskTitle;
     private String status;
+
+    public Bid(){}
 
 
     public Bid(String taskID, double amount, String provider) {

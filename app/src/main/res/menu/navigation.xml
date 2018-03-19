@@ -18,7 +18,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:enabled="true"
         android:icon="@drawable/ic_add"
         android:title="Add Task"
-        android:showAsAction="always" />
+        />
     <item
         android:id="@+id/search"
         android:enabled="true"
@@ -31,4 +31,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:icon="@drawable/ic_profile"
         android:title="Profile"
         />
+
+
 </menu>

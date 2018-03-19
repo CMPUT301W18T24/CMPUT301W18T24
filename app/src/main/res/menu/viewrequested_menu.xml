@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/mnu_item_view"
+        android:title="Edit Task"/>
+    <item
+        android:id="@+id/mnu_item_viewbid"
+        android:title="View Bids" />
+    <item
+        android:id="@+id/mnu_item_delete"
+        android:title="Delete Task" />
+</menu>

@@ -1,13 +1,17 @@
 package com.example.taskmagic;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.app.ActionBar;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.view.Gravity;
@@ -30,23 +34,46 @@ public class HomeFeed extends AppCompatActivity {
     private FirebaseAuth auth;
     private RecyclerView.Adapter adapter;
     private RecyclerView recyclerView;
-    private ActionBar actionbar;
     private TextView textview;
-    private LayoutParams layoutparams;
+    private BottomNavigationView mHomeNav;
 
-    private Button addTaskButton;
-    private Button myTasksButton;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homefeed);
-        UserSingleton singleton = UserSingleton.getInstance();
+        final UserSingleton singleton = UserSingleton.getInstance();
         auth = singleton.getmAuth();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        Log.d("homefeed", "onCreate: " + singleton.getmAuth() + db);
-
+        mHomeNav=(BottomNavigationView)findViewById(R.id.home_bottom_navigation);
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         listener(singleton.getUserId());
+        mHomeNav.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.notifications:
+                                startActivity(new Intent(HomeFeed.this, NotificationActivity.class));
+                                return true;
+                            case R.id.map:
+                                startActivity(new Intent(HomeFeed.this, MapsActivity.class));
+                                return true;
+                            case R.id.addTask:
+                                startActivity(new Intent(HomeFeed.this, CreateTaskActivity.class));
+                                return true;
+                            case R.id.search:
+                                startActivity(new Intent(HomeFeed.this, SearchActivity.class));
+                                return true;
+                            case R.id.profile:
+                                startActivity(new Intent(HomeFeed.this, ViewProfileActivity.class));
+                                return true;
+                            default: return false;
+                        }
+                    }
+
+                });
+
     }
 
 
@@ -54,6 +81,7 @@ public class HomeFeed extends AppCompatActivity {
         fmanager.getRequestedTasks(requestor, new OnGetAllTaskReqListener() {
             @Override
             public void onSuccess(TaskList taskList) {
+                Log.d("Succes", "onSuccess: "+taskList.getCount());
                 updateView(taskList);
             }
 

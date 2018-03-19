@@ -23,8 +23,7 @@
         <activity android:name=".MyTasksActivity"></activity>
         <activity android:name=".HomeFeed"
             android:theme="@style/AppTheme"
-            android:label="Home Feed"
-            android:layout_gravity="center"/>
+            android:label="Home Feed" />
         <activity android:name=".ProfileActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar"/>
         <activity android:name=".ViewPhotoActivity" />
@@ -33,7 +32,8 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".EditTaskActivity" />
         <activity android:name=".CreateBidActivity" />
-        <activity android:name=".ViewProfileActivity" />
+        <activity android:name=".ViewProfileActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"

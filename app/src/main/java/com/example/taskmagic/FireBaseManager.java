@@ -38,13 +38,12 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     private String bidTag="bids";
     private Context context;
     private FirebaseAuth.AuthStateListener listener;
-    private static UserTask task;
+
 
     public FireBaseManager(FirebaseAuth user, Context context) {
         this.mAuth = user;
         this.database = FirebaseDatabase.getInstance().getReference();
         this.context = context;
-        this.task=new UserTask();
 
     }
 
@@ -150,12 +149,14 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     //This function asychronously retrieves logged in user Tasks from the Database
     public void getMyTaskData(final String requestor, final onGetMyTaskListener listener) {
         final TaskList taskList = new TaskList();
-        database.child(taskTag).child(requestor).addValueEventListener(new ValueEventListener() {
+        database.child(taskTag).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     UserTask task=ds.getValue(UserTask.class);
-                    taskList.add(task);
+                    if (task.getRequester().equals(requestor)){
+                        taskList.add(task);
+                    }
                 }
                 listener.onSuccess(taskList);
             }

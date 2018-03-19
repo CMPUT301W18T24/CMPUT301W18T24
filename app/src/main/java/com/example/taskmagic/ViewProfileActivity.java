@@ -1,7 +1,10 @@
 package com.example.taskmagic;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.app.Fragment;
@@ -10,8 +13,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,6 +42,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private assigned_frag assignFragment;
     private user_profile_frag userFragment;
     private requested_frag requestFragment;
+    private ImageView image;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +54,17 @@ public class ViewProfileActivity extends AppCompatActivity {
         assignFragment = new assigned_frag();
         userFragment = new user_profile_frag();
         requestFragment = new requested_frag();
+        image=(ImageView)findViewById(R.id.profileImage);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mbuilder= new AlertDialog.Builder(getApplicationContext());
+                View mView=getLayoutInflater().inflate(R.layout.dialog_selectphoto,null);
+            }
+        });
 
         setFragment(userFragment);
+
 
         mProfileNav.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -80,4 +97,5 @@ public class ViewProfileActivity extends AppCompatActivity {
         transaction.replace(R.id.user_fragment_container, fragment);
         transaction.commit();
     }
+
 }
