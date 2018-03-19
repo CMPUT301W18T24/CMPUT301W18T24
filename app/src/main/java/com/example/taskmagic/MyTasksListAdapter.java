@@ -1,6 +1,7 @@
 package com.example.taskmagic;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,21 +19,21 @@ import java.util.List;
 public class MyTasksListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<UserTask> tasksList;
+    private TaskList tasksList;
 
-    public MyTasksListAdapter(Context mContext, List<UserTask> tasksList) {
+    public MyTasksListAdapter(Context mContext, TaskList tasksList) {
         this.mContext = mContext;
         this.tasksList = tasksList;
     }
 
     @Override
     public int getCount() {
-        return tasksList.size();
+        return tasksList.getCount();
     }
 
     @Override
     public Object getItem(int position) {
-        return tasksList.get(position);
+        return tasksList.getTask(position);
     }
 
     @Override
@@ -48,12 +49,12 @@ public class MyTasksListAdapter extends BaseAdapter {
         TextView date = v.findViewById(R.id.date);
         ImageView taskThumb = v.findViewById(R.id.taskThumbnail);
 
-        taskTitle.setText(tasksList.get(position).getTitle());
-        taskRequester.setText(tasksList.get(position).getRequester());
-        date.setText(tasksList.get(position).getDate());
+        taskTitle.setText(tasksList.getTask(position).getTitle());
+        taskRequester.setText(tasksList.getTask(position).getRequester());
+        date.setText(tasksList.getTask(position).getDate());
         //taskThumb.setImageBitmap(tasksList.get(position).getPhoto().getImage());
 
-        v.setTag(tasksList.get(position).getId());
+        v.setTag(tasksList.getTask(position).getId());
 
         return v;
     }

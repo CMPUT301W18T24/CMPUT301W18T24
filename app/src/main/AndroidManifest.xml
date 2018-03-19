@@ -19,11 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".HomeFeed" />
-        <activity android:name=".ProfileActivity" />
         <activity android:name=".MyTasksActivity"></activity>
-=======
         <activity android:name=".HomeFeed"
             android:theme="@style/AppTheme"
             android:label="Home Feed"
@@ -41,7 +37,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
->>>>>>> b54948bd2f8225c4c07a9102a667ea24715c5b72
+        <activity android:name=".CreateTaskActivity"></activity>
     </application>
 
 </manifest>

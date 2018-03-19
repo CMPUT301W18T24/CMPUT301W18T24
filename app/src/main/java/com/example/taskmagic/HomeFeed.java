@@ -34,15 +34,18 @@ public class HomeFeed extends AppCompatActivity {
     private TextView textview;
     private LayoutParams layoutparams;
 
+    private Button addTaskButton;
+    private Button myTasksButton;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homefeed);
-        UserSingleton singleton=UserSingleton.getInstance();
-        auth=singleton.getmAuth();
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+        UserSingleton singleton = UserSingleton.getInstance();
+        auth = singleton.getmAuth();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        Log.d("homefeed", "onCreate: "+singleton.getmAuth()+ db);
-        fmanager=new FireBaseManager(singleton.getmAuth(),getApplicationContext());
+        Log.d("homefeed", "onCreate: " + singleton.getmAuth() + db);
+
+        fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         listener(singleton.getUserId());
     }
 

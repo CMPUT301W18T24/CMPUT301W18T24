@@ -25,7 +25,11 @@ public class UserTask implements Serializable {
     public UserTask(){
 
     }
+
+    //new UserTask(whatIsID, newTitle, newDescription, taskRequester, defaultStatus, photos, bids);
+
     public UserTask(String title, String description, String userID, String photo) {
+        this.id = "-1";
         this.title = title;
         this.description = description;
         this.requester = userID;

@@ -1,6 +1,17 @@
 package com.example.taskmagic;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 import java.io.ByteArrayOutputStream;
 
@@ -18,9 +29,6 @@ public class Photo {
 
     private Bitmap bitmap = null;
     private String photoUri;
-
-
-
     public Photo(Bitmap bitmap) {
         this.bitmap = resizeBitmap(bitmap);
     }
