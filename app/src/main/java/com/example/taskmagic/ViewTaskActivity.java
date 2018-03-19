@@ -1,12 +1,17 @@
 package com.example.taskmagic;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +31,7 @@ public class ViewTaskActivity extends AppCompatActivity {
     private TextView titleText;
     private TextView descriptionText;
     private TextView dateText ;
+    private ImageView photo;
     private Button button;
     private UserTask task;
     private ProgressDialog mProgress;
@@ -43,11 +49,18 @@ public class ViewTaskActivity extends AppCompatActivity {
         mProgress = new ProgressDialog(this);
 
         task = (UserTask) getIntent().getSerializableExtra("task");
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fireworks);
+        Photo image = new Photo(bitmap);
+        task.setPhoto(image);
+
+        Button button_viewLocation = (Button) findViewById(R.id.button_viewLocation);
+
 
         button = (Button) findViewById(R.id.button_viewTask);
         titleText = (TextView) findViewById(R.id.textView_titleContent);
         descriptionText = (TextView) findViewById(R.id.textView_descriptionContent);
         dateText = (TextView) findViewById(R.id.textView_dateContent);
+        photo = (ImageView) findViewById(R.id.imageView1);
 
         if (task.getRequester().equals(singleton.getUserId())) {
             taskOwenr = true;
@@ -66,8 +79,13 @@ public class ViewTaskActivity extends AppCompatActivity {
 
         final EditDialog editDialog = new EditDialog(this, date, task, new EditDialog.onDialogListener() {
             @Override
-            public void onEnsure(String title, String date, String description) {
+            public void onEnsure(String title, String date, String description, Photo image ) {
                 //UPDATE EDITING
+                task.setDate(date);
+                task.setDescription(description);
+                task.setTitle(title);
+                task.setPhoto(image);
+                fmanager.editTask(task);
             }
         });
         initView();
@@ -78,6 +96,7 @@ public class ViewTaskActivity extends AppCompatActivity {
                 if (taskOwenr) {
                     if (task.allowEditing()) {
                         editDialog.show();
+
                     } else {
                         //shows message that you're not allowed to edit this task
                     }
@@ -91,12 +110,23 @@ public class ViewTaskActivity extends AppCompatActivity {
                 }
             }
         });
+
+        button_viewLocation.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+            }
+        });
     }
 
     private void initView() {
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
         dateText.setText(task.getDate());
+        if (task.getPhoto() != null) {
+            photo.setImageBitmap(task.getPhoto().getImage());
+        }
         if (taskOwenr) {
             button.setText("EDIT");
         } else {

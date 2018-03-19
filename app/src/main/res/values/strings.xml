@@ -6,4 +6,5 @@
     <string name="confirm">cconfirm</string>
     <string name="cancel">cancel</string>
     <string name="date">date</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -80,8 +80,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="42dp"
-        android:layout_marginRight="42dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginRight="26dp"
         android:text="@string/cancel" />
 
     <GridLayout
@@ -114,6 +114,11 @@
             android:layout_column="2"
             android:layout_row="0"
             app:srcCompat="@drawable/googleg_standard_color_18" />
+        <Button
+            android:id="@+id/imageAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
     </GridLayout>
 
 </RelativeLayout>

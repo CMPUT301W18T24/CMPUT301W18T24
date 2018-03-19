@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 /**
  * Created by yuandi on 2018-03-11.
  */
@@ -18,7 +20,7 @@ public class EditDialog extends Dialog {
     private UserTask task;
 
     public interface onDialogListener{
-        void onEnsure(String title, String date, String description);
+        void onEnsure(String title, String date, String description, Photo image);
     }
     public EditDialog(@NonNull Context context, String date, UserTask task, onDialogListener listener) {
         super(context);
@@ -61,10 +63,11 @@ public class EditDialog extends Dialog {
                 String title = titleText.getText().toString().trim();
                 String date = dateText.getText().toString().trim();
                 String description = descriptionText.getText().toString().trim();
+                Photo image = task.getPhoto();
 
                 if (checkInput(title, date, description)) {
                     dismiss();
-                    listener.onEnsure(title, date, description);
+                    listener.onEnsure(title, date, description, image);
                 } else {
                     if (title.length() == 0) {
                         titleText.setError("Non empty!");
