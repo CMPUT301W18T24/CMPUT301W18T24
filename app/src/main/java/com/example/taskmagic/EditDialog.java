@@ -20,9 +20,18 @@ public class EditDialog extends Dialog {
     private onDialogListener listener;
     private UserTask task;
 
+    // This interface returns Title, Date, and Description back
     public interface onDialogListener{
         void onEnsure(String title, String date, String description);
     }
+
+    /**
+     * This constructor creates the EditDialogue and sets date and details of Task
+     * @param context
+     * @param date
+     * @param task
+     * @param listener
+     */
     public EditDialog(@NonNull Context context, String date, UserTask task, onDialogListener listener) {
         super(context);
         this.context = context;
@@ -44,6 +53,9 @@ public class EditDialog extends Dialog {
     Button confirmButton;
     Button cancelButton;
 
+    /**
+     * This method sets Title, Date, and Description into EditTexts
+     */
     private void initView(){
         titleText = findViewById(R.id.editText_titleContent);
         titleText.setText(task.getTitle());
@@ -59,6 +71,9 @@ public class EditDialog extends Dialog {
 
     }
 
+    /**
+     * This method calls checkInput to confirm valid inputs; sends an error if user input is invalid
+     */
     private void setListener() {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -92,6 +107,14 @@ public class EditDialog extends Dialog {
             }
         });
     }
+
+    /**
+     * Checks all inputs in respective fields and returns a Boolean
+     * @param title
+     * @param dateString
+     * @param descriptionString
+     * @return
+     */
     private boolean checkInput(String title, String dateString, String descriptionString){
         if (title.length() == 0 || title.length()>20 || !dateString.matches("^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$") || descriptionString.length() == 0){
             return false;

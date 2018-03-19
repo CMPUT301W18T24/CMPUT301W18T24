@@ -36,6 +36,7 @@ import java.io.InputStream;
 import java.util.UUID;
 
 /**
+ * This activity is where information is entered to make a new UserTask.
  * Created by hyusuf on 2018-03-11.
  */
 
@@ -91,7 +92,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         addLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent locationIntent = new Intent(thisActivity, MapActivity.class);
+                Intent locationIntent = new Intent(thisActivity, MapsActivity.class);
                 startActivityForResult(locationIntent, LOCATION_REQUEST);
                 // location is processed in onActivityResult()
             }

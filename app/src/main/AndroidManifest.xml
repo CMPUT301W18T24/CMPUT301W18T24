@@ -29,7 +29,6 @@
         <activity android:name=".ViewPhotoActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".NotificationActivity" />
-        <activity android:name=".MapActivity" />
         <activity android:name=".EditTaskActivity" />
         <activity android:name=".CreateBidActivity" />
         <activity android:name=".ViewProfileActivity"

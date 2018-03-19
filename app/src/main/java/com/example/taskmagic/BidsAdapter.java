@@ -41,7 +41,12 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item,parent,false);
         return  new BidsAdapter.ViewHolder(view);
     }
-    //binds the data to the view
+
+    /**
+     * Binds the data to the view
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final BidsAdapter.ViewHolder holder, final int position) {
         final Bid bid=bidList.getBid(position);
