@@ -80,12 +80,8 @@ public class EditDialog extends Dialog {
                     } else if (description.length() == 0) {
                         descriptionText.setError("Non empty!");
                     }
+                    ((Activity) context).finish();
                 }
-                assigned_frag assigned_frag=new assigned_frag()
-                context.getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.Layout_container, nextFrag,"findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
 
             }
 

@@ -14,21 +14,39 @@ import android.widget.TextView;
  * Created by hyusuf on 2018-03-19.
  */
 
+/**
+ * THis class is used to display The users bids for the view
+ */
 public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
     private BidList bidList;
     private Context context;
     private Bid chosenBid;
+
+    /**
+     * used to get an items position id
+     * @param position
+     * @return
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     * used to get type of item in the position
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(int position) {
         return position;
     }
 
-
+    /**
+     * the bidAdapter constructor
+     * @param bidsList
+     * @param context
+     */
     public BidsAdapter(BidList bidsList, Context context) {
         this.bidList =bidsList;
         this.context = context;
@@ -41,7 +59,13 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item,parent,false);
         return  new BidsAdapter.ViewHolder(view);
     }
-    //binds the data to the view
+
+    /**
+     * binds the data to the view
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final BidsAdapter.ViewHolder holder, final int position) {
         final Bid bid=bidList.getBid(position);
@@ -61,10 +85,10 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            // triggered when edit popup button clicked
+
                             case R.id.mnu_item_viewbid:
                                 break;
-                            // triggered when delete popup button clicked
+
                         }
                         return false;
                     }
@@ -78,8 +102,8 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
     }
 
     /**
-     *  This function returns the number of items in the subscription list
-     * @return ArrayList of subscriptions size
+     *  This function returns the number of items in the Bids list
+     * @return int
      */
     @Override
     public int getItemCount() {

@@ -37,7 +37,10 @@ public class HomeFeed extends AppCompatActivity {
     private TextView textview;
     private BottomNavigationView mHomeNav;
 
-
+    /**
+     * this function sets up the home feed
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homefeed);
@@ -76,7 +79,10 @@ public class HomeFeed extends AppCompatActivity {
 
     }
 
-
+    /**
+     * this function listens to any changes to the datatbase and retrieves the info
+     * @param requestor
+     */
     private void listener(final String requestor) {
         fmanager.getRequestedTasks(requestor, new OnGetAllTaskReqListener() {
             @Override
@@ -92,10 +98,15 @@ public class HomeFeed extends AppCompatActivity {
         });
     }
 
+    /**
+     * this function updates the recyclerview
+     * @param taskList
+     */
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter=new HomeFeedAdapter(taskList,getApplicationContext());
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
