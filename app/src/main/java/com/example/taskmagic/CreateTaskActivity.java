@@ -91,7 +91,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         addLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent locationIntent = new Intent(thisActivity, MapActivity.class);
+                Intent locationIntent = new Intent(thisActivity, MapsActivity.class);
                 startActivityForResult(locationIntent, LOCATION_REQUEST);
                 // location is processed in onActivityResult()
             }
