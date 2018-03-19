@@ -39,11 +39,11 @@ public class HomeFeed extends AppCompatActivity {
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         Log.d("homefeed", "onCreate: "+singleton.getmAuth()+ db);
-        UserTask task=new UserTask("my computer","I need someone to fix it for me",auth.getUid());
-        task.setId("-L7R_ajmSNl1Gf0j4r_7");
         fmanager=new FireBaseManager(singleton.getmAuth(),getApplicationContext());
+        task.setProvider(singleton.getUserId());
         //fmanager.addTask(task);
         listener(singleton.getUserId());
+
 
 
 
@@ -59,10 +59,9 @@ public class HomeFeed extends AppCompatActivity {
 
             @Override
             public void onFailure(String message) {
-                Log.d("listener", "onFailure: "+message);
+
             }
         });
-
     }
 
     public void updateView(TaskList taskList){

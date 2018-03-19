@@ -17,6 +17,7 @@ public class UserTask implements Serializable {
     private String requester;
     private String provider;
     private Location location;
+    private String uri;
     private ArrayList<String> photoUris;
 
     public UserTask(){
@@ -62,10 +63,12 @@ public class UserTask implements Serializable {
         }
     }
 
-    public UserTask(String title, String description, String userid) {
+    public UserTask(String title, String description, String userid,String photo) {
         this.title = title;
         this.description = description;
         this.requester=userid;
+        this.uri=photo;
+        this.provider=null;
     }
 
     public String getDescription() {
