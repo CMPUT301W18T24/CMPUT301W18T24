@@ -3,6 +3,7 @@ package com.example.taskmagic;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -97,9 +98,9 @@ public class EditDialog extends Dialog {
                     }
                 }
             }
-            Intent intent = new Intent(context, HomeFeed.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            context.startActivity(intent);
+            //Intent intent = new Intent(context, HomeFeed.class);
+            //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //context.;
             //go back to homeFeed
             //https://stackoverflow.com/questions/14059810/go-back-to-mainactivity-when-ok-pressed-in-alertdialog-in-android
 

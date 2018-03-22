@@ -48,7 +48,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         mProgress = new ProgressDialog(this);
 
-        task = (UserTask) getIntent().getSerializableExtra("Task");
+        task = (UserTask) getIntent().getSerializableExtra("UserTask");
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fireworks);
 
         Button button_viewLocation = (Button) findViewById(R.id.button_viewLocation);
