@@ -86,7 +86,7 @@ public class RequestedTaskAdapter extends RecyclerView.Adapter<RequestedTaskAdap
                             case R.id.mnu_item_edit:
                                 chosenTask= taskList.getTask(position);
                                 Intent myIntent = new Intent(context, ViewTaskActivity.class);
-                                myIntent.putExtra("UserTask",chosenTask);
+                                myIntent.putExtra("task",chosenTask);
                                 context.startActivity(myIntent);
                                 break;
                             // triggered when delete popup button clicked
