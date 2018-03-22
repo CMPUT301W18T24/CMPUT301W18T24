@@ -30,6 +30,11 @@ public class assigned_frag extends Fragment {
         listener(singleton.getUserId());
         return view;
     }
+
+    /**
+     * Updates the ListView; selects which TaskList to display
+     * @param requestor
+     */
     private void listener(final String requestor) {
         fmanager.getAssignedTasks(requestor, new OnGetAssignedTaskListener() {
             @Override
@@ -45,6 +50,10 @@ public class assigned_frag extends Fragment {
         });
     }
 
+    /**
+     * Sets the list on the Adapter to specified TaskList
+     * @param taskList
+     */
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter=new AssignedTaskAdapter(taskList,getActivity());

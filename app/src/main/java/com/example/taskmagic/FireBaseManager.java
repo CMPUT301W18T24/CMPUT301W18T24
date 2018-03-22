@@ -39,7 +39,11 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     private Context context;
     private FirebaseAuth.AuthStateListener listener;
 
-
+    /**
+     * Constructor creates a manager that handles upload and download to database
+     * @param user
+     * @param context
+     */
     public FireBaseManager(FirebaseAuth user, Context context) {
         this.mAuth = user;
         this.database = FirebaseDatabase.getInstance().getReference();
@@ -49,7 +53,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
 
     @Override
     public void onSuccess(TaskList taskList) {
-
+        taskList=new TaskList();
     }
 
     @Override
@@ -73,9 +77,10 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     }
 
 
+
+
     /**
-     * this function adds a Task to FireBase Database for the who is logged in
-     *
+     * successfully adds a Task to FireBase Database under user login
      * @param task
      */
     public void addTask(UserTask task) {
@@ -96,7 +101,6 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     }
 
     /**
-     * This function is used to edit a task the database
      * @param task
      */
     public void editTask(UserTask task){
@@ -115,6 +119,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
 
     /**
      * This function is used to remove a task from the database
+     * successfully removes a Task to FireBase Database under user login
      * @param taskId
      */
     public void removeTask(String taskId){
@@ -146,7 +151,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     }
 
     /**
-     * this function retrieves userinfo from database
+     * retrieves user info from database
      * @param userid
      * @param listener
      */
@@ -165,20 +170,22 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
         });
     }
 
-
     /**
      * This function asychronously retrieves logged in user Tasks from the Database
      * @param requestor
      * @param listener
      */
     public void getMyTaskData(final String requestor, final onGetMyTaskListener listener) {
-        final TaskList taskList = new TaskList();
         database.child(taskTag).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                TaskList taskList = new TaskList();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     UserTask task=ds.getValue(UserTask.class);
-                    if (task.getRequester().equals(requestor)){
+                    if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned")||task.getStatus().equals("Done"))){
+                        continue;
+                    }
+                    else if(task.getRequester().equals(requestor) && task.getStatus().equals("Requested")){
                         taskList.add(task);
                     }
                 }
@@ -196,6 +203,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
      * this function successfully adds a bid to the database
      * @param bid
      */
+
     public void addBid(final Bid bid){
         database.child(bidTag).child(bid.getTaskID()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -213,10 +221,10 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
      * @param listener
      */
     public void getRequestedTasks(final String requestor,final OnGetAllTaskReqListener listener){
-        final TaskList taskList = new TaskList();
         database.child(taskTag).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                TaskList taskList = new TaskList();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     UserTask task=ds.getValue(UserTask.class);
                     Log.d("get requested", "onDataChange: "+task.getId());
@@ -227,6 +235,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
                         taskList.add(task);
                     }
                 }
+                Log.d("List Created", "yoo");
                 listener.onSuccess(taskList);
             }
 

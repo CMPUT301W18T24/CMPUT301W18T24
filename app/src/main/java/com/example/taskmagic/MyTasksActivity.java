@@ -21,6 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+/**
+ * This activity is used to display the current user's requested tasks.
+ */
 public class MyTasksActivity extends AppCompatActivity {
 
     private FireBaseManager fmanager;
@@ -62,6 +65,10 @@ public class MyTasksActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method listens for changes in database results; this is used to filter user's own tasks
+     * @param requester -> the unique ID of the current user
+     */
     private void listener(final String requester) {
         fmanager.getMyTaskData(requester, new onGetMyTaskListener() {
             @Override

@@ -29,6 +29,11 @@ public class bids_frag extends Fragment {
         listener(singleton.getUserId());
         return view;
     }
+
+    /**
+     * Updates the listView to display the User's BidList
+     * @param requestor
+     */
     private void listener(final String requestor) {
         fmanager.getBidsList(requestor, new OnGetBidsList() {
             @Override
@@ -44,6 +49,10 @@ public class bids_frag extends Fragment {
         });
     }
 
+    /**
+     * Sets the list in the adapter to specified BidList
+     * @param bidList
+     */
     public void updateView(BidList bidList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter=new BidsAdapter(bidList,getActivity());

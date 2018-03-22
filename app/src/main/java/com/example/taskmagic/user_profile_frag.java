@@ -11,6 +11,7 @@ package com.example.taskmagic;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.widget.Button;
     import android.widget.EditText;
     import android.widget.ImageView;
 
@@ -22,7 +23,8 @@ public class user_profile_frag extends Fragment {
         private EditText phoneNumber;
         private FireBaseManager fmanager;
         private ImageView imageView;
-
+        private Button save;
+        private String userid;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -36,12 +38,23 @@ public class user_profile_frag extends Fragment {
         phoneNumber=(EditText)view.findViewById(R.id.EditTextphoneNumber);
         password=(EditText)view.findViewById(R.id.EditTextpassword);
         userName=(EditText)view.findViewById(R.id.editTextUserName);
+        save=(Button)view.findViewById(R.id.buttonSave);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user=new User(fullName.getText().toString(),emailAddress.getText().toString(),
+                        userName.getText().toString(),password.getText().toString(),phoneNumber.getText().toString());
+                user.setId(userid);
+                fmanager.saveProfile(user);
+            }
+        });
         return view;
     }
     private void listener(final String requestor) {
         fmanager.getUserInfo(requestor, new OnGetUserInfoListener() {
             @Override
             public void onSuccess(User user) {
+                userid=user.getId();
                 fullName.setText(user.getFullName());
                 emailAddress.setText(user.getEmailAddress());
                 phoneNumber.setText(user.getPhoneNumber());

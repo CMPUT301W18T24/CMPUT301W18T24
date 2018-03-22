@@ -13,15 +13,21 @@ class Bid implements Serializable {
     private String taskID;
     private boolean accepted;
     private boolean declined;
-    private double amount;
+    private float amount;
     private String provider;
+    private String requestor;
     private String taskTitle;
     private String status;
 
     public Bid(){}
 
-
-    public Bid(String taskID, double amount, String provider) {
+    /**
+     * Constructor of Bid
+     * @param taskID
+     * @param amount
+     * @param provider
+     */
+    public Bid(String taskID, float amount, String provider) {
         this.taskID = taskID;
         this.amount = amount;
         this.provider = provider;
@@ -30,18 +36,32 @@ class Bid implements Serializable {
         this.status = "Processing";
     }
 
-
-
+    /**
+     * Returns the Id of the Task that current Bid belongs to
+     * @return Id String of Task
+     */
     public String getTaskID() {
         return taskID;
     }
 
+    /**
+     * Changes the Task that the Bid is associated to
+     * @param taskID
+     */
     public void setTaskID(String taskID) {
         this.taskID = taskID;
     }
 
+    /**
+     * Changes the amount of the Bid
+     * @param amount
+     */
     public void setAmount(float amount) { this.amount = amount; }
 
+    /**
+     * returns status: accepted/declined
+     * @return Boolean
+     */
     public boolean isAccepted() {
         return accepted;
     }
@@ -67,18 +87,31 @@ class Bid implements Serializable {
         updateStatus();
     } */
 
+    /**
+     * Returns the Id String if the Bidder
+     * @return Id String of provider
+     */
     public String getProvider() {
         return provider;
     }
 
+    /**
+     * Returns the amount of the Bid
+     * @return String
+     */
     public double getAmount() {
         return amount;
     }
 
+    /**
+     * Changes the associated provider
+     * @param provider
+     */
     public void setProvider(String provider) {
         this.provider = provider;
     }
 
+/*
     private void updateStatus() {
         if (accepted && !declined) {
             this.status = "Accepted";
@@ -87,19 +120,49 @@ class Bid implements Serializable {
         } else if (accepted && declined) {
             Log.d("Status Error", "Double status.");
         }
-    }
+    }*/
 
+    /**
+     * Takes a String and changes the status of current Bid into the String
+     * @param status
+     */
     public void setBidStatus(String status) {
         this.status = status;
     }
 
+    /**
+     * @see
+     * @return status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Changes status of Bid to be Accepted
+     */
     public void acceptBid() {
         this.accepted = true;
         setBidStatus("Accepted");
     }
 
+    public String getRequestor() {
+        return requestor;
+    }
+
+    public void setRequestor(String requestor) {
+        this.requestor = requestor;
+    }
+
+
+    public String getTaskTitle() {
+        return taskTitle;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public void setTaskTitle(String title){
+        this.taskTitle=title;
+    }
 }

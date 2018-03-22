@@ -35,6 +35,13 @@ public class UserTask implements Serializable {
 
     }
 
+    /**
+     * Constructor creates a new UserTask object using parameters
+     * @param title
+     * @param description
+     * @param userID
+     * @param photo
+     */
     public UserTask(String title, String description, String userID, String photo) {
         this.id = "-1";
         this.title = title;
@@ -47,82 +54,162 @@ public class UserTask implements Serializable {
         this.date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
     }
 
+    /**
+     * This setter takes a String and changes date of this UserTask to the String
+     * @param date
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     * @see setDescription()
+     * @return description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * @see setStatus()
+     * @return
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Takes a String and sets the status of this UserTask to the String
+     * @param status
+     */
     public void setStatus(String status) {
         this.status = status;
     }
 
+    /**
+     * @see setTitle()
+     * @return
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Takes a string and sets the title of this UserTask to this String
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+    * Takes a String and changes the description of this UserTask to the String
+    * @param description
+     **/
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * @see setRequester()
+     * @return
+     */
     public String getRequester() {
         return requester;
     }
 
+    /**
+     * @see setPhotoUriString()
+     * @return
+     */
     public String getPhotoUriString() {
         return photoUriString;
     }
 
+    /**
+     * Takes a string and sets the photoUriString of this UserTask to the String
+     * @param photoUri
+     */
     public void setPhotoUriString(String photoUri) {
         this.photoUriString = photoUri;
     }
 
+    /**
+     * Takes a string and sets the requester of this UserTask to the String
+     * @param requester
+     */
     public void setRequester(String requester) {
         this.requester = requester;
     }
 
+    /**
+     * @see setId()
+     * @return
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Takes a string and sets the id of this UserTask to the String
+     * @param id
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * @see setDate()
+     * @return
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * Returns a Boolean: determines if UserTask is editable
+     * @return
+     */
     public boolean allowEditing() {
         return (!bidded & !assigned);
     }
 
+    /**
+     * Returns a Boolean: determines if UserTask is biddable
+     * @return
+     */
     public boolean allowBidding() {
         return !assigned;
     }
 
+    /**
+     * Takes a string and sets the provider of this UserTask to the String
+     * @param provider
+     */
     public void setProvider(String provider) {
         this.provider = provider;
     }
 
+    /**
+     * @see setProvider()
+     * @return
+     */
     public String getProvider() {
         return provider;
     }
 
+    /**
+     * Takes a Location and sets the Location of this UserTask to the Location
+     * @param location
+     */
     public void setLocation(Location location) {
         this.location = location;
     }
 
+    /**
+     * @see setLocation()
+     * @return
+     */
     public Location getLocation() {
         return location;
     }

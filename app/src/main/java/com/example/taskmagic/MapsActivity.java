@@ -94,16 +94,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // LatLng sydney = new LatLng(-34, 151);
         //mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        //mGoogleApiClient = new GoogleApiClient.Builder(this)
-        //      .enableAutoManage(this /* FragmentActivity */,
-        //        this /* OnConnectionFailedListener */)
-              /*  .addApi(LocationServices.API)
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+              .enableAutoManage(this /* FragmentActivity */,
+                this /* OnConnectionFailedListener */)
+                .addApi(LocationServices.API)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-        mGoogleApiClient.connect();*/
+        mGoogleApiClient.connect();
 
     }
 

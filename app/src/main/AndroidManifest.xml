@@ -29,7 +29,6 @@
         <activity android:name=".ViewPhotoActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".NotificationActivity" />
-        <activity android:name=".MapActivity" />
         <activity android:name=".EditTaskActivity" />
         <activity android:name=".CreateBidActivity" />
         <activity android:name=".ViewProfileActivity"
@@ -49,8 +48,8 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDxq3t4XT23u4i_EUtlQrCWmtHdm_9vknA" />
 
         <activity
             android:name=".MapsActivity"
@@ -62,10 +61,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <permission
-        android:name="com.example.wuyuandi.myapplication.permission.MAPS_RECEIVE"
+        android:name="com.example.taskmagic.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.wuyuandi.myapplication.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.example.taskmagic.permission.MAPS_RECEIVE" />
     <uses-permission android:name="com.google.android.providers.gsf.permissions.READ_GSERVICES" />
 
     <uses-feature
