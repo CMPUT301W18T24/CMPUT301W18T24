@@ -1,0 +1,26 @@
+
+Unit tests
+XML overhaul
+_______________
+assign task
+complete task
+rating *
+_______________
+notification
+offline activity
+_______________
+search
+messaging
+_______________
+fix add bid (for multiple bids)
+task date
+bid list on task details
+links to user profiles
+task status
+delete task
+adding multiple photos
+location
+_______________
+onItemClick instead of menu button
+
+
