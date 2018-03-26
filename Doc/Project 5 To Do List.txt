@@ -1,26 +1,26 @@
 
-Unit tests
+Unit tests	-fanjie
 XML overhaul
 _______________
-assign task
+assign task  	-Steven
 complete task
 rating *
 _______________
-notification
+notification	-Hamdi
 offline activity
+Messaging
 _______________
-search
-messaging
+search		
+__________________________________
+fix add bid (for multiple bids)		-Harrold
+task date				-Paul
+bid list on task details		-Paul
+links to user profiles			-Paul
+task status				-Harrold
+delete task				-Randy
+adding multiple photos			-Harrold
+location				-Randy
 _______________
-fix add bid (for multiple bids)
-task date
-bid list on task details
-links to user profiles
-task status
-delete task
-adding multiple photos
-location
-_______________
-onItemClick instead of menu button
+onItemClick instead of menu button	-Harrold
 
 
