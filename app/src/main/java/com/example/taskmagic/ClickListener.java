@@ -9,6 +9,10 @@ package com.example.taskmagic;
 
 import android.view.View;
 
+/**
+ * Created by harrold on 03/27/2018.
+ * https://medium.com/@harivigneshjayapalan/android-recyclerview-implementing-single-item-click-and-long-press-part-ii-b43ef8cb6ad8
+ */
 public interface ClickListener {
     public void onClick(View view, int position);
 }

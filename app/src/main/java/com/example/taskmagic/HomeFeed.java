@@ -79,6 +79,7 @@ public class HomeFeed extends AppCompatActivity {
 
                 });
 
+        //https://medium.com/@harivigneshjayapalan/android-recyclerview-implementing-single-item-click-and-long-press-part-ii-b43ef8cb6ad8
         recyclerView.addOnItemTouchListener(new FeedItemTouchListener(this, recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {

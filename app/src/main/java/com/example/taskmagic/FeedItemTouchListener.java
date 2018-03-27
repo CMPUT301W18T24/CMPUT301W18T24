@@ -14,7 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by Chiia on 3/27/2018.
+ * Created by harrold on 3/27/2018.
+ * https://medium.com/@harivigneshjayapalan/android-recyclerview-implementing-single-item-click-and-long-press-part-ii-b43ef8cb6ad8
  */
 
 public class FeedItemTouchListener implements RecyclerView.OnItemTouchListener {
