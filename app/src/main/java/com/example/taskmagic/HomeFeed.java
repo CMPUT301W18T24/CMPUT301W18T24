@@ -37,6 +37,7 @@ public class HomeFeed extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView textview;
     private BottomNavigationView mHomeNav;
+    private TaskList listUserTask;
 
     /**
      * this function sets up the home feed
@@ -78,6 +79,17 @@ public class HomeFeed extends AppCompatActivity {
 
                 });
 
+        recyclerView.addOnItemTouchListener(new FeedItemTouchListener(this, recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Log.d("click: ", "clicked" + position);
+                UserTask chosenTask= listUserTask.getTask(position);
+                Intent myIntent = new Intent(HomeFeed.this, ViewTaskActivity.class);
+                myIntent.putExtra("UserTask",chosenTask);
+                startActivity(myIntent);
+            }
+        }));
+
     }
 
     /**
@@ -91,6 +103,7 @@ public class HomeFeed extends AppCompatActivity {
                 Log.d("Succes", "onSuccess: "+taskList.getCount());
                 TaskList list=new TaskList();
                 list=taskList;
+                listUserTask = taskList;
                 updateView(taskList);
             }
 

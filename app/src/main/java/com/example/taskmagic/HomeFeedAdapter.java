@@ -86,29 +86,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
 
             }
         });
-
-        // This will open up task details on click of taskTitle
-        holder.textTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chosenTask= taskList.getTask(position);
-                Intent detailsIntent = new Intent(context, ViewTaskActivity.class);
-                detailsIntent.putExtra("UserTask", chosenTask);
-                context.startActivity(detailsIntent);
-            }
-        });
-
-        // This will open up task details on click of taskTitle
-        holder.textStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chosenTask= taskList.getTask(position);
-                Intent detailsIntent = new Intent(context, ViewTaskActivity.class);
-                detailsIntent.putExtra("UserTask", chosenTask);
-                context.startActivity(detailsIntent);
-            }
-        });
-
     }
 
     /**
