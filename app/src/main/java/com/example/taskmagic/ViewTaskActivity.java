@@ -89,7 +89,7 @@ public class ViewTaskActivity extends AppCompatActivity {
                 task.setDescription(description);
                 task.setTitle(title);
                 //task.setPhoto(image);
-                fmanager.editTask(task);
+                editTask(task);
                 finish();
             }
         });
@@ -102,15 +102,18 @@ public class ViewTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (taskOwenr) {
                     if (task.allowEditing()) {
+                        task.setEditing(true);
                         editDialog.show();
-
+                        task.setEditing(false);
                     } else {
                         //shows message that you're not allowed to edit this task
                     }
 
                 } else {
                     if (task.allowBidding()) {
+                        task.setBidding(true);
                         bidDialog.show();
+                        task.setBidding(false);
                     } else {
                         //shows message that the task is done or assigned.
                     }
@@ -156,8 +159,56 @@ public class ViewTaskActivity extends AppCompatActivity {
     private void bidOnTask(Bid bid) {
         mProgress.setMessage("Adding");
         mProgress.show();
-        fmanager.addBid(bid);
+        fmanager.getTaskInfo(bid.getTaskID(), new OnGetATaskListener() {
+            @Override
+            public void onSuccess(UserTask t) {
+                UserTask task = t;
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+        if (task.allowBidding()) {
+            fmanager.addBid(bid);
+            task.setBidded(true);
+        } else {
+            mProgress.dismiss();
+            mProgress.setMessage("Sorry, you cannot bid on this task at the moment. Try again later.");
+            mProgress.show();
+        }
         mProgress.dismiss();
         finish();
     }
+
+    /**
+     * Allows user to edit a task
+     * @param task
+     */
+    private void editTask(UserTask task) {
+        mProgress.setMessage("Saving change");
+        mProgress.show();
+        fmanager.getTaskInfo(task.getId(), new OnGetATaskListener() {
+            @Override
+            public void onSuccess(UserTask t) {
+                UserTask task = t;
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+        if (task.allowEditing()) {
+            fmanager.editTask(task);
+        } else {
+            mProgress.dismiss();
+            mProgress.setMessage("Sorry, you cannot edit this task at the moment. Try again later.");
+            mProgress.show();
+        }
+        mProgress.dismiss();
+        finish();
+    }
+
 }

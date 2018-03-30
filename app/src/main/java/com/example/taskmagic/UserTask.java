@@ -29,7 +29,9 @@ public class UserTask implements Serializable {
     private String provider;
     private Location location;
     private String uri;
+    private boolean editing = false;
     private ArrayList<String> photoUris;
+    private boolean bidding = false;
 
     public UserTask(){
 
@@ -171,7 +173,7 @@ public class UserTask implements Serializable {
      * @return
      */
     public boolean allowEditing() {
-        return (!bidded & !assigned);
+        return (!bidded && !assigned && !bidding);
     }
 
     /**
@@ -179,7 +181,7 @@ public class UserTask implements Serializable {
      * @return
      */
     public boolean allowBidding() {
-        return !assigned;
+        return !assigned && !editing;
     }
 
     /**
@@ -212,5 +214,37 @@ public class UserTask implements Serializable {
      */
     public Location getLocation() {
         return location;
+    }
+
+    /**
+     * Takes a boolean and sets the bidded of this UserTask to the bidded
+     * @param bidded
+     */
+    public void setBidded(Boolean bidded) {
+        this.bidded = bidded;
+    }
+
+    /**
+     * Takes a boolean and sets the assigned of this UserTask to the assigned
+     * @param assigned
+     */
+    public void setAssigned(Boolean assigned) {
+        this.assigned = assigned;
+    }
+
+    /**
+     * Takes a boolean and sets the editing of this UserTask to the editing
+     * @param editing
+     */
+    public void setEditing(boolean editing) {
+        this.editing = editing;
+    }
+
+    /**
+     * Takes a boolean and sets the bidding of this UserTask to the bidding
+     * @param bidding
+     */
+    public void setBidding(boolean bidding) {
+        this.bidding = bidding;
     }
 }

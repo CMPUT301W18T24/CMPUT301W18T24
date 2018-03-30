@@ -1,26 +1,17 @@
 package com.example.taskmagic;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -30,30 +21,27 @@ import com.google.firebase.database.DatabaseReference;
  */
 
 public class ViewProfileActivity extends AppCompatActivity {
-
     private UserTask task;
     private FireBaseManager fmanager;
     private DatabaseReference db;
     private FirebaseAuth auth;
-
     private BottomNavigationView mProfileNav;
     private FrameLayout mProfileFrame;
-    private bids_frag bidFragment;
+    private Bid_frag bidFragment;
     private assigned_frag assignFragment;
-    private user_profile_frag userFragment;
-    private requested_frag requestFragment;
+    private User_profile_frag userFragment;
+    private Requested_frag requestFragment;
     private ImageView image;
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_profile);
         mProfileNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         mProfileFrame = (FrameLayout) findViewById(R.id.user_fragment_container);
-        bidFragment = new bids_frag();
+        bidFragment = new Bid_frag();
         assignFragment = new assigned_frag();
-        userFragment = new user_profile_frag();
-        requestFragment = new requested_frag();
+        userFragment = new User_profile_frag();
+        requestFragment = new Requested_frag();
         image=(ImageView)findViewById(R.id.profileImage);
         image.setOnClickListener(new View.OnClickListener() {
             @Override

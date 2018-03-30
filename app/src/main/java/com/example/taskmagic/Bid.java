@@ -19,8 +19,6 @@ class Bid implements Serializable {
     private String taskTitle;
     private String status;
 
-    public Bid(){}
-
     /**
      * Constructor of Bid
      * @param taskID
@@ -53,6 +51,14 @@ class Bid implements Serializable {
     }
 
     /**
+     * Returns the amount of the Bid
+     * @return String
+     */
+    public double getAmount() {
+        return amount;
+    }
+
+    /**
      * Changes the amount of the Bid
      * @param amount
      */
@@ -65,62 +71,11 @@ class Bid implements Serializable {
     public boolean isAccepted() {
         return accepted;
     }
+
     public boolean isDeclined(){
         return declined;
 
     }
-
- /*   public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
-        updateStatus();
-
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
-    }
-
-    public void setDeclined(boolean declined) {
-        this.declined = declined;
-    }
-
-    public void setDeclined(boolean declined) {
-        this.declined = declined;
-        updateStatus();
-    } */
-
-    /**
-     * Returns the Id String if the Bidder
-     * @return Id String of provider
-     */
-    public String getProvider() {
-        return provider;
-    }
-
-    /**
-     * Returns the amount of the Bid
-     * @return String
-     */
-    public double getAmount() {
-        return amount;
-    }
-
-    /**
-     * Changes the associated provider
-     * @param provider
-     */
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
-
-/*
-    private void updateStatus() {
-        if (accepted && !declined) {
-            this.status = "Accepted";
-        } else if (!accepted && declined) {
-            this.status = "Declined";
-        } else if (accepted && declined) {
-            Log.d("Status Error", "Double status.");
-        }
-    }*/
 
     /**
      * Takes a String and changes the status of current Bid into the String
@@ -146,14 +101,17 @@ class Bid implements Serializable {
         setBidStatus("Accepted");
     }
 
-    public String getRequestor() {
-        return requestor;
-    }
-
     public void setRequestor(String requestor) {
         this.requestor = requestor;
     }
 
+    public String getRequestor() {
+        return requestor;
+    }
+
+    public void setTaskTitle(String title){
+        this.taskTitle=title;
+    }
 
     public String getTaskTitle() {
         return taskTitle;
@@ -162,7 +120,51 @@ class Bid implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-    public void setTaskTitle(String title){
-        this.taskTitle=title;
+
+    /**
+     * Returns the Id String if the Bidder
+     * @return Id String of provider
+     */
+    public String getProvider() {
+        return provider;
     }
+
+    /**
+     * Changes the associated provider
+     * @param provider
+     */
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+ /*   public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+        updateStatus();
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public void setDeclined(boolean declined) {
+        this.declined = declined;
+    }
+
+    public void setDeclined(boolean declined) {
+        this.declined = declined;
+        updateStatus();
+    } */
+
+
+/*
+    private void updateStatus() {
+        if (accepted && !declined) {
+            this.status = "Accepted";
+        } else if (!accepted && declined) {
+            this.status = "Declined";
+        } else if (accepted && declined) {
+            Log.d("Status Error", "Double status.");
+        }
+    }*/
+
+
 }

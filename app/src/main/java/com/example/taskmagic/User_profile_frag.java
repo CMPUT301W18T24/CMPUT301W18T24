@@ -15,7 +15,7 @@ package com.example.taskmagic;
     import android.widget.EditText;
     import android.widget.ImageView;
 
-public class user_profile_frag extends Fragment {
+public class User_profile_frag extends Fragment {
         private EditText fullName;
         private EditText userName;
         private EditText emailAddress;

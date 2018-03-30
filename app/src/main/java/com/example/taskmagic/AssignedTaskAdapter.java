@@ -36,8 +36,6 @@ public class AssignedTaskAdapter extends RecyclerView.Adapter<AssignedTaskAdapte
         this.context = context;
     }
 
-
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item,parent,false);

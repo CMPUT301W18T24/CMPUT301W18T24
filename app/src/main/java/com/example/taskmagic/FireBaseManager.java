@@ -1,36 +1,23 @@
 package com.example.taskmagic;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.*;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.ArrayList;
-import java.util.concurrent.Executor;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by hyusuf on 2018-03-08.
  */
 
-public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsList,OnGetAssignedTaskListener {
+public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsList,OnGetAssignedTaskListener {
     private FirebaseAuth mAuth;
     private DatabaseReference database;
     private String taskTag = "task";
@@ -75,9 +62,6 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     public void onFailure(String message) {
 
     }
-
-
-
 
     /**
      * successfully adds a Task to FireBase Database under user login
@@ -175,7 +159,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
      * @param requestor
      * @param listener
      */
-    public void getMyTaskData(final String requestor, final onGetMyTaskListener listener) {
+    public void getMyTaskData(final String requestor, final OnGetMyTaskListener listener) {
         database.child(taskTag).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -320,7 +304,25 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
         });
     }
 
+    public void getBidsListOnTask(final String provider,final OnGetBidsList listener){
+        final BidList bidList = new BidList();
+        database.child(bidTag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    Bid bid=ds.getValue(Bid.class);
+                    if (bid.getProvider().equals(provider)){
+                        bidList.add(bid);
+                    }
 
+                }
+                listener.onSuccess(bidList);
+            }
 
-
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
+    }
 }
