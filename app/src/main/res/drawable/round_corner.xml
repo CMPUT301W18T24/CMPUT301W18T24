@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+  ~ You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+  ~ You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+  ~
+  -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#000" />
+    <stroke
+        android:width="0dip"
+        android:color="#FFFF" />
+    <corners android:radius="10dip" />
+    <padding
+        android:bottom="0dip"
+        android:left="0dip"
+        android:right="0dip"
+        android:top="0dip" />
+</shape>

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class User {
     private String id;
+    private String token;
     private String fullName;
     private String emailAddress;
     private String userName;
@@ -91,5 +92,11 @@ public class User {
         return id;
     }
 
+    public String getToken() {
+        return token;
+    }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

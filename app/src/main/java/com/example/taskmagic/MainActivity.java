@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class MainActivity extends AppCompatActivity {
     private EditText mEmail;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     singleton.setAuth(mAuth);
                     startActivity(new Intent(getApplicationContext(),HomeFeed.class));
                     Log.d("Main", "onAuthStateChanged: "+singleton.getmAuth());
+                    init();
                 }
             }
         };
@@ -61,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email=mEmail.getText().toString();
-                password=mPassword.getText().toString();
+                email=mEmail.getText().toString().trim();
+                password=mPassword.getText().toString().trim();
                 login(email,password);
             }
         });
@@ -76,6 +79,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    private void init(){
+        String token= FirebaseInstanceId.getInstance().getToken();
+        Log.d("MainActivity", "init: "+token);
+        sendRegistrationToServer(token);
+    }
+
+    private void sendRegistrationToServer(String Token){
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
+        UserSingleton singleton= UserSingleton.getInstance();
+        reference.child("users").child(singleton.getUserId()).child("token").setValue(Token);
+    }
+
 
     @Override
     protected void onStart() {
@@ -104,6 +119,11 @@ public class MainActivity extends AppCompatActivity {
                     progress.dismiss();
                     Toast.makeText(getApplicationContext(),"Login Error",Toast.LENGTH_LONG).show();
                 }
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Activity", "onFailure: "+e.getMessage());
             }
         });
 

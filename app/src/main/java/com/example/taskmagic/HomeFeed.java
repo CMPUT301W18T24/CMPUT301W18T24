@@ -1,5 +1,6 @@
 package com.example.taskmagic;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
 import android.app.ActionBar;
@@ -37,7 +38,7 @@ public class HomeFeed extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView textview;
     private BottomNavigationView mHomeNav;
-
+    public static Boolean isActivity;
     /**
      * this function sets up the home feed
      * @param savedInstanceState
@@ -101,6 +102,12 @@ public class HomeFeed extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isActivity=false;
+    }
+
     /**
      * this function updates the recyclerview
      * @param taskList
@@ -115,6 +122,7 @@ public class HomeFeed extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        isActivity=true;
 
     }
 
@@ -123,4 +131,5 @@ public class HomeFeed extends AppCompatActivity {
         super.onResume();
 
     }
+
 }

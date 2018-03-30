@@ -71,6 +71,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
                                 chosenTask= taskList.getTask(position);
                                 Intent myIntent = new Intent(context, ViewTaskActivity.class);
                                 myIntent.putExtra("UserTask",chosenTask);
+                                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(myIntent);
                                 break;
                             // triggered when delete popup button clicked
