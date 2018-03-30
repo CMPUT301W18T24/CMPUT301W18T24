@@ -23,4 +23,7 @@ location				-Randy
 _______________
 onItemClick instead of menu button	-Harrold
 
-
+29-mar-2018
+edit Bid.java (reqUsername, taskTitle, status, lowestBid)
+edit UserTask.java (reqUsername)
+profile bidView card
