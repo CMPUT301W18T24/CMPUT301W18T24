@@ -3,10 +3,12 @@ package com.example.taskmagic;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,7 +87,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
 
             }
         });
-
     }
 
     /**
@@ -109,9 +110,9 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textTitle=(TextView)itemView.findViewById(R.id.taskTitle);
-            textStatus=(TextView)itemView.findViewById(R.id.status);
-            textOption=(TextView)itemView.findViewById(R.id.textOption);
+            textTitle = (TextView) itemView.findViewById(R.id.taskTitle);
+            textStatus = (TextView) itemView.findViewById(R.id.status);
+            textOption = (TextView) itemView.findViewById(R.id.textOption);
         }
     }
 }

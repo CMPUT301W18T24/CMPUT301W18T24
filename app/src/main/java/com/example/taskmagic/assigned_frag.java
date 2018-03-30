@@ -6,6 +6,7 @@ package com.example.taskmagic;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,8 @@ public class assigned_frag extends Fragment {
     private RecyclerView recyclerView;
     private FireBaseManager fmanager;
 
+    private TaskList listUserTask;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,6 +31,18 @@ public class assigned_frag extends Fragment {
         UserSingleton singleton=UserSingleton.getInstance();
         fmanager = new FireBaseManager(singleton.getmAuth(), getActivity());
         listener(singleton.getUserId());
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Log.d("Assigned frag item: ", "clicked " + position);
+                UserTask chosenTask= listUserTask.getTask(position);
+                Intent myIntent = new Intent(getActivity(), ViewTaskActivity.class);
+                myIntent.putExtra("UserTask",chosenTask);
+                startActivity(myIntent);
+            }
+        }));
+
         return view;
     }
 
@@ -40,6 +55,7 @@ public class assigned_frag extends Fragment {
             @Override
             public void onSuccess(TaskList taskList) {
                 Log.d("Succes", "onSuccess: "+taskList.getCount());
+                listUserTask = taskList;
                 updateView(taskList);
             }
 

@@ -1,0 +1,29 @@
+
+Unit tests	-fanjie
+XML overhaul
+_______________
+assign task  	-Steven
+complete task
+rating *
+_______________
+notification	-Hamdi
+offline activity
+Messaging
+_______________
+search		
+__________________________________
+fix add bid (for multiple bids)		-Harrold
+task date				-Paul
+bid list on task details		-Paul
+links to user profiles			-Paul
+task status				-Harrold
+delete task				-Randy
+adding multiple photos			-Harrold
+location				-Randy
+_______________
+onItemClick instead of menu button	-Harrold
+
+29-mar-2018
+edit Bid.java (reqUsername, taskTitle, status, lowestBid)
+edit UserTask.java (reqUsername)
+profile bidView card
