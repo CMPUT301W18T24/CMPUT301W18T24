@@ -1,39 +1,42 @@
 package com.example.taskmagic;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * This activity is where information is entered to make a new UserTask.
@@ -47,30 +50,36 @@ public class CreateTaskActivity extends AppCompatActivity {
     public static final int LOCATION_REQUEST = 31;
     public static final int maxHeight = 255;
     public static final int maxWidth = 255;
+    private int CALENDAR_ID = 41;
 
     private FireBaseManager fmanager;
     private DatabaseReference db;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
-    private FirebaseAuth auth;
     private UserSingleton singleton = UserSingleton.getInstance();
+    private final Gson gson = new Gson();
 
     private String storageTag = "images";
-    private String uuid = java.util.UUID.randomUUID().toString();
 
     private String newTitle;
     private String newDescription;
     private String taskRequester;
     private byte[] photoBArray;
-    private String photoUri;
+    private PhotoList photoUris = new PhotoList();
+    private ArrayList<Bitmap> bitmaps = new ArrayList<>();
+    private int currYear;
+    private int currMonth;
+    private int currDay;
 
     private EditText titleField;
     private EditText descriptionField;
     private Button addLocationButton;
-    private Button openCameraButton;
-    private Button openGalleryButton;
+    private ImageButton openCameraButton;
+    private ImageButton openGalleryButton;
+    private RecyclerView displayRecycler;
+    private PhotosAdapter adapter;
     private Button postTaskButton;
-    private ImageView thumbnail;
+    private TextView dateField;
 
     private CreateTaskActivity thisActivity = this;
 
@@ -80,10 +89,21 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         titleField = findViewById(R.id.task_title);
         descriptionField = findViewById(R.id.task_description);
-        thumbnail = findViewById(R.id.thumbnail);
 
         db = FirebaseDatabase.getInstance().getReference();
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
+
+        final Calendar cal = Calendar.getInstance();
+        currYear = cal.get(Calendar.YEAR);
+        currMonth = cal.get(Calendar.MONTH);
+        currDay = cal.get(Calendar.DAY_OF_MONTH);
+        dateField = findViewById(R.id.date_field);
+        dateField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(CALENDAR_ID);
+            }
+        });
 
         /**
          * On press of button, map opens up and allows user to pin point a location
@@ -122,6 +142,14 @@ public class CreateTaskActivity extends AppCompatActivity {
         });
 
         /**
+         * This RecyclerView displays the photos associated with the task being created
+         */
+        displayRecycler = findViewById(R.id.display_recycler);
+        displayRecycler.setLayoutManager(new LinearLayoutManager(thisActivity, LinearLayoutManager.HORIZONTAL, false));
+        adapter = new PhotosAdapter(bitmaps, thisActivity);
+        displayRecycler.setAdapter(adapter);
+
+        /**
          * On press of button, the task is uploaded onto database
          */
         postTaskButton = findViewById(R.id.post_task_button);
@@ -129,12 +157,15 @@ public class CreateTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                newTitle = titleField.getText().toString();
-                newDescription = descriptionField.getText().toString();
+                newTitle = titleField.getText().toString().trim();
+                newDescription = descriptionField.getText().toString().trim();
                 taskRequester = singleton.getUserId();
+                storageUpload();
+                //Jsonify photoUris for saving
+                String uris = gson.toJson(photoUris);
 
                 // save userTask to database
-                UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, photoUri);
+                UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
                 Log.d("UserTask created", newTask.getTitle() + db + storageRef + fmanager);
                 fmanager.addTask(newTask);
 
@@ -184,23 +215,7 @@ public class CreateTaskActivity extends AppCompatActivity {
                 cameraBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
                 photoBArray = outputStream.toByteArray();      /* This byteArray is the photo to be saved into storage */
 
-
-                StorageReference imageRef = storageRef.child(storageTag + "/" + uuid + ".png");
-
-                UploadTask uploadTask = imageRef.putBytes(photoBArray);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(thisActivity, "Upload unsuccessful.", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        photoUri = taskSnapshot.getDownloadUrl().toString();
-                    }
-                });
-
-                thumbnail.setImageBitmap(cameraBitmap);
+                adapter.addItem(cameraBitmap);
             }
 
             /**
@@ -219,22 +234,7 @@ public class CreateTaskActivity extends AppCompatActivity {
                     galleryBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                     photoBArray = baos.toByteArray();
 
-                    StorageReference imageRef = storageRef.child(storageTag + "/" + uuid + ".png");
-
-                    UploadTask uploadTask = imageRef.putBytes(photoBArray);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(thisActivity, "Upload unsuccessful.", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            photoUri = taskSnapshot.getDownloadUrl().toString();
-                        }
-                    });
-
-                    thumbnail.setImageBitmap(galleryBitmap);
+                    adapter.addItem(galleryBitmap);
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -244,4 +244,53 @@ public class CreateTaskActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * This will upload all images in bitmaps to FirebaseStorage and lists all URLs into photoUris for saving.
+     */
+    public void storageUpload() {
+        for (Bitmap bm : bitmaps) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] barray = baos.toByteArray();
+
+            String uuid = java.util.UUID.randomUUID().toString();
+            StorageReference photoRef = storageRef.child(storageTag + "/" + uuid + ".png");
+            final UploadTask uploadTask = photoRef.putBytes(barray);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    photoUris.add(taskSnapshot.getDownloadUrl().toString());
+                    Log.d("Photo upload: ", "Photo uploaded successfully ");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(thisActivity, "Upload unsuccessful.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    /*
+     * https://www.youtube.com/watch?v=czKLAx750N0
+     * This opens up a DatePickerDialog and displays chosen date to dateField.
+     * @param id
+     * @return
+     */
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id == CALENDAR_ID)
+            return new DatePickerDialog(this, dateListener, currYear, currMonth, currDay);
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener dateListener
+            = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            String newDate = String.format("%d/%d/%d", year, month + 1, dayOfMonth);
+            dateField.setText(newDate);
+        }
+    };
 }

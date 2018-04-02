@@ -18,7 +18,7 @@ bid list on task details		-Paul
 links to user profiles			-Paul
 task status				-Harrold
 delete task				-Randy
-adding multiple photos			-Harrold
+adding multiple photoUris			-Harrold
 location				-Randy
 _______________
 onItemClick instead of menu button	-Harrold
