@@ -76,6 +76,13 @@ public class ViewTaskActivity extends AppCompatActivity {
                 Bid bid = new Bid(task.getId(), Float.valueOf(amount), singleton.getUserId());
                 bid.setTaskTitle(task.getTitle());
                 bid.setRequestor(task.getRequester());
+
+                if (task.getStatus() != "Bidded") {
+                    UserTask newTask = task;
+                    newTask.setStatus("Bidded");
+                    fmanager.editTask(task);
+                }
+
                 bidOnTask(bid);
             }
         });
