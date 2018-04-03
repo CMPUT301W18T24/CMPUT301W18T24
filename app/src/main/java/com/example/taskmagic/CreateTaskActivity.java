@@ -273,7 +273,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     }
 
     /*
-     * https://www.youtube.com/watch?v=czKLAx750N0
+     * https://www.youtube.com/watch?v=czKLAx750N0 2/April/2018
      * This opens up a DatePickerDialog and displays chosen date to dateField.
      * @param id
      * @return
