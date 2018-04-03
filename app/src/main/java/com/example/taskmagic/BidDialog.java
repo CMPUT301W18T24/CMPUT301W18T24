@@ -74,8 +74,11 @@ public class BidDialog extends Dialog {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String amountStr = amount.getText().toString().trim();
                 dismiss();
-                listener.onEnsure(amount.getText().toString().trim());
+                if (!amountStr.isEmpty()) {
+                    listener.onEnsure(amountStr);
+                }
                 amount.setText("");
             }
         });
@@ -88,5 +91,7 @@ public class BidDialog extends Dialog {
             }
         });
     }
+
+
 }
 

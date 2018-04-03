@@ -21,17 +21,35 @@ public class UserTask implements Serializable {
     private String title;
     private String description;
     private String status="Requested";
-    private Boolean bidded = false;
-    private Boolean assigned = false;
+    private boolean bidded = false;
+    private boolean assigned = false;
+    private boolean bidding = false;
+    private boolean editing = false;
+
+    public boolean isBidded() {
+        return bidded;
+    }
+
+    public boolean isAssigned() {
+        return assigned;
+    }
+
+    public boolean isBidding() {
+        return bidding;
+    }
+
+    public boolean isEditing() {
+        return editing;
+    }
+
     private String requester;
     private String date;
     private String photoUriString;
     private String provider;
     private Location location;
     private String uri;
-    private boolean editing = false;
     private ArrayList<String> photoUris;
-    private boolean bidding = false;
+
 
     public UserTask(){
 
@@ -220,7 +238,7 @@ public class UserTask implements Serializable {
      * Takes a boolean and sets the bidded of this UserTask to the bidded
      * @param bidded
      */
-    public void setBidded(Boolean bidded) {
+    public void setBidded(boolean bidded) {
         this.bidded = bidded;
     }
 
@@ -228,7 +246,7 @@ public class UserTask implements Serializable {
      * Takes a boolean and sets the assigned of this UserTask to the assigned
      * @param assigned
      */
-    public void setAssigned(Boolean assigned) {
+    public void setAssigned(boolean assigned) {
         this.assigned = assigned;
     }
 

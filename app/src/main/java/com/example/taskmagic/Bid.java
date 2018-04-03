@@ -19,6 +19,7 @@ class Bid implements Serializable {
     private String taskTitle;
     private String status;
 
+    public Bid(){}
     /**
      * Constructor of Bid
      * @param taskID

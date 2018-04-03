@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Bid_frag extends Fragment {
+public class Bid_Frag extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView recyclerView;
     private FireBaseManager fmanager;

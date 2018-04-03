@@ -4,6 +4,7 @@ package com.example.taskmagic;
  * Created by steve on 2018-03-18.
  */
 
+
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Requested_frag extends Fragment {
+public class Assigned_Frag extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView recyclerView;
     private FireBaseManager fmanager;
@@ -24,8 +25,8 @@ public class Requested_frag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.request_frag,container,false);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
+        View view=inflater.inflate(R.layout.assigned_frag,container,false);
+        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerAssigned);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         UserSingleton singleton=UserSingleton.getInstance();
         fmanager = new FireBaseManager(singleton.getmAuth(), getActivity());
@@ -43,13 +44,17 @@ public class Requested_frag extends Fragment {
         }));
 
         return view;
-
     }
+
+    /**
+     * Updates the ListView; selects which TaskList to display
+     * @param requestor
+     */
     private void listener(final String requestor) {
-        fmanager.getMyTaskData(requestor, new OnGetMyTaskListener() {
+        fmanager.getAssignedTasks(requestor, new OnGetAssignedTaskListener() {
             @Override
             public void onSuccess(TaskList taskList) {
-                Log.d("Success", "onSuccess: "+taskList.getCount());
+                Log.d("Succes", "onSuccess: "+taskList.getCount());
                 listUserTask = taskList;
                 updateView(taskList);
             }
@@ -61,10 +66,13 @@ public class Requested_frag extends Fragment {
         });
     }
 
+    /**
+     * Sets the list on the Adapter to specified TaskList
+     * @param taskList
+     */
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter=new RequestedTaskAdapter(taskList,getActivity());
+        adapter=new AssignedTaskAdapter(taskList,getActivity());
         recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 }

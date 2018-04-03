@@ -27,10 +27,10 @@ public class ViewProfileActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private BottomNavigationView mProfileNav;
     private FrameLayout mProfileFrame;
-    private Bid_frag bidFragment;
-    private assigned_frag assignFragment;
-    private User_profile_frag userFragment;
-    private Requested_frag requestFragment;
+    private Bid_Frag bidFragment;
+    private Assigned_Frag assignFragment;
+    private User_Profile_Frag userFragment;
+    private Requested_Frag requestFragment;
     private ImageView image;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,11 @@ public class ViewProfileActivity extends AppCompatActivity {
         setContentView(R.layout.view_profile);
         mProfileNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         mProfileFrame = (FrameLayout) findViewById(R.id.user_fragment_container);
-        bidFragment = new Bid_frag();
-        assignFragment = new assigned_frag();
-        userFragment = new User_profile_frag();
-        requestFragment = new Requested_frag();
-        image=(ImageView)findViewById(R.id.profileImage);
+        bidFragment = new Bid_Frag();
+        assignFragment = new Assigned_Frag();
+        userFragment = new User_Profile_Frag();
+        requestFragment = new Requested_Frag();
+        image = (ImageView)findViewById(R.id.profileImage);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

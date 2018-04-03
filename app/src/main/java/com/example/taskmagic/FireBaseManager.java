@@ -169,7 +169,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
                     if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned")||task.getStatus().equals("Done"))){
                         continue;
                     }
-                    else if(task.getRequester().equals(requestor) && task.getStatus().equals("Requested")){
+                    else if(task.getRequester().equals(requestor) && task.getStatus().equals("Requested") || task.getRequester().equals(requestor) && task.getStatus().equals("Bidded")){
                         taskList.add(task);
                     }
                 }
@@ -304,14 +304,14 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
         });
     }
 
-    public void getBidsListOnTask(final String provider,final OnGetBidsList listener){
-        final BidList bidList = new BidList();
+    public void getBidsListOnTask(final String taskID,final OnGetBidsList listener){
         database.child(bidTag).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                BidList bidList = new BidList();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     Bid bid=ds.getValue(Bid.class);
-                    if (bid.getProvider().equals(provider)){
+                    if (bid.getTaskID().equals(taskID)){
                         bidList.add(bid);
                     }
 

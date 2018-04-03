@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,11 +34,13 @@ public class ViewTaskActivity extends AppCompatActivity {
     private TextView descriptionText;
     private TextView dateText ;
     private ImageView photo;
+    private RecyclerView bids;
+    private RecyclerView.Adapter adapter;
     private Button button;
     private UserTask task;
+    private BidList bidList = new BidList();
     private ProgressDialog mProgress;
     private Boolean taskOwenr;
-    private String date = "2018-08-08";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +53,17 @@ public class ViewTaskActivity extends AppCompatActivity {
         mProgress = new ProgressDialog(this);
 
         task = (UserTask) getIntent().getSerializableExtra("UserTask");
+
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fireworks);
 
         Button button_viewLocation = (Button) findViewById(R.id.button_viewLocation);
-
-
         button = (Button) findViewById(R.id.button_viewTask);
         titleText = (TextView) findViewById(R.id.textView_titleContent);
         descriptionText = (TextView) findViewById(R.id.textView_descriptionContent);
         dateText = (TextView) findViewById(R.id.textView_dateContent);
         photo = (ImageView) findViewById(R.id.imageView1);
+        bids = (RecyclerView) findViewById(R.id.bidList);
+        bids.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
 
         if (task.getRequester().equals(singleton.getUserId())) {
@@ -66,7 +71,6 @@ public class ViewTaskActivity extends AppCompatActivity {
 
         } else {
             taskOwenr = false;
-            Log.d("viewtask", "onCreate: "+task.getRequester()+singleton.getUserId());
         }
 
         // @See BidDialog.java
@@ -77,11 +81,13 @@ public class ViewTaskActivity extends AppCompatActivity {
                 bid.setTaskTitle(task.getTitle());
                 bid.setRequestor(task.getRequester());
                 bidOnTask(bid);
+                task.setBidding(false);
+                fmanager.editTask(task);
             }
         });
 
         // @See EditDialog.java
-        final EditDialog editDialog = new EditDialog(this, date, task, new EditDialog.onDialogListener() {
+        final EditDialog editDialog = new EditDialog(this, task, new EditDialog.onDialogListener() {
             @Override
             public void onEnsure(String title, String date, String description) {
                 //UPDATE EDITING
@@ -89,11 +95,13 @@ public class ViewTaskActivity extends AppCompatActivity {
                 task.setDescription(description);
                 task.setTitle(title);
                 //task.setPhoto(image);
-                editTask(task);
-                finish();
+                task.setEditing(false);
+                fmanager.editTask(task);
             }
         });
+
         initView();
+
         /**
         * Depending if User is the task owner, the Button will either Edit task or add Bid
         */
@@ -103,8 +111,8 @@ public class ViewTaskActivity extends AppCompatActivity {
                 if (taskOwenr) {
                     if (task.allowEditing()) {
                         task.setEditing(true);
+                        fmanager.editTask(task);
                         editDialog.show();
-                        task.setEditing(false);
                     } else {
                         //shows message that you're not allowed to edit this task
                     }
@@ -112,8 +120,8 @@ public class ViewTaskActivity extends AppCompatActivity {
                 } else {
                     if (task.allowBidding()) {
                         task.setBidding(true);
+                        fmanager.editTask(task);
                         bidDialog.show();
-                        task.setBidding(false);
                     } else {
                         //shows message that the task is done or assigned.
                     }
@@ -140,6 +148,20 @@ public class ViewTaskActivity extends AppCompatActivity {
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
         dateText.setText(task.getDate());
+        fmanager.getBidsListOnTask(task.getId(), new OnGetBidsList() {
+            @Override
+            public void onSuccess(BidList Bids) {
+                bidList = Bids;
+                adapter = new BidsAdapter(bidList, getApplicationContext());
+                bids.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
         /*
         if (task.getPhoto() != null) {
             photo.setImageBitmap(task.getPhoto().getImage());
@@ -159,56 +181,11 @@ public class ViewTaskActivity extends AppCompatActivity {
     private void bidOnTask(Bid bid) {
         mProgress.setMessage("Adding");
         mProgress.show();
-        fmanager.getTaskInfo(bid.getTaskID(), new OnGetATaskListener() {
-            @Override
-            public void onSuccess(UserTask t) {
-                UserTask task = t;
-            }
-
-            @Override
-            public void onFailure(String message) {
-
-            }
-        });
-        if (task.allowBidding()) {
-            fmanager.addBid(bid);
-            task.setBidded(true);
-        } else {
-            mProgress.dismiss();
-            mProgress.setMessage("Sorry, you cannot bid on this task at the moment. Try again later.");
-            mProgress.show();
-        }
+        fmanager.addBid(bid);
+        task.setBidded(true);
+        task.setStatus("Bidded");
+        fmanager.editTask(task);
         mProgress.dismiss();
-        finish();
-    }
-
-    /**
-     * Allows user to edit a task
-     * @param task
-     */
-    private void editTask(UserTask task) {
-        mProgress.setMessage("Saving change");
-        mProgress.show();
-        fmanager.getTaskInfo(task.getId(), new OnGetATaskListener() {
-            @Override
-            public void onSuccess(UserTask t) {
-                UserTask task = t;
-            }
-
-            @Override
-            public void onFailure(String message) {
-
-            }
-        });
-        if (task.allowEditing()) {
-            fmanager.editTask(task);
-        } else {
-            mProgress.dismiss();
-            mProgress.setMessage("Sorry, you cannot edit this task at the moment. Try again later.");
-            mProgress.show();
-        }
-        mProgress.dismiss();
-        finish();
     }
 
 }
