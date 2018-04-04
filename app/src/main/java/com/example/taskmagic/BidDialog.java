@@ -75,7 +75,10 @@ public class BidDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 dismiss();
-                listener.onEnsure(amount.getText().toString().trim());
+                String amountStr = amount.getText().toString().trim();
+                if(!amountStr.isEmpty()) {
+                    listener.onEnsure(amountStr);
+                }
                 amount.setText("");
             }
         });

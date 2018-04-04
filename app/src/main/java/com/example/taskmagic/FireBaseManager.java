@@ -76,9 +76,6 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
 
     }
 
-
-
-
     /**
      * successfully adds a Task to FireBase Database under user login
      * @param task
@@ -185,7 +182,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
                     if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned")||task.getStatus().equals("Done"))){
                         continue;
                     }
-                    else if(task.getRequester().equals(requestor) && task.getStatus().equals("Requested")){
+                    else if(task.getRequester().equals(requestor) && task.getStatus().equals("Requested") || task.getRequester().equals(requestor) && task.getStatus().equals("Bidded")){
                         taskList.add(task);
                     }
                 }
@@ -267,7 +264,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     }
 
     /**
-     * This function get the bids for a given task in the database
+     * This function get the bids of a given user in the database
      * @param provider
      * @param listener
      */
@@ -321,6 +318,32 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
     }
 
 
+    /**
+     * This function get the bids for a given task in the database
+     * @param taskId
+     * @param listener
+     */
+    public void getBidsListOnTask(final String taskId,final OnGetBidsList listener){
+        database.child(bidTag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                BidList bidList = new BidList();
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    Bid bid=ds.getValue(Bid.class);
+                    if (bid.getTaskID().equals(taskId)){
+                        bidList.add(bid);
+                    }
+
+                }
+                listener.onSuccess(bidList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
+    }
 
 
 }

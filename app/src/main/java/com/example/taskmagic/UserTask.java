@@ -21,8 +21,10 @@ public class UserTask implements Serializable {
     private String title;
     private String description;
     private String status="Requested";
-    private Boolean bidded = false;
-    private Boolean assigned = false;
+    private boolean bidded = false;
+    private boolean assigned = false;
+    private boolean bidding = false;
+    private boolean editing = false;
     private String requester;
     private String date;
     private String photoUriString;
@@ -212,5 +214,65 @@ public class UserTask implements Serializable {
      */
     public Location getLocation() {
         return location;
+    }
+
+    public boolean isBidded() {
+        return bidded;
+    }
+
+    /**
+     * This setter takes a boolean and changes bidded of this UserTask to the String
+     * @param bidded
+     */
+    public void setBidded(boolean bidded) {
+        this.bidded = bidded;
+    }
+
+    /**
+     * Returns a Boolean: determines if UserTask is Assigned
+     * @return
+     */
+    public boolean isAssigned() {
+        return assigned;
+    }
+
+    /**
+     * This setter takes a boolean and changes assigned of this UserTask to the String
+     * @param assigned
+     */
+    public void setAssigned(boolean assigned) {
+        this.assigned = assigned;
+    }
+
+    /**
+     * Returns a Boolean: determines if UserTask is being bidded on
+     * @return
+     */
+    public boolean isBidding() {
+        return bidding;
+    }
+
+    /**
+     * This setter takes a boolean and changes bidding of this UserTask to the String
+     * @param bidding
+     */
+    public void setBidding(boolean bidding) {
+        this.bidding = bidding;
+    }
+
+    /**
+     * Returns a Boolean: determines if UserTask is being edited
+     * @return
+     */
+    public boolean isEditing() {
+        return editing;
+    }
+
+    /**
+     * This setter takes a boolean and changes editing of this UserTask to the String
+     * @param editing
+     */
+    public void setEditing(boolean editing) {
+        this.editing = editing;
     }
 }

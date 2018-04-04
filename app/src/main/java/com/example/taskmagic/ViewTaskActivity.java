@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +38,10 @@ public class ViewTaskActivity extends AppCompatActivity {
     private UserTask task;
     private ProgressDialog mProgress;
     private Boolean taskOwenr;
-    private String date = "2018-08-08";
+    private BidList bidList = new BidList();
+    private RecyclerView bids;
+    private RecyclerView.Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +54,15 @@ public class ViewTaskActivity extends AppCompatActivity {
         mProgress = new ProgressDialog(this);
 
         task = (UserTask) getIntent().getSerializableExtra("UserTask");
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fireworks);
 
         Button button_viewLocation = (Button) findViewById(R.id.button_viewLocation);
-
-
         button = (Button) findViewById(R.id.button_viewTask);
         titleText = (TextView) findViewById(R.id.textView_titleContent);
         descriptionText = (TextView) findViewById(R.id.textView_descriptionContent);
         dateText = (TextView) findViewById(R.id.textView_dateContent);
         photo = (ImageView) findViewById(R.id.imageView1);
-
+        bids = (RecyclerView) findViewById(R.id.bidList);
+        bids.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         if (task.getRequester().equals(singleton.getUserId())) {
             taskOwenr = true;
@@ -76,19 +79,14 @@ public class ViewTaskActivity extends AppCompatActivity {
                 Bid bid = new Bid(task.getId(), Float.valueOf(amount), singleton.getUserId());
                 bid.setTaskTitle(task.getTitle());
                 bid.setRequestor(task.getRequester());
-
-                if (task.getStatus() != "Bidded") {
-                    UserTask newTask = task;
-                    newTask.setStatus("Bidded");
-                    fmanager.editTask(task);
-                }
-
                 bidOnTask(bid);
+                task.setBidding(false);
+                fmanager.editTask(task);
             }
         });
 
         // @See EditDialog.java
-        final EditDialog editDialog = new EditDialog(this, date, task, new EditDialog.onDialogListener() {
+        final EditDialog editDialog = new EditDialog(this, task, new EditDialog.onDialogListener() {
             @Override
             public void onEnsure(String title, String date, String description) {
                 //UPDATE EDITING
@@ -96,8 +94,8 @@ public class ViewTaskActivity extends AppCompatActivity {
                 task.setDescription(description);
                 task.setTitle(title);
                 //task.setPhoto(image);
+                task.setEditing(false);
                 fmanager.editTask(task);
-                finish();
             }
         });
         initView();
@@ -109,6 +107,8 @@ public class ViewTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (taskOwenr) {
                     if (task.allowEditing()) {
+                        task.setEditing(true);      //lock the task for editing
+                        fmanager.editTask(task);
                         editDialog.show();
 
                     } else {
@@ -117,6 +117,8 @@ public class ViewTaskActivity extends AppCompatActivity {
 
                 } else {
                     if (task.allowBidding()) {
+                        task.setBidding(true);      //lock the task for bidding
+                        fmanager.editTask(task);
                         bidDialog.show();
                     } else {
                         //shows message that the task is done or assigned.
@@ -144,6 +146,21 @@ public class ViewTaskActivity extends AppCompatActivity {
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
         dateText.setText(task.getDate());
+        fmanager.getBidsListOnTask(task.getId(), new OnGetBidsList() {
+            @Override
+            public void onSuccess(BidList Bids) {
+                bidList = Bids;
+                bidList.sortList();
+                adapter = new BidsAdapter(bidList, getApplicationContext());
+                bids.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
         /*
         if (task.getPhoto() != null) {
             photo.setImageBitmap(task.getPhoto().getImage());
@@ -164,7 +181,9 @@ public class ViewTaskActivity extends AppCompatActivity {
         mProgress.setMessage("Adding");
         mProgress.show();
         fmanager.addBid(bid);
+        task.setBidded(true);
+        task.setStatus("Bidded");
+        fmanager.editTask(task);
         mProgress.dismiss();
-        finish();
     }
 }

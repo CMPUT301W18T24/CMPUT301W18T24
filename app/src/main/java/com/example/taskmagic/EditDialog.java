@@ -29,11 +29,10 @@ public class EditDialog extends Dialog {
     /**
      * This constructor creates the EditDialogue and sets date and details of Task
      * @param context
-     * @param date
      * @param task
      * @param listener
      */
-    public EditDialog(@NonNull Context context, String date, UserTask task, onDialogListener listener) {
+    public EditDialog(@NonNull Context context, UserTask task, onDialogListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;

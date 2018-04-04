@@ -49,6 +49,7 @@ class BidList {
      * @return
      */
     public ArrayList<Bid> getBidList() {
+        sortList();
         return bids;
     }
 
@@ -59,5 +60,12 @@ class BidList {
      */
     public Bid getBid(int index) {
         return bids.get(index);
+    }
+
+    /**
+     * this method sorts the BidList in ascending order by amount fiedld of bids
+     */
+    public void sortList() {
+        Collections.sort(bids);
     }
 }
