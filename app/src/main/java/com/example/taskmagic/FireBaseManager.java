@@ -1,36 +1,23 @@
 package com.example.taskmagic;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.*;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.ArrayList;
-import java.util.concurrent.Executor;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by hyusuf on 2018-03-08.
  */
 
-public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsList,OnGetAssignedTaskListener {
+public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsList,OnGetAssignedTaskListener {
     private FirebaseAuth mAuth;
     private DatabaseReference database;
     private String taskTag = "task";
@@ -172,7 +159,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
      * @param requestor
      * @param listener
      */
-    public void getMyTaskData(final String requestor, final onGetMyTaskListener listener) {
+    public void getMyTaskData(final String requestor, final OnGetMyTaskListener listener) {
         database.child(taskTag).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -202,7 +189,7 @@ public class FireBaseManager implements onGetMyTaskListener,OnGetUserInfoListene
      */
 
     public void addBid(final Bid bid){
-        database.child(bidTag).child(bid.getTaskID()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.child(bidTag).push().setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(context, "Bid Successfully Saved", Toast.LENGTH_LONG).show();

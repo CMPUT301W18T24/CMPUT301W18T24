@@ -38,10 +38,10 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView mProfileNav;
     private FrameLayout mProfileFrame;
-    private bids_frag bidFragment;
-    private assigned_frag assignFragment;
-    private user_profile_frag userFragment;
-    private requested_frag requestFragment;
+    private BidFrag bidFragment;
+    private AssignedFrag assignFragment;
+    private UserProfileFrag userFragment;
+    private RequestedFrag requestFragment;
     private ImageView image;
 
 
@@ -50,10 +50,10 @@ public class ViewProfileActivity extends AppCompatActivity {
         setContentView(R.layout.view_profile);
         mProfileNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         mProfileFrame = (FrameLayout) findViewById(R.id.user_fragment_container);
-        bidFragment = new bids_frag();
-        assignFragment = new assigned_frag();
-        userFragment = new user_profile_frag();
-        requestFragment = new requested_frag();
+        bidFragment = new BidFrag();
+        assignFragment = new AssignedFrag();
+        userFragment = new UserProfileFrag();
+        requestFragment = new RequestedFrag();
         image=(ImageView)findViewById(R.id.profileImage);
         image.setOnClickListener(new View.OnClickListener() {
             @Override

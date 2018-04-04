@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class requested_frag extends Fragment {
+public class RequestedFrag extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView recyclerView;
     private FireBaseManager fmanager;
@@ -46,7 +46,7 @@ public class requested_frag extends Fragment {
 
     }
     private void listener(final String requestor) {
-        fmanager.getMyTaskData(requestor, new onGetMyTaskListener() {
+        fmanager.getMyTaskData(requestor, new OnGetMyTaskListener() {
             @Override
             public void onSuccess(TaskList taskList) {
                 Log.d("Success", "onSuccess: "+taskList.getCount());
