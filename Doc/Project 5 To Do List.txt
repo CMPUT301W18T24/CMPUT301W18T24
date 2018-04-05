@@ -30,7 +30,7 @@ profile bidView card
 ______________________________
 SUPER CRUNCH
 
-create field check
+create field check - Harrold
 delete task
 unique username and email
 clickable username
