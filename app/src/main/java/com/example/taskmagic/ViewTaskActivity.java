@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -195,16 +197,57 @@ public class ViewTaskActivity extends AppCompatActivity {
     }
 
     private ViewPager viewPager;
+    private LinearLayout displayDots;
+    private int dotsCount;
+    private ImageView[] dots;
+
 
     //https://www.youtube.com/watch?v=GqcFEvBCnIk       4/April/2018
     //https://www.youtube.com/watch?v=plnLs6aST1M       4/April/2018
+    //https://www.youtube.com/watch?v=Q2M30NriSsE       5/April/2018
     private void openPhotoSlider() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(ViewTaskActivity.this);
         View photoView = getLayoutInflater().inflate(R.layout.dialog_photo_slider, null);
 
         viewPager = photoView.findViewById(R.id.photo_slider);
+        displayDots =  photoView.findViewById(R.id.display_dots);
         PhotoSliderAdapter photoSliderAdapter = new PhotoSliderAdapter(this, bitmaps);
         viewPager.setAdapter(photoSliderAdapter);
+        dotsCount = photoSliderAdapter.getCount();
+        dots = new ImageView[dotsCount];
+
+        for (int i = 0 ; i < dotsCount ; i++) {
+            dots[i] = new ImageView(this);
+            dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot_yt));
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(4,0,4,0);
+
+            displayDots.addView(dots[i], params);
+        }
+
+        dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot_yt));
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0 ; i < dotsCount ; i++) {
+                    dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.nonactive_dot_yt));
+                }
+
+                dots[position].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot_yt));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         mBuilder.setView(photoView);
         AlertDialog dialog = mBuilder.create();
