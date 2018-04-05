@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mEmail=(EditText)findViewById(R.id.editTextEmail);
+        mEmail.setText("pp1234@gmail.com");
         mPassword=(EditText)findViewById(R.id.editTextpassword);
+        mPassword.setText("pp1234");
         mLogin=(Button) findViewById(R.id.buttonlogin);
         register=(TextView)findViewById(R.id.textViewNewUser);
         mAuth=FirebaseAuth.getInstance();

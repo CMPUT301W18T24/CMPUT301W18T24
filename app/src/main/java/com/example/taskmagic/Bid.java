@@ -188,4 +188,5 @@ class Bid implements Serializable, Comparable<Bid> {
     public void setRequestorName(String requestorName) {
         this.requestorName = requestorName;
     }
+
 }

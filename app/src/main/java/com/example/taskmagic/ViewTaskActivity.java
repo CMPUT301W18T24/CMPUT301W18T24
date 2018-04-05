@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import static java.lang.Float.valueOf;
+
 /**
  * Created by hyusuf on 2018-03-11.
  */
@@ -37,7 +39,8 @@ public class ViewTaskActivity extends AppCompatActivity {
     private Button button;
     private UserTask task;
     private ProgressDialog mProgress;
-    private Boolean taskOwenr;
+    private boolean taskOwenr = false;
+    private boolean assignedTask = false;
     private BidList bidList = new BidList();
     private RecyclerView bids;
     private RecyclerView.Adapter adapter;
@@ -61,26 +64,26 @@ public class ViewTaskActivity extends AppCompatActivity {
         descriptionText = (TextView) findViewById(R.id.textView_descriptionContent);
         dateText = (TextView) findViewById(R.id.textView_dateContent);
         photo = (ImageView) findViewById(R.id.imageView1);
+
         bids = (RecyclerView) findViewById(R.id.bidList);
         bids.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         if (task.getRequester().equals(singleton.getUserId())) {
             taskOwenr = true;
-
-        } else {
-            taskOwenr = false;
-            Log.d("viewtask", "onCreate: "+task.getRequester()+singleton.getUserId());
+        } else if (task.isAssigned()) {
+            assignedTask = true;
         }
 
         // @See BidDialog.java
         final BidDialog bidDialog = new BidDialog(this, task, new BidDialog.onDialogListener() {
             @Override
             public void onEnsure(String amount) {
-                Bid bid = new Bid(task.getId(), Float.valueOf(amount), singleton.getUserId());
+                Bid bid = new Bid(task.getId(), valueOf(amount), singleton.getUserId());
                 bid.setTaskTitle(task.getTitle());
                 bid.setRequestor(task.getRequester());
                 bidOnTask(bid);
                 task.setBidding(false);
+                task.setLowestBid(valueOf(amount));
                 fmanager.editTask(task);
             }
         });
@@ -105,7 +108,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (taskOwenr) {
+                if (taskOwenr) {                    //Edit task
                     if (task.allowEditing()) {
                         task.setEditing(true);      //lock the task for editing
                         fmanager.editTask(task);
@@ -114,8 +117,12 @@ public class ViewTaskActivity extends AppCompatActivity {
                     } else {
                         //shows message that you're not allowed to edit this task
                     }
+                } else if (assignedTask) {          //Complete task
+                    task.setStatus("Done");
+                    fmanager.editTask(task);
+                    finish();
 
-                } else {
+                } else {                            //Bid on task
                     if (task.allowBidding()) {
                         task.setBidding(true);      //lock the task for bidding
                         fmanager.editTask(task);
@@ -143,17 +150,32 @@ public class ViewTaskActivity extends AppCompatActivity {
      * Initialize the View of the activity, sets Task details into respective fields
      */
     private void initView() {
+        if (taskOwenr) {
+            button.setText("EDIT");
+        } else if (assignedTask) {
+            button.setText("COMPLETE");
+        }else {
+            button.setText("BID");
+        }
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
         dateText.setText(task.getDate());
         fmanager.getBidsListOnTask(task.getId(), new OnGetBidsList() {
             @Override
             public void onSuccess(BidList Bids) {
-                bidList = Bids;
-                bidList.sortList();
-                adapter = new BidsAdapter(bidList, getApplicationContext());
-                bids.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                if (assignedTask) {
+                    Bid acceptedBid = Bids.getAcceptedBid();
+                    TextView bidTitle = (TextView) findViewById(R.id.textView_bidList);
+                    TextView bidContent = (TextView) findViewById(R.id.textView_bidContent);
+                    bidTitle.setText("Accepted Bid");
+                    bidContent.setText("" + acceptedBid.getAmount());
+                } else {
+                    bidList = Bids;
+                    bidList.sortList();
+                    adapter = new BidsAdapter(bidList, getApplicationContext());
+                    bids.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -166,11 +188,7 @@ public class ViewTaskActivity extends AppCompatActivity {
             photo.setImageBitmap(task.getPhoto().getImage());
         }
         */
-        if (taskOwenr) {
-            button.setText("EDIT");
-        } else {
-            button.setText("BID");
-        }
+
     }
 
     /**

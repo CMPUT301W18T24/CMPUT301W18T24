@@ -166,11 +166,15 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
                 TaskList taskList = new TaskList();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     UserTask task=ds.getValue(UserTask.class);
-                    if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned")||task.getStatus().equals("Done"))){
-                        continue;
-                    }
-                    else if(task.getRequester().equals(requestor) && task.getStatus().equals("Requested") || task.getRequester().equals(requestor) && task.getStatus().equals("Bidded")){
+                    if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned")
+                            || task.getStatus().equals("Done") || task.getStatus().equals("Bidded"))){
+                        //continue;
                         taskList.add(task);
+                    }
+                    //else if(task.getRequester().equals(requestor)){
+                     else {
+                        continue;
+                        //taskList.add(task);
                     }
                 }
                 listener.onSuccess(taskList);
@@ -196,6 +200,23 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
             }
         });
 
+    }
+
+    /**
+     * @param bid
+     */
+    public void editBid(final Bid bid){
+        database.child(bidTag).child(bid.getTaskID()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Succesfully edited Bid", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**

@@ -88,8 +88,15 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
                         switch (item.getItemId()) {
 
                             case R.id.mnu_item_viewbid:
+                                Intent myIntent = new Intent(context, BidDetailsActivity.class);
+                                myIntent.putExtra("Bid",bid);
+                                context.startActivity(myIntent);
                                 break;
 
+                            case R.id.mnu_item_accept:
+                                break;
+
+                            case R.id.mnu_item_contact:
                         }
                         return false;
                     }

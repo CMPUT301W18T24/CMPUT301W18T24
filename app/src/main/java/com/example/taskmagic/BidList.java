@@ -68,4 +68,13 @@ class BidList {
     public void sortList() {
         Collections.sort(bids);
     }
+
+    public Bid getAcceptedBid() {
+        for (Bid bid : bids) {
+            if (bid.isAccepted()) {
+                return bid;
+            }
+        }
+        return null;
+    }
 }

@@ -20,7 +20,7 @@ public class UserTask implements Serializable {
     private String id;
     private String title;
     private String description;
-    private String status="Requested";
+    private String status = "Requested";
     private boolean bidded = false;
     private boolean assigned = false;
     private boolean bidding = false;
@@ -32,6 +32,7 @@ public class UserTask implements Serializable {
     private Location location;
     private String uri;
     private ArrayList<String> photoUris;
+    private float lowestBid = -1f;
 
     public UserTask(){
 
@@ -274,5 +275,21 @@ public class UserTask implements Serializable {
      */
     public void setEditing(boolean editing) {
         this.editing = editing;
+    }
+
+    /**
+     * This setter takes a float and compare it with the current lowest bid of task, updates when necessary
+     * @param amount
+     */
+    public void setLowestBid(float amount) {
+        if (lowestBid < 0) {
+            lowestBid = amount;
+        } else if (lowestBid > amount) {
+            this.lowestBid = amount;
+        }
+    }
+
+    public float getLowestBid() {
+        return lowestBid;
     }
 }
