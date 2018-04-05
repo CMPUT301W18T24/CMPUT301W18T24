@@ -49,3 +49,6 @@ view location on details
 5km map
 
 ADD APK TO REPOSITORY
+wiki
+UML
+reuse statement
