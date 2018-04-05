@@ -31,6 +31,7 @@ public class BidDetailsActivity extends AppCompatActivity {
     private TextView provider;
     private TextView amount;
     private TextView lowestAmount;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class BidDetailsActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance().getReference();
         auth = singleton.getmAuth();
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
+        userID = singleton.getUserId();
 
         title = (TextView) findViewById(R.id.textView_titleContent);
         description = (TextView) findViewById(R.id.textView_descriptionContent);
@@ -81,9 +83,9 @@ public class BidDetailsActivity extends AppCompatActivity {
                 title.setText(t.getTitle());
                 description.setText(t.getDescription());
                 lowestAmount.setText(valueOf(task.getLowestBid()));
-                if (t.isAssigned()) {
+                if (t.isAssigned() || t.getRequester() != userID) {
                     Button button = (Button) findViewById(R.id.button_accept);
-                    button.setEnabled(false);
+                    button.setVisibility(View.GONE);
                 }
             }
 
