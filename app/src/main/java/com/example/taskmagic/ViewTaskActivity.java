@@ -1,23 +1,32 @@
 package com.example.taskmagic;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -37,6 +46,8 @@ public class ViewTaskActivity extends AppCompatActivity {
     private ProgressDialog mProgress;
     private Boolean taskOwenr;
     private String date = "2018-08-08";
+    private ImageButton photoButton;
+    private ArrayList<Bitmap> bitmaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +60,8 @@ public class ViewTaskActivity extends AppCompatActivity {
         mProgress = new ProgressDialog(this);
 
         task = (UserTask) getIntent().getSerializableExtra("UserTask");
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fireworks);
 
+        bitmaps = getBitmaps();
         Button button_viewLocation = (Button) findViewById(R.id.button_viewLocation);
 
 
@@ -58,8 +69,10 @@ public class ViewTaskActivity extends AppCompatActivity {
         titleText = (TextView) findViewById(R.id.textView_titleContent);
         descriptionText = (TextView) findViewById(R.id.textView_descriptionContent);
         dateText = (TextView) findViewById(R.id.textView_dateContent);
-        photo = (ImageView) findViewById(R.id.imageView1);
 
+        photoButton = findViewById(R.id.photo_button);
+        if (!bitmaps.isEmpty())
+            photoButton.setImageBitmap(bitmaps.get(0));
 
         if (task.getRequester().equals(singleton.getUserId())) {
             taskOwenr = true;
@@ -135,6 +148,19 @@ public class ViewTaskActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MapsActivity.class));
             }
         });
+
+        photoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bitmaps.size() > 0) {
+                    Log.d("Photo count", task.getPhotoUriString().toString());
+                    openPhotoSlider();
+                } else {
+                    Log.d("Photo count", task.getPhotoUriString().toString());
+                    Toast.makeText(getApplicationContext(), "This Task has no Photos", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     /**
@@ -166,5 +192,36 @@ public class ViewTaskActivity extends AppCompatActivity {
         fmanager.addBid(bid);
         mProgress.dismiss();
         finish();
+    }
+
+    private ViewPager viewPager;
+
+    //https://www.youtube.com/watch?v=GqcFEvBCnIk       4/April/2018
+    //https://www.youtube.com/watch?v=plnLs6aST1M       4/April/2018
+    private void openPhotoSlider() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(ViewTaskActivity.this);
+        View photoView = getLayoutInflater().inflate(R.layout.dialog_photo_slider, null);
+
+        viewPager = photoView.findViewById(R.id.photo_slider);
+        PhotoSliderAdapter photoSliderAdapter = new PhotoSliderAdapter(this, bitmaps);
+        viewPager.setAdapter(photoSliderAdapter);
+
+        mBuilder.setView(photoView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+    }
+
+
+    private ArrayList<Bitmap> getBitmaps() {
+        Gson gson = new Gson();
+        PhotoList photoList = gson.fromJson(task.getPhotoUriString(), PhotoList.class);
+
+        ArrayList<Bitmap> bitmaps = new ArrayList<>();
+        for (int i = 0 ; i < photoList.getCount() ; i++) {
+            byte[] barray = Base64.decode(photoList.getPhoto(i), Base64.DEFAULT);
+            bitmaps.add(BitmapFactory.decodeByteArray(barray, 0, barray.length));
+        }
+
+        return bitmaps;
     }
 }
