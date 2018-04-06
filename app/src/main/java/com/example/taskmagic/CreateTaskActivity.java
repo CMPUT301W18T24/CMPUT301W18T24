@@ -269,6 +269,10 @@ public class CreateTaskActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * This will check input fields before posting UserTask.
+     * @return
+     */
     private Boolean checkFields() {
         if (titleField.getText().length() <= 0 || descriptionField.getText().length() <= 0){
             Log.d("title check", titleField.getText() + (titleField.getText().equals("") ? "empty" : "non empty"));
