@@ -12,8 +12,8 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
     public PhotoTest() {
         super(com.example.taskmagic.MainActivity.class);
     }
-
-    /*test the constructor?*/
+/*
+    /*test the constructor?/
     public void testAddPhoto() {
         Bitmap image = null;
         Photo newPhoto = new Photo(image);
@@ -23,14 +23,14 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testGetImage() throws Exception {
-        Bitmap image = null; /*or maybe have a tester bitmap in res?*/
+        Bitmap image = null; /*or maybe have a tester bitmap in res?/
 
         Photo photo = new Photo(image);
 
         //assertNotNull(anotherImage);
         assertNull(photo.getImage());
     }
-
+*/
     public void testResizeImage() {         /*need to throw exception??*/
         //Bitmap image = get a bitmap image of w/e size
         // int originalSize = get original size of image

@@ -166,7 +166,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
                 TaskList taskList = new TaskList();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     UserTask task=ds.getValue(UserTask.class);
-                    if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned")
+                    if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned") || task.getStatus().equals("Requested")
                             || task.getStatus().equals("Done") || task.getStatus().equals("Bidded"))){
                         //continue;
                         taskList.add(task);
@@ -193,7 +193,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
      */
 
     public void addBid(final Bid bid){
-        database.child(bidTag).push().setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(context, "Bid Successfully Saved", Toast.LENGTH_LONG).show();
@@ -206,7 +206,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
      * @param bid
      */
     public void editBid(final Bid bid){
-        database.child(bidTag).child(bid.getTaskID()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(context, "Succesfully edited Bid", Toast.LENGTH_LONG).show();
@@ -353,5 +353,49 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
         });
     }
 
+    /**
+     * This function get the lowest bid for a given task in the database
+     * @param taskId
+     * @param listener
+     */
+    public void getLowestBidOnTask(final String taskId,final OnGetLowestBid listener){
+        database.child(bidTag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                float lowestBid = 99999f;
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    Bid bid=ds.getValue(Bid.class);
+                    if (bid.getTaskID().equals(taskId) && (float) bid.getAmount() < lowestBid){
+                        lowestBid = (float)bid.getAmount();
+                    }
 
+                }
+                listener.onSuccess(lowestBid);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
+    }
+
+    /**
+     * This function is used to remove a Bid from the database
+     * successfully removes a Bid to FireBase Database under user login
+     * @param bid
+     */
+    public void removeBid(Bid bid) {
+        database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Succesfully removed Bid", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }

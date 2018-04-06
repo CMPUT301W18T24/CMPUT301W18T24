@@ -40,6 +40,7 @@ public class AssignedFrag extends Fragment {
                 Intent myIntent = new Intent(getActivity(), ViewTaskActivity.class);
                 myIntent.putExtra("UserTask",chosenTask);
                 startActivity(myIntent);
+                updateView(listUserTask);
             }
         }));
 

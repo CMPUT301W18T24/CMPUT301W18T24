@@ -71,7 +71,7 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
         final Bid bid = bidList.getBid(position);
 
         holder.textTitle.setText(bid.getTaskTitle());
-        holder.textAmount.setText("Bid Amount: "+bid.getAmount());
+        holder.textAmount.setText("Bid Amount: " + String.format("%.2f",bid.getAmount()));
 
         holder.textOption.setOnClickListener(new View.OnClickListener() {
             @Override

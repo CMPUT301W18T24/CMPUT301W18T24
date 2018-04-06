@@ -24,6 +24,7 @@ public class EditDialog extends Dialog {
     // This interface returns Title, Date, and Description back
     public interface onDialogListener{
         void onEnsure(String title, String date, String description);
+        void onCancel();
     }
 
     /**
@@ -108,6 +109,7 @@ public class EditDialog extends Dialog {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                listener.onCancel();
                 dismiss();
             }
         });

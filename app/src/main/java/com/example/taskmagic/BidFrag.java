@@ -57,5 +57,6 @@ public class BidFrag extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter=new BidsAdapter(bidList,getActivity());
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

@@ -31,6 +31,7 @@ public class BidDetailsActivity extends AppCompatActivity {
     private TextView provider;
     private TextView amount;
     private TextView lowestAmount;
+    private boolean owner = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,38 +50,109 @@ public class BidDetailsActivity extends AppCompatActivity {
 
         bid = (Bid)getIntent().getSerializableExtra("Bid");
 
-        final Button button_accept = (Button) findViewById(R.id.button_accept);
+        if (bid.getProvider().equals(singleton.getUserId())) {
+            owner = true;
+        }
+
+        final Button button = (Button) findViewById(R.id.button_accept);
         Button button_contact = (Button) findViewById(R.id.button_contact);
+
+        button.setVisibility(View.VISIBLE);
+        if (owner) {
+            button.setText("DECLINE");
+        } else if (!bid.getRequestor().equals(singleton.getUserId())) {
+            button.setVisibility(View.GONE);
+        }
+
 
         initView();
 
-        button_accept.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bid.acceptBid();
-                task.setStatus("Assigned");
-                task.setProvider(bid.getProvider());
-                task.setAssigned(true);
-                fmanager.editTask(task);
-                fmanager.editBid(bid);
-                Toast toast = Toast.makeText(getApplicationContext(), "Accepted.", Toast.LENGTH_LONG);
-                button_accept.setEnabled(false);
+                if (owner) {
+                    delcineBid();
+                } else {
+                    acceptBid();
+                }
+            }
+        });
+    }
+
+    /**
+     * This method declines the chosen bid on task
+     */
+    private void delcineBid() {
+        fmanager.removeBid(bid);
+        fmanager.getTaskInfo(bid.getTaskID(), new OnGetATaskListener() {
+            @Override
+            public void onSuccess(UserTask t) {
+                task = t;
+            }
+
+            @Override
+            public void onFailure(String message) {
 
             }
         });
+        fmanager.getBidsListOnTask(task.getId(), new OnGetBidsList() {
+            @Override
+            public void onSuccess(BidList Bids) {
+                if (Bids.getCount() == 0){
+                    task.setStatus("Requested");
+                    task.setBidded(false);
+                    fmanager.editTask(task);
+                }
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+        Toast.makeText(getApplicationContext(), "Declined.", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    /**
+     * This method accepts the chosen bid on task
+     */
+    private void acceptBid() {
+        bid.acceptBid();
+        task.setStatus("Assigned");
+        task.setProvider(bid.getProvider());
+        task.setAssigned(true);
+        fmanager.editTask(task);
+        fmanager.editBid(bid);
+        Toast.makeText(getApplicationContext(), "Accepted.", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     /**
      * Initiates views of activity
      */
     private void initView() {
+        //Set current lowest bid
+        fmanager.getLowestBidOnTask(bid.getTaskID(), new OnGetLowestBid() {
+            @Override
+            public void onSuccess(float lowestBid) {
+                lowestAmount.setText(String.format("%.2f", lowestBid));
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
+        //get info of the task
         fmanager.getTaskInfo(bid.getTaskID(), new OnGetATaskListener() {
             @Override
             public void onSuccess(UserTask t) {
                 task = t;
                 title.setText(t.getTitle());
                 description.setText(t.getDescription());
-                lowestAmount.setText(valueOf(task.getLowestBid()));
+                //lowestAmount.setText(valueOf(task.getLowestBid()));
                 if (t.isAssigned()) {
                     Button button = (Button) findViewById(R.id.button_accept);
                     button.setEnabled(false);
@@ -95,7 +167,7 @@ public class BidDetailsActivity extends AppCompatActivity {
             }
         });
 
-
+        //set provider name
         fmanager.getUserInfo(bid.getProvider(), new OnGetUserInfoListener() {
             @Override
             public void onSuccess(User u) {
@@ -109,6 +181,6 @@ public class BidDetailsActivity extends AppCompatActivity {
                 finish();
             }
         });
-        amount.setText(valueOf(bid.getAmount()));
+        amount.setText(String.format("%.2f", bid.getAmount()));
     }
 }
