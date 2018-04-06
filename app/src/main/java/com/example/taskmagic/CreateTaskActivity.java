@@ -1,7 +1,9 @@
 package com.example.taskmagic;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -63,6 +65,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private int currYear;
     private int currMonth;
     private int currDay;
+    private String dateString;
 
     private EditText titleField;
     private EditText descriptionField;
@@ -90,6 +93,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         currYear = cal.get(Calendar.YEAR);
         currMonth = cal.get(Calendar.MONTH);
         currDay = cal.get(Calendar.DAY_OF_MONTH);
+        dateString = String.format("%d/%d/%d", currYear, currMonth + 1, currDay);
         dateField = findViewById(R.id.date_field);
         dateField.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,24 +153,26 @@ public class CreateTaskActivity extends AppCompatActivity {
         postTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (checkFields().equals(true)) {
 
-                newTitle = titleField.getText().toString().trim();
-                newDescription = descriptionField.getText().toString().trim();
-                taskRequester = singleton.getUserId();
-                //Jsonify photoUris for saving
-                String uris = gson.toJson(photoUris);
+                    newTitle = titleField.getText().toString().trim();
+                    newDescription = descriptionField.getText().toString().trim();
+                    taskRequester = singleton.getUserId();
+                    //Jsonify photoUris for saving
+                    String uris = gson.toJson(photoUris);
 
-                // save userTask to database
-                //UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
-                UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
-                Log.d("UserTask created", newTask.getTitle() + db + fmanager);
-                fmanager.addTask(newTask);
+                    // save userTask to database
+                    //UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
+                    UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
+                    Log.d("UserTask created", newTask.getTitle() + db + fmanager);
+                    fmanager.addTask(newTask);
 
-                Intent intent = new Intent(thisActivity, HomeFeed.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                thisActivity.startActivity(intent);
-                //go back to homeFeed
-                //https://stackoverflow.com/questions/14059810/go-back-to-mainactivity-when-ok-pressed-in-alertdialog-in-android
+                    Intent intent = new Intent(thisActivity, HomeFeed.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    thisActivity.startActivity(intent);
+                    //go back to homeFeed
+                    //https://stackoverflow.com/questions/14059810/go-back-to-mainactivity-when-ok-pressed-in-alertdialog-in-android
+                }
             }
         });
     }
@@ -259,6 +265,58 @@ public class CreateTaskActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             String newDate = String.format("%d/%d/%d", year, month + 1, dayOfMonth);
             dateField.setText(newDate);
+            dateString = newDate;
         }
     };
+
+    private Boolean checkFields() {
+        if (titleField.getText().length() <= 0 || descriptionField.getText().length() <= 0){
+            Log.d("title check", titleField.getText() + (titleField.getText().equals("") ? "empty" : "non empty"));
+            Toast.makeText(thisActivity, "Please fill empty fields.", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (titleField.getText().length() > 30) {
+            Toast.makeText(thisActivity, "Title is too long.", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (descriptionField.getText().length() > 300) {
+            Toast.makeText(thisActivity, "Description too long.", Toast.LENGTH_LONG).show();
+            return false;
+        } /*else if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))
+                || bitmaps.isEmpty()) {
+            return openCreateTaskWarning();
+        } */
+
+        return true;
+    }
+/*
+    private Boolean openCreateTaskWarning() {
+        final Boolean[] alertRetVal = new Boolean[1];
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(thisActivity);
+
+        String alertMessage = "Your task will:\n";
+        if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))){
+            alertMessage = String.format(alertMessage + "\t* Be set to finish today.\n");
+        } else if (bitmaps.isEmpty()) {
+            alertMessage = String.format(alertMessage + "\t* Have no photos to show.\n");
+        }
+        mBuilder.setMessage(alertMessage);
+
+        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertRetVal[0] = true;
+                Log.d("change RetVal", alertRetVal[0].toString());
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertRetVal[0] = false;
+            }
+        });
+
+        AlertDialog fieldsAlert = mBuilder.create();
+        fieldsAlert.show();
+
+//        Log.d(" xRetVal", alertRetVal[0].toString());
+        return alertRetVal[0];
+    } */
 }
