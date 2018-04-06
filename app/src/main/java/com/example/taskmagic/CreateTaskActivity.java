@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,6 +50,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     public static final int LOCATION_REQUEST = 31;
     public static final int maxHeight = 255;
     public static final int maxWidth = 255;
+    public static final int MAX_IMG_SIZE = 65536;
     private int CALENDAR_ID = 41;
 
     private FireBaseManager fmanager;
@@ -210,9 +212,27 @@ public class CreateTaskActivity extends AppCompatActivity {
                 Bitmap cameraBitmap = (Bitmap) data.getExtras().get("data");
                 cameraBitmap = Bitmap.createScaledBitmap(cameraBitmap, maxWidth, maxHeight, true);
                 // https://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
+                // https://stackoverflow.com/questions/28760941/compress-image-file-from-camera-to-certain-size -- 6/April/2018
+                int streamLength = MAX_IMG_SIZE;
+                int compressQuality = 105;
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                cameraBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                photoBArray = outputStream.toByteArray();      /* This byteArray is the photo to be saved into storage */
+                while (streamLength >= MAX_IMG_SIZE && compressQuality > 5) {
+                    try {
+                        outputStream.flush();
+                        outputStream.reset();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    compressQuality -= 5;
+                    cameraBitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, outputStream);
+                    photoBArray = outputStream.toByteArray();
+                    streamLength = photoBArray.length;
+                    if (BuildConfig.DEBUG) {
+                        Log.d("Test upload", "Quality: " + compressQuality);
+                        Log.d("Test upload", "Size: " + streamLength);
+                    }
+                }
+
                 photoUris.add(Base64.encodeToString(photoBArray, Base64.DEFAULT));
 
                 adapter.addItem(cameraBitmap);
@@ -230,9 +250,27 @@ public class CreateTaskActivity extends AppCompatActivity {
 
                     Bitmap galleryBitmap = BitmapFactory.decodeStream(inputStream);
                     galleryBitmap = Bitmap.createScaledBitmap(galleryBitmap, maxWidth, maxHeight, true);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    galleryBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                    photoBArray = baos.toByteArray();
+                    // https://stackoverflow.com/questions/28760941/compress-image-file-from-camera-to-certain-size -- 6/April/2018
+                    int streamLength = MAX_IMG_SIZE;
+                    int compressQuality = 105;
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    while (streamLength >= MAX_IMG_SIZE && compressQuality > 5) {
+                        try {
+                            outputStream.flush();
+                            outputStream.reset();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        compressQuality -= 5;
+                        galleryBitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, outputStream);
+                        photoBArray = outputStream.toByteArray();
+                        streamLength = photoBArray.length;
+                        if (BuildConfig.DEBUG) {
+                            Log.d("Test upload", "Quality: " + compressQuality);
+                            Log.d("Test upload", "Size: " + streamLength);
+                        }
+                    }
+
                     photoUris.add(Base64.encodeToString(photoBArray, Base64.DEFAULT));
 
                     adapter.addItem(galleryBitmap);
