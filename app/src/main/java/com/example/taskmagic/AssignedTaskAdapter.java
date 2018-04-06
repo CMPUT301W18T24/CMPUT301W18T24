@@ -77,7 +77,6 @@ public class AssignedTaskAdapter extends RecyclerView.Adapter<AssignedTaskAdapte
                 });
                 //displaying the popup
                 popup.show();
-
             }
         });
 

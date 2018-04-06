@@ -1,6 +1,8 @@
 package com.example.taskmagic;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,9 +36,10 @@ public class ViewTaskActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private TextView titleText;
     private TextView descriptionText;
-    private TextView dateText ;
+    private TextView dateText;
     private ImageView photo;
     private Button button;
+    private Button button_deletTask;
     private UserTask task;
     private ProgressDialog mProgress;
     private boolean taskOwenr = false;
@@ -59,6 +62,9 @@ public class ViewTaskActivity extends AppCompatActivity {
         task = (UserTask) getIntent().getSerializableExtra("UserTask");
 
         Button button_viewLocation = (Button) findViewById(R.id.button_viewLocation);
+        button_deletTask = (Button) findViewById(R.id.button_delete);
+
+
         button = (Button) findViewById(R.id.button_viewTask);
         titleText = (TextView) findViewById(R.id.textView_titleContent);
         descriptionText = (TextView) findViewById(R.id.textView_descriptionContent);
@@ -101,6 +107,28 @@ public class ViewTaskActivity extends AppCompatActivity {
                 fmanager.editTask(task);
             }
         });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Warning!");
+        builder.setMessage("Are you sure to delete the task permenatly?");
+        builder.setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //remove task
+                fmanager.removeTask(task.getId());
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //dismiss the dialog
+            }
+        });
+        final AlertDialog alertDialog = builder.create();
+
         initView();
         /**
         * Depending if User is the task owner, the Button will either Edit task or add Bid
@@ -144,6 +172,13 @@ public class ViewTaskActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MapsActivity.class));
             }
         });
+
+        button_deletTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.show();
+            }
+        });
     }
 
     /**
@@ -152,6 +187,9 @@ public class ViewTaskActivity extends AppCompatActivity {
     private void initView() {
         if (taskOwenr) {
             button.setText("EDIT");
+            if(task.getStatus().equals("Requested")) {
+                button_deletTask.setVisibility(View.VISIBLE);
+            }
         } else if (assignedTask) {
             button.setText("COMPLETE");
         }else {

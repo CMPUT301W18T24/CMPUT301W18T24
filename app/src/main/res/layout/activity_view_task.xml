@@ -90,6 +90,16 @@
         android:text="Button" />
 
     <Button
+        android:id="@+id/button_delete"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ea0808"
+        android:layout_above="@+id/button_viewLocation"
+        android:text="DELETE" />
+
+    <Button
         android:id="@+id/button_viewLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

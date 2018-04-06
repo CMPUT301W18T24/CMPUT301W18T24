@@ -166,7 +166,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
                 TaskList taskList = new TaskList();
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     UserTask task=ds.getValue(UserTask.class);
-                    if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned")
+                    if (task.getRequester().equals(requestor) && (task.getStatus().equals("Requested") || task.getStatus().equals("Assigned")
                             || task.getStatus().equals("Done") || task.getStatus().equals("Bidded"))){
                         //continue;
                         taskList.add(task);
