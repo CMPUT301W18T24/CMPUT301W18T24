@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -189,7 +190,20 @@ public class ViewTaskActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+                fmanager.getTaskInfo(task.getId(), new OnGetATaskListener() {
+                    @Override
+                    public void onSuccess(UserTask t) {
+                        Log.d("tag", "onSuccess: "+t.getId());
+                        LatLng latLng = new LatLng(t.getLatitude(), t.getLongtitude());
+                        startActivity(new Intent(getApplicationContext(), MapsActivity.class).putExtra("LatLng", latLng));
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+
+                    }
+                });
+
             }
         });
 

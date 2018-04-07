@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -75,6 +76,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private TextView dateField;
 
     private CreateTaskActivity thisActivity = this;
+    private LatLng location;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,6 +161,8 @@ public class CreateTaskActivity extends AppCompatActivity {
                 // save userTask to database
                 //UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
                 UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
+                newTask.setLatitude(location.latitude);
+                newTask.setLongtitude(location.longitude);
                 Log.d("UserTask created", newTask.getTitle() + db + fmanager);
                 fmanager.addTask(newTask);
 
@@ -196,6 +200,13 @@ public class CreateTaskActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
+            /**
+             * process LOCATION_REQUEST returns
+             */
+            if (requestCode == LOCATION_REQUEST) {
+                location = (LatLng) data.getExtras().get("Location");
+                Toast.makeText(getApplicationContext(), "into"+location, Toast.LENGTH_LONG).show();
+            }
 
             /**
              * process CAMERA_REQUEST returns

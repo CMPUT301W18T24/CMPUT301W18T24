@@ -19,6 +19,8 @@
         android:orientation="horizontal">
 
         <CheckBox
+            android:checked="true"
+            android:id="@+id/checkbox_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -26,6 +28,8 @@
 
 
         <CheckBox
+            android:checked="true"
+            android:id="@+id/checkbox_requested"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,6 +37,8 @@
 
 
         <CheckBox
+            android:checked="true"
+            android:id="@+id/checkbox_bidded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

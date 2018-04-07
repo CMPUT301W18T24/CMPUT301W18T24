@@ -8,9 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Yipu on 21/02/2018.
@@ -29,7 +26,8 @@ public class UserTask implements Serializable {
     private String date;
     private String photoUriString;
     private String provider;
-    private Location location;
+    private Double latitude;
+    private Double longtitude;
     private String uri;
     private ArrayList<String> photoUris;
     private float lowestBid = -1f;
@@ -202,21 +200,9 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * Takes a Location and sets the Location of this UserTask to the Location
-     * @param location
-     */
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    /**
-     * @see setLocation()
+     * see setBidded
      * @return
      */
-    public Location getLocation() {
-        return location;
-    }
-
     public boolean isBidded() {
         return bidded;
     }
@@ -291,5 +277,39 @@ public class UserTask implements Serializable {
 
     public float getLowestBid() {
         return lowestBid;
+    }
+
+
+    /**
+     * see setLatitude()
+     * @return
+     */
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * Takes a Location and sets the latitude of this UserTask
+     * @param latitude
+     */
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+
+    /**
+     * see setLongtitude()
+     * @return
+     */
+    public Double getLongtitude() {
+        return longtitude;
+    }
+
+    /**
+     * Takes a Location and sets the longtitude of this UserTask
+     * @param longtitude
+     */
+    public void setLongtitude(Double longtitude) {
+        this.longtitude = longtitude;
     }
 }
