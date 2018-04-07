@@ -70,7 +70,7 @@ public class MyTasksActivity extends AppCompatActivity {
      * @param requester -> the unique ID of the current user
      */
     private void listener(final String requester) {
-        fmanager.getMyTaskData(requester, new onGetMyTaskListener() {
+        fmanager.getMyTaskData(requester, new OnGetMyTaskListener() {
             @Override
             public void onSuccess(TaskList taskList) {
                 myTasks = taskList;

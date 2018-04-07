@@ -101,19 +101,19 @@ public class ViewTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (taskOwenr) {
-                    if (task.allowEditing()) {
+                    //if (task.allowEditing()) {
                         editDialog.show();
 
-                    } else {
-                        //shows message that you're not allowed to edit this task
-                    }
+//                    } else {
+//                        //shows message that you're not allowed to edit this task
+//                    }
 
                 } else {
-                    if (task.allowBidding()) {
+                    //if (task.allowBidding()) {
                         bidDialog.show();
-                    } else {
-                        //shows message that the task is done or assigned.
-                    }
+//                    } else {
+//                        //shows message that the task is done or assigned.
+//                    }
                 }
             }
         });

@@ -25,6 +25,8 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import misc.BottomNavigationViewHelper;
+
 /**
  * Created by steve on 2018-03-11.
  */
@@ -38,10 +40,11 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView mProfileNav;
     private FrameLayout mProfileFrame;
-    private bids_frag bidFragment;
-    private assigned_frag assignFragment;
-    private user_profile_frag userFragment;
-    private requested_frag requestFragment;
+    private Bids_Frag bidFragment;
+    private Assigned_Frag assignFragment;
+    private User_Profile_Frag userFragment;
+    private Requested_Frag requestFragment;
+    private Messages_Frag messagesFragment;
     private ImageView image;
 
 
@@ -49,11 +52,13 @@ public class ViewProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_profile);
         mProfileNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(mProfileNav);
         mProfileFrame = (FrameLayout) findViewById(R.id.user_fragment_container);
-        bidFragment = new bids_frag();
-        assignFragment = new assigned_frag();
-        userFragment = new user_profile_frag();
-        requestFragment = new requested_frag();
+        bidFragment = new Bids_Frag();
+        assignFragment = new Assigned_Frag();
+        userFragment = new User_Profile_Frag();
+        requestFragment = new Requested_Frag();
+        messagesFragment= new Messages_Frag();
         image=(ImageView)findViewById(R.id.profileImage);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +78,9 @@ public class ViewProfileActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.my_info:
                                 setFragment(userFragment);
+                                return true;
+                            case R.id.messages:
+                                setFragment(messagesFragment);
                                 return true;
                             case R.id.requested_task:
                                 setFragment(requestFragment);

@@ -21,8 +21,8 @@ public class UserTask implements Serializable {
     private String title;
     private String description;
     private String status="Requested";
-    private Boolean bidded = false;
-    private Boolean assigned = false;
+    private Boolean bidded;
+    private Boolean assigned;
     private String requester;
     private String date;
     private String photoUriString;
@@ -52,6 +52,8 @@ public class UserTask implements Serializable {
         this.photoUriString = photo; // if this is anything like BidsList, photo can just contain owner ID which can be retrieved *******
         // https://stackoverflow.com/questions/8654990/how-can-i-get-current-date-in-android -> 2018-Mar-13
         this.date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        this.bidded=false;
+        this.assigned=false;
     }
 
     /**
@@ -63,7 +65,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setDescription()
+     * @see
      * @return description
      */
     public String getDescription() {
@@ -71,11 +73,19 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setStatus()
+     * @see
      * @return
      */
     public String getStatus() {
         return status;
+    }
+
+    public Boolean getAssigned() {
+        return assigned;
+    }
+
+    public void setAssigned(Boolean assigned) {
+        this.assigned = assigned;
     }
 
     /**
@@ -86,8 +96,16 @@ public class UserTask implements Serializable {
         this.status = status;
     }
 
+    public Boolean getBidded() {
+        return bidded;
+    }
+
+    public void setBidded(Boolean bidded) {
+        this.bidded = bidded;
+    }
+
     /**
-     * @see setTitle()
+     * @see
      * @return
      */
     public String getTitle() {
@@ -111,7 +129,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setRequester()
+     * @see
      * @return
      */
     public String getRequester() {
@@ -119,7 +137,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setPhotoUriString()
+     * @see
      * @return
      */
     public String getPhotoUriString() {
@@ -143,7 +161,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setId()
+     * @see
      * @return
      */
     public String getId() {
@@ -159,7 +177,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setDate()
+     * @see
      * @return
      */
     public String getDate() {
@@ -191,7 +209,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setProvider()
+     * @see
      * @return
      */
     public String getProvider() {
@@ -207,7 +225,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setLocation()
+     * @see
      * @return
      */
     public Location getLocation() {

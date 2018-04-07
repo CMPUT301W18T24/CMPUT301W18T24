@@ -1,12 +1,13 @@
 package com.example.taskmagic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Yipu on 21/02/2018.
  */
 
-public class User {
+public class User implements Serializable {
     private String id;
     private String token;
     private String fullName;

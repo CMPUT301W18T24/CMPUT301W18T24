@@ -15,7 +15,7 @@ package com.example.taskmagic;
     import android.widget.EditText;
     import android.widget.ImageView;
 
-public class user_profile_frag extends Fragment {
+public class User_Profile_Frag extends Fragment {
         private EditText fullName;
         private EditText userName;
         private EditText emailAddress;
@@ -25,12 +25,14 @@ public class user_profile_frag extends Fragment {
         private ImageView imageView;
         private Button save;
         private String userid;
+        private UserSingleton singleton;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.user_profile_frag,container,false);
-        UserSingleton singleton = UserSingleton.getInstance();
+
+        singleton = UserSingleton.getInstance();
         fmanager = new FireBaseManager(singleton.getmAuth(), getActivity());
         listener(singleton.getUserId());
         fullName=(EditText)view.findViewById(R.id.editTextfullName);
@@ -51,10 +53,13 @@ public class user_profile_frag extends Fragment {
         return view;
     }
     private void listener(final String requestor) {
+
         fmanager.getUserInfo(requestor, new OnGetUserInfoListener() {
             @Override
             public void onSuccess(User user) {
                 userid=user.getId();
+                UserSingleton singleton = UserSingleton.getInstance();
+                singleton.setUserName(user.getUserName());
                 fullName.setText(user.getFullName());
                 emailAddress.setText(user.getEmailAddress());
                 phoneNumber.setText(user.getPhoneNumber());
