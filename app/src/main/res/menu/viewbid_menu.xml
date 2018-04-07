@@ -2,4 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/mnu_item_viewbid"
         android:title="View Details"/>
+    <item android:id="@+id/mnu_item_contact"
+        android:title="Contact Provider"/>
+    <item android:id="@+id/mnu_item_accept"
+        android:title="Accept Bid"/>
 </menu>

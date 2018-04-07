@@ -8,9 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Yipu on 21/02/2018.
@@ -20,16 +17,20 @@ public class UserTask implements Serializable {
     private String id;
     private String title;
     private String description;
-    private String status="Requested";
-    private Boolean bidded;
-    private Boolean assigned;
+    private String status = "Requested";
+    private boolean bidded = false;
+    private boolean assigned = false;
+    private boolean bidding = false;
+    private boolean editing = false;
     private String requester;
     private String date;
     private String photoUriString;
     private String provider;
-    private Location location;
+    private Double latitude;
+    private Double longtitude;
     private String uri;
     private ArrayList<String> photoUris;
+    private float lowestBid = -1f;
 
     public UserTask(){
 
@@ -80,28 +81,12 @@ public class UserTask implements Serializable {
         return status;
     }
 
-    public Boolean getAssigned() {
-        return assigned;
-    }
-
-    public void setAssigned(Boolean assigned) {
-        this.assigned = assigned;
-    }
-
     /**
      * Takes a String and sets the status of this UserTask to the String
      * @param status
      */
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Boolean getBidded() {
-        return bidded;
-    }
-
-    public void setBidded(Boolean bidded) {
-        this.bidded = bidded;
     }
 
     /**
@@ -217,18 +202,116 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * Takes a Location and sets the Location of this UserTask to the Location
-     * @param location
+     * see setBidded
+     * @return
      */
-    public void setLocation(Location location) {
-        this.location = location;
+    public boolean getBidded() {
+        return bidded;
     }
 
     /**
-     * @see
+     * This setter takes a boolean and changes bidded of this UserTask to the String
+     * @param bidded
+     */
+    public void setBidded(boolean bidded) {
+        this.bidded = bidded;
+    }
+
+    /**
+     * Returns a Boolean: determines if UserTask is Assigned
      * @return
      */
-    public Location getLocation() {
-        return location;
+    public boolean getAssigned() {
+        return assigned;
+    }
+
+    /**
+     * This setter takes a boolean and changes assigned of this UserTask to the String
+     * @param assigned
+     */
+    public void setAssigned(boolean assigned) {
+        this.assigned = assigned;
+    }
+
+    /**
+     * Returns a Boolean: determines if UserTask is being bidded on
+     * @return
+     */
+    public boolean isBidding() {
+        return bidding;
+    }
+
+    /**
+     * This setter takes a boolean and changes bidding of this UserTask to the String
+     * @param bidding
+     */
+    public void setBidding(boolean bidding) {
+        this.bidding = bidding;
+    }
+
+    /**
+     * Returns a Boolean: determines if UserTask is being edited
+     * @return
+     */
+    public boolean isEditing() {
+        return editing;
+    }
+
+    /**
+     * This setter takes a boolean and changes editing of this UserTask to the String
+     * @param editing
+     */
+    public void setEditing(boolean editing) {
+        this.editing = editing;
+    }
+
+    /**
+     * This setter takes a float and compare it with the current lowest bid of task, updates when necessary
+     * @param amount
+     */
+    public void setLowestBid(float amount) {
+        if (lowestBid < 0) {
+            lowestBid = amount;
+        } else if (lowestBid > amount) {
+            this.lowestBid = amount;
+        }
+    }
+
+    public float getLowestBid() {
+        return lowestBid;
+    }
+
+
+    /**
+     * see setLatitude()
+     * @return
+     */
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * Takes a Location and sets the latitude of this UserTask
+     * @param latitude
+     */
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+
+    /**
+     * see setLongtitude()
+     * @return
+     */
+    public Double getLongtitude() {
+        return longtitude;
+    }
+
+    /**
+     * Takes a Location and sets the longtitude of this UserTask
+     * @param longtitude
+     */
+    public void setLongtitude(Double longtitude) {
+        this.longtitude = longtitude;
     }
 }

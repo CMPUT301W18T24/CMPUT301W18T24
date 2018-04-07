@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Assigned_Frag extends Fragment {
+public class AssignedFrag extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView recyclerView;
     private FireBaseManager fmanager;
@@ -23,7 +23,8 @@ public class Assigned_Frag extends Fragment {
     private TaskList listUserTask;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.assigned_frag,container,false);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerAssigned);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -39,6 +40,7 @@ public class Assigned_Frag extends Fragment {
                 Intent myIntent = new Intent(getActivity(), ViewTaskActivity.class);
                 myIntent.putExtra("UserTask",chosenTask);
                 startActivity(myIntent);
+                updateView(listUserTask);
             }
         }));
 

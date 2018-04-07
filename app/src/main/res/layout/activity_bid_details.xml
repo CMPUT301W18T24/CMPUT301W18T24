@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+  ~ You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+  ~ You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+  ~
+  -->
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.example.taskmagic.BidDetailsActivity">
 
     <TextView
         android:id="@+id/textView_title"
@@ -12,7 +20,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="102dp"
+        android:layout_marginLeft="5dp"
         android:text="@string/title" />
 
     <TextView
@@ -21,6 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
         android:layout_below="@+id/textView_title"
         android:text="TextView" />
 
@@ -30,46 +40,55 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
         android:layout_below="@+id/textView_titleContent"
-        android:layout_marginTop="10dp"
         android:text="@string/description" />
 
     <TextView
-        android:id="@+id/textView_date"
+        android:id="@+id/textView_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
         android:layout_below="@+id/textView_descriptionContent"
-        android:text="@string/date" />
+        android:text="Provider" />
 
     <TextView
-        android:id="@+id/textView_bidList"
+        android:id="@+id/textView_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
-        android:layout_below="@+id/textView_dateContent"
-        android:text="Bids" />
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/textView_userContent"
+        android:text="Amount" />
+
 
     <TextView
-        android:id="@+id/textView_dateContent"
+        android:id="@+id/textView_amountContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView_date"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/textView_amount"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textView_bidContent"
+        android:id="@+id/textView_userContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView_bidList"
-        android:text="" />
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/textView_user"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/textView_descriptionContent"
@@ -77,51 +96,52 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
         android:layout_below="@+id/textView_description"
         android:text="TextView" />
 
+    <TextView
+        android:id="@+id/textView_lowestBid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/textView_amountContent"
+        android:text="Lowest Bid on Task" />
+
+
+    <TextView
+        android:id="@+id/textView_lowestBidContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/textView_lowestBid"
+        android:text="TextView" />
+
     <Button
-        android:id="@+id/button_viewTask"
+        android:id="@+id/button_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:icon="@drawable/ic_search"
+        android:layout_alignTop="@+id/textView_user"
+        android:text="Contact" />
+
+    <Button
+        android:id="@+id/button_accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button_viewLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button_viewTask"
-        android:text="ViewLocation" />
-
-    <Button
-        android:id="@+id/button_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textColor="#f10505"
         android:visibility="gone"
-        android:layout_above="@+id/button_viewLocation"
-        android:text="DELETE" />
-
-    <ImageButton
-        android:id="@+id/photo_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@mipmap/ic_launcher" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/bidList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView_bidList"
-        android:layout_above="@id/button_delete">
-    </android.support.v7.widget.RecyclerView>
+        android:text="Accept" />
 
 
 </RelativeLayout>

@@ -24,16 +24,16 @@ public class EditDialog extends Dialog {
     // This interface returns Title, Date, and Description back
     public interface onDialogListener{
         void onEnsure(String title, String date, String description);
+        void onCancel();
     }
 
     /**
      * This constructor creates the EditDialogue and sets date and details of Task
      * @param context
-     * @param date
      * @param task
      * @param listener
      */
-    public EditDialog(@NonNull Context context, String date, UserTask task, onDialogListener listener) {
+    public EditDialog(@NonNull Context context, UserTask task, onDialogListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;
@@ -109,6 +109,7 @@ public class EditDialog extends Dialog {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                listener.onCancel();
                 dismiss();
             }
         });

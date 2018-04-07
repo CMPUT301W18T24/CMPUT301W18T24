@@ -40,11 +40,12 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView mProfileNav;
     private FrameLayout mProfileFrame;
-    private Bids_Frag bidFragment;
-    private Assigned_Frag assignFragment;
-    private User_Profile_Frag userFragment;
-    private Requested_Frag requestFragment;
-    private Messages_Frag messagesFragment;
+
+    private BidFrag bidFragment;
+    private AssignedFrag assignFragment;
+    private UserProfileFrag userFragment;
+    private RequestedFrag requestFragment;
+    private Messages_Frag messagesFrag;
     private ImageView image;
 
 
@@ -54,11 +55,11 @@ public class ViewProfileActivity extends AppCompatActivity {
         mProfileNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mProfileNav);
         mProfileFrame = (FrameLayout) findViewById(R.id.user_fragment_container);
-        bidFragment = new Bids_Frag();
-        assignFragment = new Assigned_Frag();
-        userFragment = new User_Profile_Frag();
-        requestFragment = new Requested_Frag();
-        messagesFragment= new Messages_Frag();
+        bidFragment = new BidFrag();
+        assignFragment = new AssignedFrag();
+        userFragment = new UserProfileFrag();
+        requestFragment = new RequestedFrag();
+        messagesFrag=new Messages_Frag();
         image=(ImageView)findViewById(R.id.profileImage);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +81,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                                 setFragment(userFragment);
                                 return true;
                             case R.id.messages:
-                                setFragment(messagesFragment);
+                                setFragment(messagesFrag);
                                 return true;
                             case R.id.requested_task:
                                 setFragment(requestFragment);

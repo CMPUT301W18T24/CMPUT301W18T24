@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Yipu on 12/03/2018.
  */
@@ -21,6 +24,7 @@ public class BidDialog extends Dialog {
     // This interface sends the amount value back
     public interface onDialogListener {
         void onEnsure(String amount);
+        void onCancel();
     }
 
     /**
@@ -69,14 +73,26 @@ public class BidDialog extends Dialog {
      *      Clicking the confirm button gets the amount value from user input and reset editText
      *      Clicking the cancel button resets the amount value
      *      Both buttons dismisses dialogue
+     *      https://stackoverflow.com/questions/25118599/edittext-currency-validation-in-android
      */
     private void setListener() {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
-                listener.onEnsure(amount.getText().toString().trim());
-                amount.setText("");
+                String amountStr = amount.getText().toString().trim();
+                String pattern = "^([0-9]{1,4})(.[0-9]{0,2})?$"; // 4 digits followe by . followed by 2 digits
+                Pattern r = Pattern.compile(pattern);
+                Matcher m = r.matcher(amountStr);
+                if (m.matches()) {
+                    dismiss();
+                    if(!amountStr.isEmpty()) {
+                        listener.onEnsure(amountStr);
+                    }
+                    amount.setText("");
+                } else {
+                    amount.setError("Invalid input!");
+                }
+
             }
         });
 
@@ -85,6 +101,7 @@ public class BidDialog extends Dialog {
             public void onClick(View v) {
                 amount.setText("");
                 dismiss();
+                listener.onCancel();
             }
         });
     }

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by Yipu on 22/02/2018.
  */
 
-class Bid implements Serializable {
+class Bid implements Serializable, Comparable<Bid> {
     private String taskID;
     private boolean accepted;
     private boolean declined;
@@ -17,6 +17,8 @@ class Bid implements Serializable {
     private String provider;
     private String requestor;
     private String taskTitle;
+    private String providerName;
+    private String requestorName;
     private String status;
 
     public Bid(){}
@@ -165,4 +167,26 @@ class Bid implements Serializable {
     public void setTaskTitle(String title){
         this.taskTitle=title;
     }
+
+    @Override
+    public int compareTo(@NonNull Bid b2) {
+        return (int)(this.amount - b2.getAmount());
+    }
+
+    public String getProviderName() {
+        return providerName;
+    }
+
+    public void setProviderName(String providerName) {
+        this.providerName = providerName;
+    }
+
+    public String getRequestorName() {
+        return requestorName;
+    }
+
+    public void setRequestorName(String requestorName) {
+        this.requestorName = requestorName;
+    }
+
 }

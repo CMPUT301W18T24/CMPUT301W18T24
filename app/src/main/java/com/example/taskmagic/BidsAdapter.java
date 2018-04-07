@@ -68,9 +68,10 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
      */
     @Override
     public void onBindViewHolder(final BidsAdapter.ViewHolder holder, final int position) {
-        final Bid bid=bidList.getBid(position);
+        final Bid bid = bidList.getBid(position);
+
         holder.textTitle.setText(bid.getTaskTitle());
-        holder.textAmount.setText("Bid Amount: "+bid.getAmount());
+        holder.textAmount.setText("Bid Amount: " + String.format("%.2f",bid.getAmount()));
 
         holder.textOption.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +88,15 @@ public class BidsAdapter extends RecyclerView.Adapter<BidsAdapter.ViewHolder> {
                         switch (item.getItemId()) {
 
                             case R.id.mnu_item_viewbid:
+                                Intent myIntent = new Intent(context, BidDetailsActivity.class);
+                                myIntent.putExtra("Bid",bid);
+                                context.startActivity(myIntent);
                                 break;
 
+                            case R.id.mnu_item_accept:
+                                break;
+
+                            case R.id.mnu_item_contact:
                         }
                         return false;
                     }

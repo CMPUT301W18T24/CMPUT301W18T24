@@ -1,37 +1,26 @@
 package com.example.taskmagic;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.*;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.Executor;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by hyusuf on 2018-03-08.
  */
+
 
 public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsList,OnGetAssignedTaskListener,OnGetChatMessagesListener,OnGetNotificationsListener {
     private FirebaseAuth mAuth;
@@ -41,7 +30,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
     private String bidTag = "bids";
     private String messageTag = "messages";
     private Context context;
-    private String notificationTag="Notifications";
+    private String notificationTag = "Notifications";
     private FirebaseAuth.AuthStateListener listener;
 
 
@@ -204,10 +193,15 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
                 TaskList taskList = new TaskList();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     UserTask task = ds.getValue(UserTask.class);
-                    if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned") || task.getStatus().equals("Done"))) {
-                        continue;
-                    } else if (task.getRequester().equals(requestor) && task.getStatus().equals("Requested")) {
+                    if (task.getRequester().equals(requestor) && (task.getStatus().equals("Assigned") || task.getStatus().equals("Requested")
+                            || task.getStatus().equals("Done") || task.getStatus().equals("Bidded"))) {
+                        //continue;
                         taskList.add(task);
+                    }
+                    //else if(task.getRequester().equals(requestor)){
+                    else {
+                        continue;
+                        //taskList.add(task);
                     }
                 }
                 listener.onSuccess(taskList);
@@ -227,13 +221,30 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
      */
 
     public void addBid(final Bid bid) {
-        database.child(bidTag).push().setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
+        database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(context, "Bid Successfully Saved", Toast.LENGTH_LONG).show();
             }
         });
 
+    }
+
+    /**
+     * @param bid
+     */
+    public void editBid(final Bid bid) {
+        database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Succesfully edited Bid", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
@@ -290,7 +301,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
     }
 
     /**
-     * This function get the bids for a given task in the database
+     * This function get the bids of a given user in the database
      *
      * @param provider
      * @param listener
@@ -346,7 +357,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
     }
 
     public void addChatMessage(ChatMessage message) {
-       database.child(messageTag).child(message.getSenderId()).push().setValue(message).addOnCompleteListener(new OnCompleteListener<Void>() {
+        database.child(messageTag).child(message.getSenderId()).push().setValue(message).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (!task.isSuccessful()) {
@@ -356,16 +367,16 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
                 }
             }
         });
-       database.child(messageTag).child(message.getReceiverId()).push().setValue(message).addOnCompleteListener(new OnCompleteListener<Void>() {
-           @Override
-           public void onComplete(@NonNull Task<Void> task) {
-               if (!task.isSuccessful()) {
-                   Toast.makeText(context, "Error " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-               } else {
-                   Toast.makeText(context, "Message sent successfully!", Toast.LENGTH_SHORT).show();
-               }
-           }
-       });
+        database.child(messageTag).child(message.getReceiverId()).push().setValue(message).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (!task.isSuccessful()) {
+                    Toast.makeText(context, "Error " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Message sent successfully!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 
@@ -373,10 +384,10 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
         database.child(messageTag).child(sender).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<ChatMessage> chatList=new ArrayList<ChatMessage>();
+                ArrayList<ChatMessage> chatList = new ArrayList<ChatMessage>();
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                    ChatMessage message= snap.getValue(ChatMessage.class);
-                    if (message.getSenderId().equals(sender) && message.getReceiverId().equals(receiver)|| message.getSenderId().equals(receiver) && message.getReceiverId().equals(sender)){
+                    ChatMessage message = snap.getValue(ChatMessage.class);
+                    if (message.getSenderId().equals(sender) && message.getReceiverId().equals(receiver) || message.getSenderId().equals(receiver) && message.getReceiverId().equals(sender)) {
                         chatList.add(message);
                     }
 
@@ -389,29 +400,103 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
                 listener.onFailure(databaseError.toString());
             }
         });
+    }
+
+    /**
+     * This function get the bids for a given task in the database
+     *
+     * @param taskId
+     * @param listener
+     */
+    public void getBidsListOnTask(final String taskId, final OnGetBidsList listener) {
+        database.child(bidTag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                BidList bidList = new BidList();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Bid bid = ds.getValue(Bid.class);
+                    if (bid.getTaskID().equals(taskId)) {
+                        bidList.add(bid);
+                    }
+                }
+                listener.onSuccess(bidList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
 
     }
 
-    public void retrieveNotifications(final String receiver, final OnGetNotificationsListener listener){
+    public void retrieveNotifications(final String receiver, final OnGetNotificationsListener listener) {
         database.child(notificationTag).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    List<NotificationMSG> nList = new ArrayList<NotificationMSG>();
-                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                        Log.d("Notification", "onDataChange: " + snap.getValue());
-                        NotificationMSG message = snap.getValue(NotificationMSG.class);
-                        if (message.getReceiverId().equals(receiver)) {
-                            nList.add(message);
-                        }
-
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<NotificationMSG> nList = new ArrayList<NotificationMSG>();
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    Log.d("Notification", "onDataChange: " + snap.getValue());
+                    NotificationMSG message = snap.getValue(NotificationMSG.class);
+                    if (message.getReceiverId().equals(receiver)) {
+                        nList.add(message);
                     }
-                    listener.onSuccess(nList);
                 }
+                listener.onSuccess(nList);
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    listener.onFailure(databaseError.toString());
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
+    }
+
+    /**
+     * This function get the lowest bid for a given task in the database
+     *
+     * @param taskId
+     * @param listener
+     */
+    public void getLowestBidOnTask(final String taskId, final OnGetLowestBid listener) {
+        database.child(bidTag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                float lowestBid = 99999f;
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Bid bid = ds.getValue(Bid.class);
+                    if (bid.getTaskID().equals(taskId) && (float) bid.getAmount() < lowestBid) {
+                        lowestBid = (float) bid.getAmount();
+                    }
                 }
-            });
+                listener.onSuccess(lowestBid);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailure(databaseError.toString());
+            }
+        });
+    }
+
+    /**
+     * This function is used to remove a Bid from the database
+     * successfully removes a Bid to FireBase Database under user login
+     *
+     * @param bid
+     */
+    public void removeBid(Bid bid) {
+        database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Succesfully removed Bid", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }
+

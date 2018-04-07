@@ -18,7 +18,7 @@ bid list on task details		-Paul
 links to user profiles			-Paul
 task status				-Harrold
 delete task				-Randy
-adding multiple photos			-Harrold
+adding multiple photoUris			-Harrold
 location				-Randy
 _______________
 onItemClick instead of menu button	-Harrold
@@ -27,3 +27,28 @@ onItemClick instead of menu button	-Harrold
 edit Bid.java (reqUsername, taskTitle, status, lowestBid)
 edit UserTask.java (reqUsername)
 profile bidView card
+______________________________
+SUPER CRUNCH
+
+create field check - get from origin/harroldPrj5
+delete task
+unique username and email
+clickable username
+lowest bid on the feed/search card
+monetary value check
+on bidded list: card
+notify declined bids
+hide declined bid
+multiple bids
+filter Requested List see Use Case 6.2.1
+bid details card
+re post task (if task is assigned and not completed)
+limit photo size
+set location on create task
+view location on details
+5km map
+
+ADD APK TO REPOSITORY
+wiki
+UML
+reuse statement
