@@ -167,7 +167,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
                     // save userTask to database
                     //UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
-                    UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
+                    UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris, dateString);
                     Log.d("UserTask created", newTask.getTitle() + db + fmanager);
                     fmanager.addTask(newTask);
 
