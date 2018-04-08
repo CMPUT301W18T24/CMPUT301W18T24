@@ -2,7 +2,6 @@ package com.example.taskmagic;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,12 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -264,7 +258,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
         dateText.setText(task.getDate());
-        fmanager.getBidsListOnTask(task.getId(), new OnGetBidsList() {
+        fmanager.getBidsListOnTask(task.getId(), new OnGetBidsListListener() {
             @Override
             public void onSuccess(BidList Bids) {
                 if (assignedTask) {

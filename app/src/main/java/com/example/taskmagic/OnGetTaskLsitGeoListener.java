@@ -8,10 +8,11 @@
 package com.example.taskmagic;
 
 /**
- * Created by Yipu on 06/04/2018.
+ * Created by Yipu on 07/04/2018.
  */
 
-public interface OnGetLowestBid {
-    public void onSuccess(float lowestBid);
+interface OnGetTaskLsitGeoListener {
+
+    public void onSuccess(TaskList taskList);
     public void onFailure(String message);
 }

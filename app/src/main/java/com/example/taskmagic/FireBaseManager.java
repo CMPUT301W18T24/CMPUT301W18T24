@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +23,7 @@ import java.util.List;
  */
 
 
-public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsList,OnGetAssignedTaskListener,OnGetChatMessagesListener,OnGetNotificationsListener {
+public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsListListener,OnGetAssignedTaskListener,OnGetChatMessagesListener,OnGetNotificationsListener {
     private FirebaseAuth mAuth;
     private DatabaseReference database;
     private String taskTag = "task";
@@ -308,7 +307,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
      * @param provider
      * @param listener
      */
-    public void getBidsList(final String provider, final OnGetBidsList listener) {
+    public void getBidsList(final String provider, final OnGetBidsListListener listener) {
         final BidList bidList = new BidList();
         database.child(bidTag).addValueEventListener(new ValueEventListener() {
             @Override
@@ -410,7 +409,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
      * @param taskId
      * @param listener
      */
-    public void getBidsListOnTask(final String taskId, final OnGetBidsList listener) {
+    public void getBidsListOnTask(final String taskId, final OnGetBidsListListener listener) {
         database.child(bidTag).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -460,7 +459,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
      * @param taskId
      * @param listener
      */
-    public void getLowestBidOnTask(final String taskId, final OnGetLowestBid listener) {
+    public void getLowestBidOnTask(final String taskId, final OnGetLowestBidListener listener) {
         database.child(bidTag).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -501,7 +500,13 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
         });
     }
 
-    public void searchViaGeoOnTask(final Location position, final OnGetTaskLsitGeo listener) {
+    /**
+     * This function takes a Location and return a Tasklist containing all tasks that has a distance less
+     * than 5km to the Location
+     * @param position
+     * @param listener
+     */
+    public void searchViaGeoOnTask(final Location position, final OnGetTaskLsitGeoListener listener) {
         database.child(taskTag).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -509,11 +514,13 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     UserTask task = ds.getValue(UserTask.class);
                     try {
-                        Location taskLocation = new Location("");
-                        taskLocation.setLatitude(task.getLatitude());
-                        taskLocation.setLongitude(task.getLongtitude());
-                        if (position.distanceTo(taskLocation) <= 5000f) {
-                            taskList.add(task);
+                        if (task.getStatus().equals("Bidded") || task.getStatus().equals("Requested")) {
+                            Location taskLocation = new Location("");
+                            taskLocation.setLatitude(task.getLatitude());
+                            taskLocation.setLongitude(task.getLongtitude());
+                            if (position.distanceTo(taskLocation) <= 5000f) {
+                                taskList.add(task);
+                            }
                         }
                     } catch (Exception e) {}
 

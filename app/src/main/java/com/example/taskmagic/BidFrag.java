@@ -35,7 +35,7 @@ public class BidFrag extends Fragment {
      * @param requestor
      */
     private void listener(final String requestor) {
-        fmanager.getBidsList(requestor, new OnGetBidsList() {
+        fmanager.getBidsList(requestor, new OnGetBidsListListener() {
             @Override
             public void onSuccess(BidList bidList) {
                 Log.d("Succes", "onSuccess: "+bidList.getCount());

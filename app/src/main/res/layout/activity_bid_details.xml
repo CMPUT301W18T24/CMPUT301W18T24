@@ -18,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:clickable="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
@@ -57,6 +58,41 @@
         android:text="Provider" />
 
     <TextView
+        android:id="@+id/textView_userContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/textView_user"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView_requester"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/textView_userContent"
+        android:text="Requester" />
+
+    <TextView
+        android:id="@+id/textView_requesterContent"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/textView_requester"
+        android:text="TextView" />
+
+    <TextView
         android:id="@+id/textView_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,9 +100,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="5dp"
-        android:layout_below="@+id/textView_userContent"
+        android:layout_below="@+id/textView_requesterContent"
         android:text="Amount" />
-
 
     <TextView
         android:id="@+id/textView_amountContent"
@@ -79,16 +114,6 @@
         android:layout_below="@+id/textView_amount"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/textView_userContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="5dp"
-        android:textSize="20sp"
-        android:layout_below="@+id/textView_user"
-        android:text="TextView" />
 
     <TextView
         android:id="@+id/textView_descriptionContent"
