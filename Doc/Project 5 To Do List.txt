@@ -56,8 +56,8 @@ reuse statement
 _________________________
 ULTRA CRUNCH
 
-link from bid details to task details
-full names on bid details
+link from bid details to task details -Done
+full names on bid details   -Done  Clickalbe as well
 decline bid ??
 reset task
 search keyword
@@ -65,9 +65,9 @@ messages
 edit Location
 rating
 FULL NAME everywhere - partially done
-accept bid and decline others
+accept bid and decline others   -Done, but need test
 set status from assigned to done
-geolocation search: show only bidded/requested tasks
+geolocation search: show only bidded/requested tasks -DONE (not tested)
 
 TESTSSSSS
 UML
