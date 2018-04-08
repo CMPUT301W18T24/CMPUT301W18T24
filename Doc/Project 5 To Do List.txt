@@ -63,6 +63,11 @@ reset task
 search keyword
 messages
 edit Location
+rating
+FULL NAME everywhere - partially done
+accept bid and decline others
+set status from assigned to done
+geolocation search: show only bidded/requested tasks
 
 TESTSSSSS
 UML
