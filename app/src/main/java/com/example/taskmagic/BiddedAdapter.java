@@ -72,7 +72,7 @@ public class BiddedAdapter extends RecyclerView.Adapter<BiddedAdapter.ViewHolder
         final UserTask task = tasks.getTask(position);
 
         holder.textTitle.setText(bid.getTaskTitle());
-        holder.textRequester.setText(bid.getRequestorName());
+        holder.textRequester.setText(task.getRequesterName());
         holder.textStatus.setText(task.getStatus());
 
         holder.textOwnBid.setText(String.format("%.2f", bid.getAmount()));
