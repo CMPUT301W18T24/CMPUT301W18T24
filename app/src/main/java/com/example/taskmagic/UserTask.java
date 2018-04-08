@@ -53,6 +53,8 @@ public class UserTask implements Serializable {
         this.photoUriString = photo; // if this is anything like BidsList, photo can just contain owner ID which can be retrieved *******
         // https://stackoverflow.com/questions/8654990/how-can-i-get-current-date-in-android -> 2018-Mar-13
         this.date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        this.bidded=false;
+        this.assigned=false;
     }
 
     /**
@@ -64,7 +66,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setDescription()
+     * @see
      * @return description
      */
     public String getDescription() {
@@ -72,7 +74,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setStatus()
+     * @see
      * @return
      */
     public String getStatus() {
@@ -88,7 +90,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setTitle()
+     * @see
      * @return
      */
     public String getTitle() {
@@ -112,7 +114,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setRequester()
+     * @see
      * @return
      */
     public String getRequester() {
@@ -120,7 +122,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setPhotoUriString()
+     * @see
      * @return
      */
     public String getPhotoUriString() {
@@ -144,7 +146,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setId()
+     * @see
      * @return
      */
     public String getId() {
@@ -160,7 +162,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setDate()
+     * @see
      * @return
      */
     public String getDate() {
@@ -192,7 +194,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see setProvider()
+     * @see
      * @return
      */
     public String getProvider() {
@@ -203,7 +205,7 @@ public class UserTask implements Serializable {
      * see setBidded
      * @return
      */
-    public boolean isBidded() {
+    public boolean getBidded() {
         return bidded;
     }
 
@@ -219,7 +221,7 @@ public class UserTask implements Serializable {
      * Returns a Boolean: determines if UserTask is Assigned
      * @return
      */
-    public boolean isAssigned() {
+    public boolean getAssigned() {
         return assigned;
     }
 

@@ -5,9 +5,14 @@
   ~ You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
   ~
   -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/ViewBidder"
+        android:enabled="true"
+        android:icon="@drawable/ic_notifications"
+        android:title="View Bidder"
+        />
 
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+</menu>

@@ -81,9 +81,10 @@ public class ViewTaskActivity extends AppCompatActivity {
 
         if (task.getRequester().equals(singleton.getUserId())) {
             taskOwenr = true;
-        } else if (task.isAssigned()) {
+        } else if (task.getAssigned()) {
             assignedTask = true;
         }
+
 
         // @See BidDialog.java
         final BidDialog bidDialog = new BidDialog(this, task, new BidDialog.onDialogListener() {
@@ -154,24 +155,24 @@ public class ViewTaskActivity extends AppCompatActivity {
                         task.setBidding(true);      //lock the task for bidding
                         fmanager.editTask(task);
                         bidDialog.show();
-                    } else {
-                        //shows message that the task is done or assigned.
-                    }
+                    } //else {
+//                        //shows message that the task is done or assigned.
+//                    }
                 }
             }
         });
+
 
         /**
          * This button allows the User to view geolocation of the Task
          */
         button_viewLocation.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 fmanager.getTaskInfo(task.getId(), new OnGetATaskListener() {
                     @Override
                     public void onSuccess(UserTask t) {
-                        Log.d("tag", "onSuccess: "+t.getId());
+                        Log.d("tag", "onSuccess: " + t.getId());
                         LatLng latLng = new LatLng(t.getLatitude(), t.getLongtitude());
                         startActivity(new Intent(getApplicationContext(), MapsActivity.class).putExtra("LatLng", latLng));
                     }
@@ -181,9 +182,9 @@ public class ViewTaskActivity extends AppCompatActivity {
 
                     }
                 });
-
             }
         });
+
 
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,6 +206,7 @@ public class ViewTaskActivity extends AppCompatActivity {
             }
         });
     }
+
 
     /**
      * Initialize the View of the activity, sets Task details into respective fields
@@ -327,7 +329,7 @@ public class ViewTaskActivity extends AppCompatActivity {
     }
 
 
-    private ArrayList<Bitmap> getBitmaps() {
+    private ArrayList<Bitmap> getBitmaps(){
         Gson gson = new Gson();
         PhotoList photoList = gson.fromJson(task.getPhotoUriString(), PhotoList.class);
 

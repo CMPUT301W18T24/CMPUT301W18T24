@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import misc.BottomNavigationViewHelper;
+
 /**
  * Created by hyusuf on 2018-03-08.
  */
@@ -46,6 +48,7 @@ public class HomeFeed extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mHomeNav=(BottomNavigationView)findViewById(R.id.home_bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(mHomeNav);
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         listener(singleton.getUserId());
         mHomeNav.setOnNavigationItemSelectedListener(
@@ -53,8 +56,11 @@ public class HomeFeed extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.notifications:
-                                startActivity(new Intent(HomeFeed.this, NotificationActivity.class));
+                            case R.id.logout:
+                                singleton.logout();
+                                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                                startActivity(intent);
                                 return true;
                             case R.id.map:
                                 startActivity(new Intent(HomeFeed.this, MapsActivity.class));
@@ -97,7 +103,7 @@ public class HomeFeed extends AppCompatActivity {
             @Override
             public void onSuccess(TaskList taskList) {
                 Log.d("Succes", "onSuccess: "+taskList.getCount());
-                TaskList list=new TaskList();
+                TaskList list=new TaskList();//recheck this function
                 list=taskList;
                 listUserTask = taskList;
                 updateView(taskList);

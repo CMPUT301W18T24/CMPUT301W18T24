@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+  ~ You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+  ~ You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+  ~
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Messages"
+        android:gravity="center"
+        android:typeface="normal"
+        android:textSize="25sp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/MRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+</LinearLayout>

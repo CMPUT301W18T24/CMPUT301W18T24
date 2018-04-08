@@ -25,6 +25,8 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import misc.BottomNavigationViewHelper;
+
 /**
  * Created by steve on 2018-03-11.
  */
@@ -38,10 +40,12 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView mProfileNav;
     private FrameLayout mProfileFrame;
+
     private BidFrag bidFragment;
     private AssignedFrag assignFragment;
     private UserProfileFrag userFragment;
     private RequestedFrag requestFragment;
+    private Messages_Frag messagesFrag;
     private ImageView image;
 
 
@@ -49,11 +53,13 @@ public class ViewProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_profile);
         mProfileNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(mProfileNav);
         mProfileFrame = (FrameLayout) findViewById(R.id.user_fragment_container);
         bidFragment = new BidFrag();
         assignFragment = new AssignedFrag();
         userFragment = new UserProfileFrag();
         requestFragment = new RequestedFrag();
+        messagesFrag=new Messages_Frag();
         image=(ImageView)findViewById(R.id.profileImage);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +79,9 @@ public class ViewProfileActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.my_info:
                                 setFragment(userFragment);
+                                return true;
+                            case R.id.messages:
+                                setFragment(messagesFrag);
                                 return true;
                             case R.id.requested_task:
                                 setFragment(requestFragment);

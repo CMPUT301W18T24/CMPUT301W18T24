@@ -33,29 +33,29 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference datbase;
     private ProgressDialog progress;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    private UserSingleton singleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mEmail=(EditText)findViewById(R.id.editTextEmail);
-        mEmail.setText("pp1234@gmail.com");
         mPassword=(EditText)findViewById(R.id.editTextpassword);
-        mPassword.setText("pp1234");
         mLogin=(Button) findViewById(R.id.buttonlogin);
         register=(TextView)findViewById(R.id.textViewNewUser);
         mAuth=FirebaseAuth.getInstance();
         progress=new ProgressDialog(this);
-
-
+        singleton=UserSingleton.getInstance();
         mAuthListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(mAuth.getCurrentUser()!=null){
-                    UserSingleton singleton=UserSingleton.getInstance();
                     singleton.setAuth(mAuth);
-                    startActivity(new Intent(getApplicationContext(),HomeFeed.class));
+                    User user=new User();
+                    //user.setId("");
+                    Intent myIntent = new Intent(MainActivity.this, HomeFeed.class);
+                    //myIntent.putExtra("id","gfozdHipBXQP1aaXsb9sQOYMLWW2");
+                    startActivity(myIntent);
                     Log.d("Main", "onAuthStateChanged: "+singleton.getmAuth());
                     init();
                 }
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     progress.dismiss();
                     Toast.makeText(getApplicationContext(),"SignIn Sucessful",Toast.LENGTH_LONG).show();
+
                 }
                 else{
                     progress.dismiss();

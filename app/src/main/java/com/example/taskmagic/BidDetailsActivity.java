@@ -153,7 +153,7 @@ public class BidDetailsActivity extends AppCompatActivity {
                 title.setText(t.getTitle());
                 description.setText(t.getDescription());
                 //lowestAmount.setText(valueOf(task.getLowestBid()));
-                if (t.isAssigned()) {
+                if (t.getAssigned()) {
                     Button button = (Button) findViewById(R.id.button_accept);
                     button.setEnabled(false);
                 }

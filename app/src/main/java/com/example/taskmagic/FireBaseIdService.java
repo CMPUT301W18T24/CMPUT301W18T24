@@ -29,4 +29,5 @@ public class FireBaseIdService extends FirebaseInstanceIdService {
         UserSingleton singleton= UserSingleton.getInstance();
         reference.child("users").child(singleton.getUserId()).child("token").setValue(Token);
     }
+
 }

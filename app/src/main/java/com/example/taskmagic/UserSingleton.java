@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class UserSingleton {
     private final static UserSingleton obj=new UserSingleton();
     private FirebaseAuth mAuth;
+    private String userName;
     private UserSingleton(){}
 
     public static UserSingleton getInstance(){
@@ -19,6 +20,15 @@ public class UserSingleton {
     public void setAuth(FirebaseAuth auth){
         this.mAuth=auth;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public FirebaseAuth getmAuth(){
         return mAuth;
     }

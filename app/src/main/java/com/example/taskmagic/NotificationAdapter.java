@@ -1,29 +1,30 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
+
 package com.example.taskmagic;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by hyusuf on 2018-03-12.
- */
-
-
-public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHolder> {
-    private TaskList taskList;
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
+    private List<NotificationMSG> nList;
     private Context context;
-    private UserTask chosenTask;
+    private NotificationMSG notification;
 
 
     @Override
@@ -37,8 +38,8 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
     }
 
 
-    public HomeFeedAdapter(TaskList taskList, Context context) {
-        this.taskList = taskList;
+    public NotificationAdapter(List<NotificationMSG> nList, Context context) {
+        this.nList= nList;
         this.context = context;
     }
 
@@ -52,9 +53,9 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
     //binds the data to the view
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final UserTask task=taskList.getTask(position);
-        holder.textTitle.setText(task.getTitle());
-        holder.textStatus.setText("Status: "+task.getStatus());
+        final NotificationMSG nMessage=nList.get(position);
+        holder.TaskTitle.setText(nMessage.getTaskTitle());
+        holder.message.setText(nMessage.getMessage());
 
         holder.textOption.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,22 +64,21 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
                 //creating a popup menu
                 PopupMenu popup = new PopupMenu(context, holder.textOption);
                 //inflating menu from xml resource
-                popup.inflate(R.menu.cardview_menu);
+                popup.inflate(R.menu.notification_menu);
                 //adding click listener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             // triggered when edit popup button clicked
-                            case R.id.mnu_item_view:
-                                chosenTask= taskList.getTask(position);
-                                Intent myIntent = new Intent(context, ViewTaskActivity.class);
-                                myIntent.putExtra("UserTask",chosenTask);
+                            case R.id.ViewBidder:
+                                notification= nList.get(position);
+                                Intent myIntent = new Intent(context, ViewProfileActivity.class);
+                                myIntent.putExtra("provider",notification.getSenderId());
                                 myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(myIntent);
                                 break;
                             // triggered when delete popup button clicked
-
                         }
                         return false;
                     }
@@ -91,12 +91,12 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
     }
 
     /**
-     *  This function returns the number of items in the subscription list
-     * @return ArrayList of subscriptions size
+     *  This function returns the number of
+     * @return ArrayList of notification list
      */
     @Override
     public int getItemCount() {
-        return taskList.getCount();
+        return nList.size();
     }
 
     /**
@@ -105,15 +105,17 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
      */
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textTitle;
-        public TextView textStatus;
+        public TextView TaskTitle;
+        public TextView message;
         public TextView textOption;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textTitle = (TextView) itemView.findViewById(R.id.taskTitle);
-            textStatus = (TextView) itemView.findViewById(R.id.status);
+            TaskTitle = (TextView) itemView.findViewById(R.id.taskTitle);
+            message = (TextView) itemView.findViewById(R.id.status);
             textOption = (TextView) itemView.findViewById(R.id.textOption);
         }
     }
 }
+
+
