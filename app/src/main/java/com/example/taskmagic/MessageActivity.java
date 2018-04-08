@@ -67,8 +67,7 @@ public class MessageActivity extends AppCompatActivity {
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         Intent intent = getIntent();
         userId = intent.getStringExtra("id");
-        this.getWindow().setSoftInputMode(
-               WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         getUser(userId);
         mSendImageButton.setOnClickListener(new View.OnClickListener() {
             @Override

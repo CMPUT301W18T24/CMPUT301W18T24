@@ -44,7 +44,7 @@ public class Messages_Frag extends Fragment {
         View view = inflater.inflate(R.layout.messages_frag, container, false);
         recyclerView = (RecyclerView)view.findViewById(R.id.MRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        UserSingleton singleton=UserSingleton.getInstance();
+        final UserSingleton singleton=UserSingleton.getInstance();
         db=FirebaseDatabase.getInstance().getReference();
         fmanager = new FireBaseManager(singleton.getmAuth(), getActivity());
         chatListener(singleton.getUserId());
@@ -55,7 +55,12 @@ public class Messages_Frag extends Fragment {
                 Log.d("Assigned frag item: ", "clicked " + position);
                 ChatMessage message= values.get(position);
                 Intent myIntent = new Intent(getActivity(), MessageActivity.class);
-                myIntent.putExtra("id",message.getReceiverId());
+                if (message.getReceiverId().equals(singleton.getUserId())) {
+                    myIntent.putExtra("id",message.getSenderId());
+                }
+                else{
+                    myIntent.putExtra("id",message.getReceiverId());
+                }
                 startActivity(myIntent);
             }
         }));
