@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -41,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by hyusuf on 2018-03-08.
@@ -51,7 +53,6 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int SELECT_FILE = 4;
 
     private EditText mUserName;
-    private EditText mPassWord;
     private EditText mEmail;
     private EditText mPhoneNumber;
     private EditText mFullName;
@@ -70,6 +71,8 @@ public class ProfileActivity extends AppCompatActivity {
     private ProgressDialog mProgress;
     private ArrayList<String> userNames;
     private Bitmap bitmap;
+    private String userId;
+    private boolean googleUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,20 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mProgress = new ProgressDialog(this);
         userNames=new ArrayList<String>();
+
+        try{
+            Intent intent= getIntent();
+            mUserName.setText(intent.getStringExtra("userName"));
+            mFullName.setText(intent.getStringExtra("name"));
+            userId=intent.getStringExtra("id");
+            mEmail.setText(intent.getStringExtra("email"));
+            mPassword.setVisibility(View.GONE);
+            googleUser=true;
+
+
+        }catch (Exception e){
+
+        }
 
         checkUserName();
 
@@ -104,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
                 FullName = mFullName.getText().toString();
                 PhoneNumber = mPhoneNumber.getText().toString();
                 UserName = mUserName.getText().toString();
-                if (Email.isEmpty() || PassWord.isEmpty() || FullName.isEmpty() || PhoneNumber.isEmpty() || UserName.isEmpty()) {
+                if (Email.isEmpty() || PassWord.isEmpty()&& googleUser==false || FullName.isEmpty() || PhoneNumber.isEmpty() || UserName.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "One Of The Fields Are Empty Please Complete Your Profile", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (UserName.length() < 8) {
@@ -116,20 +133,43 @@ public class ProfileActivity extends AppCompatActivity {
                     return;
                 }
 
-                User user = new User(FullName, Email, UserName, PassWord, PhoneNumber);
-                addUser(user);
+
+                if (googleUser){
+                    User user = new User(FullName, Email, UserName, PhoneNumber);
+                    user.setId(userId);
+                    String token= FirebaseInstanceId.getInstance().getToken();
+                    user.setToken(token);
+                    createGoogleUser(user);
+                }else{
+                    User user1 = new User(FullName, Email, UserName, PassWord, PhoneNumber);
+                    emailUser(user1);
+                }
+
             }
         });
 
 
     }
 
+    private void createGoogleUser(User user) {
+        mDatabase.child("users").child(user.getId()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(),"Saved your account",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+    }
+
     private boolean checkUniqueness(String userName) {
         if(userNames.size()!= 0){
             for(int i=0; i<userNames.size();i++) {
-                String name = userNames.get(i);
-                if (name.equals(userName)){
-                    return false;
+                if (userNames.get(i)!=null) {
+                    String name = userNames.get(i);
+                    if (name.equals(userName)) {
+                        return false;
+                    }
                 }
             }
         }
@@ -165,7 +205,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-    public void addUser(final User user) {
+    public void emailUser(final User user) {
         mProgress.setMessage("Saving");
         mProgress.show();
         mAuth.createUserWithEmailAndPassword(user.getEmailAddress(), user.getPassword())
@@ -176,8 +216,6 @@ public class ProfileActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(getApplicationContext(), "Profile Saved You Can Now Login", Toast.LENGTH_LONG).show();
                             user.setId(task.getResult().getUser().getUid());
-                            UserSingleton singleton=UserSingleton.getInstance();
-                            singleton.setUserName(user.getUserName());
                             mDatabase.child("users").child(user.getId()).setValue(user);
 
                         } else {
@@ -242,6 +280,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     }
+
 
 
 }

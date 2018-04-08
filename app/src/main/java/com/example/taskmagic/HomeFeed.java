@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Notification;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
@@ -35,7 +38,11 @@ public class HomeFeed extends AppCompatActivity {
     private BottomNavigationView mHomeNav;
     public static Boolean isActivity;
     private TaskList listUserTask;
-
+    private String userName;
+    private String personName;
+    private String personId;
+    private String email;
+    //private Uri personPhoto;
     /**
      * this function sets up the home feed
      * @param savedInstanceState
@@ -50,10 +57,21 @@ public class HomeFeed extends AppCompatActivity {
         mHomeNav=(BottomNavigationView)findViewById(R.id.home_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mHomeNav);
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
+        googleUser();
         fmanager.getUserInfo(singleton.getUserId(), new OnGetUserInfoListener() {
             @Override
             public void onSuccess(User user) {
-                singleton.setUserName(user.getFullName());
+                if (user.getUserName()==null){
+                    Intent intent=new Intent(getApplicationContext(),ProfileActivity.class);
+                    intent.putExtra("userName",userName);
+                    intent.putExtra("name",personName);
+                    intent.putExtra("id",singleton.getUserId());
+                    intent.putExtra("email",email);
+                    startActivity(intent);
+                }
+                else {
+                    singleton.setUserName(user.getFullName());
+                }
             }
 
             @Override
@@ -155,6 +173,16 @@ public class HomeFeed extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+    }
+    private void googleUser(){
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        if (acct != null) {
+            userName = acct.getDisplayName();
+            personName = acct.getGivenName();
+            email = acct.getEmail();
+            personId = acct.getId();
+            //personPhoto = acct.getPhotoUrl();
+        }
     }
 
 }

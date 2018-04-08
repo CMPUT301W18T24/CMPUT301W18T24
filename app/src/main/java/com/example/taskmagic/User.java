@@ -20,6 +20,13 @@ public class User implements Serializable {
 
     public User(){
     }
+    public User(String fullName, String emailAddress, String userName, String phoneNumber){
+        this.fullName=fullName;
+        this.emailAddress = emailAddress;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+
+    }
 
     public User(String fullName, String emailAddress, String userName, String password, String phoneNumber, String photo) {
         this.fullName=fullName;
