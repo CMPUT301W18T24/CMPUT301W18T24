@@ -31,6 +31,7 @@ public class ProfileDialog extends Dialog {
     private Context context;
     private User user;
     private ProfileDialog.onDialogListener listener;
+    private String currentUserId;
 
     public interface onDialogListener {
         void onEnsure();
@@ -42,11 +43,12 @@ public class ProfileDialog extends Dialog {
      * @param context
      * @param user
      */
-    public ProfileDialog(@NonNull Context context, User user, onDialogListener listener) {
+    public ProfileDialog(@NonNull Context context, User user, String currentUserId, onDialogListener listener) {
         super(context);
         this.context = context;
         this.user = user;
         this.listener = listener;
+        this.currentUserId = currentUserId;
     }
 
     TextView username;
@@ -81,6 +83,9 @@ public class ProfileDialog extends Dialog {
         fullname.setText(user.getFullName());
         email.setText(user.getEmailAddress());
         phone.setText(user.getPhoneNumber());
+        if (currentUserId.equals(user.getId())) {
+            contactButton.setVisibility(View.GONE);
+        }
 
     }
 
