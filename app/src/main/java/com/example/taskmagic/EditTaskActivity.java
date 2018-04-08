@@ -1,15 +1,21 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
+
 package com.example.taskmagic;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,11 +30,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
@@ -39,67 +42,69 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.taskmagic.CreateTaskActivity.MAX_IMG_SIZE;
+import static com.example.taskmagic.CreateTaskActivity.maxHeight;
+import static com.example.taskmagic.CreateTaskActivity.maxWidth;
+
 /**
- * This activity is where information is entered to make a new UserTask.
- * Created by hyusuf on 2018-03-11.
+ * Created by harrold on 4/7/2018. Originally EditDialog by yuandi
  */
 
-public class CreateTaskActivity extends AppCompatActivity {
+public class EditTaskActivity extends AppCompatActivity {
 
-    public static final int GALLERY_REQUEST = 20;
     public static final int CAMERA_REQUEST = 21;
-    public static final int LOCATION_REQUEST = 31;
-    public static final int maxHeight = 255;
-    public static final int maxWidth = 255;
-    public static final int MAX_IMG_SIZE = 65536;
-    private int CALENDAR_ID = 41;
-
-    private FireBaseManager fmanager;
+    private static final int GALLERY_REQUEST = 20;
+    private static final int CALENDAR_ID = 41;
     private DatabaseReference db;
+    private FireBaseManager fmanager;
     private UserSingleton singleton = UserSingleton.getInstance();
-    private final Gson gson = new Gson();
+    private Gson gson = new Gson();
 
-    private String newTitle;
-    private String newDescription;
-    private String taskRequester;
-    private byte[] photoBArray;
-    private PhotoList photoUris = new PhotoList();
-    private ArrayList<Bitmap> bitmaps = new ArrayList<>();
+    UserTask task;
+    ArrayList<Bitmap> bitmaps;
+    byte[] photoBytes;
+    PhotoList photoUris = new PhotoList();
     private int currYear;
     private int currMonth;
     private int currDay;
     private String dateString;
 
-    private EditText titleField;
-    private EditText descriptionField;
-    private Button addLocationButton;
-    private ImageButton openCameraButton;
-    private ImageButton openGalleryButton;
-    private RecyclerView displayRecycler;
-    private PhotosAdapter adapter;
-    private Button postTaskButton;
-    private TextView dateField;
+    EditText titleText;
+    EditText descriptionText;
+    TextView dateText;
+    Button confirmButton;
+    Button cancelButton;
+    RecyclerView displayRecycler;
+    ImageButton cameraButton;
+    ImageButton galleryButton;
+    private PhotosAdapter photosAdapter;
 
-    private CreateTaskActivity thisActivity = this;
-    private LatLng location;
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_createtask);
-
-        titleField = findViewById(R.id.task_title);
-        descriptionField = findViewById(R.id.task_description);
+        setContentView(R.layout.activity_edit_task);
 
         db = FirebaseDatabase.getInstance().getReference();
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
+
+        task = (UserTask) getIntent().getSerializableExtra("UserTask");
+        bitmaps = getBitmaps();
 
         final Calendar cal = Calendar.getInstance();
         currYear = cal.get(Calendar.YEAR);
         currMonth = cal.get(Calendar.MONTH);
         currDay = cal.get(Calendar.DAY_OF_MONTH);
-        dateString = String.format("%d/%d/%d", currYear, currMonth + 1, currDay);
-        dateField = findViewById(R.id.date_field);
-        dateField.setOnClickListener(new View.OnClickListener() {
+        dateString = task.getDate();
+
+        titleText = findViewById(R.id.editText_titleContent);
+        descriptionText = findViewById(R.id.editText_descriptionContent);
+        dateText = findViewById(R.id.editText_dateContent);
+
+        titleText.setText(task.getTitle());
+        descriptionText.setText(task.getDescription());
+
+        dateText.setText(task.getDate());
+        dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(CALENDAR_ID);
@@ -107,85 +112,77 @@ public class CreateTaskActivity extends AppCompatActivity {
         });
 
         /**
-         * On press of button, map opens up and allows user to pin point a location
+         * @see CreateTaskActivity
          */
-        addLocationButton = findViewById(R.id.set_location_button);
-        addLocationButton.setOnClickListener(new View.OnClickListener() {
+        cameraButton = findViewById(R.id.edit_camera_button);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent locationIntent = new Intent(thisActivity, MapsActivity.class);
-                startActivityForResult(locationIntent, LOCATION_REQUEST);
-                // location is processed in onActivityResult()
-            }
-        });
-
-        /**
-         * On press of button, camera opens up and allows user to take a snapshot
-         */
-        openCameraButton = findViewById(R.id.camera_button);
-        openCameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             }
         });
 
         /**
-         * On press of button, gallery opens up and allows user to pick 1 photo to attach to task
+         * @see CreateTaskActivity
          */
-        openGalleryButton = findViewById(R.id.gallery_button);
-        openGalleryButton.setOnClickListener(new View.OnClickListener() {
+        galleryButton = findViewById(R.id.edit_gallery_button);
+        galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onGalleryButtonClick(view);
+            public void onClick(View v) {
+                onGalleryButtonClick(v);
             }
         });
 
-        /**
-         * This RecyclerView displays the photos associated with the task being created
-         */
-        displayRecycler = findViewById(R.id.display_recycler);
-        displayRecycler.setLayoutManager(new LinearLayoutManager(thisActivity, LinearLayoutManager.HORIZONTAL, false));
-        adapter = new PhotosAdapter(bitmaps, photoUris,thisActivity);
-        displayRecycler.setAdapter(adapter);
+        displayRecycler = findViewById(R.id.edit_display_recycler);
+        displayRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        photosAdapter = new PhotosAdapter(bitmaps, photoUris, this);
+        displayRecycler.setAdapter(photosAdapter);
 
         /**
-         * On press of button, the task is uploaded onto database
+         * @see CreateTaskActivity
          */
-        postTaskButton = findViewById(R.id.post_task_button);
-        postTaskButton.setOnClickListener(new View.OnClickListener() {
+        confirmButton = findViewById(R.id.edit_confirm_button);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 if (checkFields().equals(true)) {
-
-                    newTitle = titleField.getText().toString().trim();
-                    newDescription = descriptionField.getText().toString().trim();
-                    taskRequester = singleton.getUserId();
+                    task.setTitle(titleText.getText().toString().trim());
+                    task.setDescription(descriptionText.getText().toString().trim());
+                    task.setDate(dateText.getText().toString().trim());
                     //Jsonify photoUris for saving
-                    String uris = gson.toJson(photoUris);
+                    task.setPhotoUriString(gson.toJson(photoUris));
+                    task.setEditing(false);
 
                     // save userTask to database
-                    //UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
-                    UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris, dateString);
-                    Log.d("UserTask created", newTask.getTitle() + db + fmanager);
-                    fmanager.addTask(newTask);
+                    Log.d("UserTask edited", task.getTitle() + db + fmanager);
+                    fmanager.editTask(task);
 
-                    Intent intent = new Intent(thisActivity, HomeFeed.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    thisActivity.startActivity(intent);
+                    Intent retIntent = new Intent(getApplicationContext(), ViewTaskActivity.class);
+                    retIntent.putExtra("UserTask", task);
+                    startActivity(retIntent);
                     //go back to homeFeed
                     //https://stackoverflow.com/questions/14059810/go-back-to-mainactivity-when-ok-pressed-in-alertdialog-in-android
                 }
             }
         });
+
+        cancelButton = findViewById(R.id.edit_cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
     }
 
     /**
-     * This method executes when openGallery button is clicked.
-     * https://www.youtube.com/watch?v=wBuWqqBWziU -> 13-Mar-2018
+     * @see CreateTaskActivity
+     * @param view
      */
-    public void onGalleryButtonClick(View view) {
+    private void onGalleryButtonClick(View view) {
         // invoke the image gallery using an implicit intent.
         Intent galleryIntent = new Intent(Intent.ACTION_PICK);
 
@@ -206,13 +203,6 @@ public class CreateTaskActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            /**
-             * process LOCATION_REQUEST returns
-             */
-            if (requestCode == LOCATION_REQUEST) {
-                location = (LatLng) data.getExtras().get("Location");
-                Toast.makeText(getApplicationContext(), "into"+location, Toast.LENGTH_LONG).show();
-            }
 
             /**
              * process CAMERA_REQUEST returns
@@ -234,17 +224,17 @@ public class CreateTaskActivity extends AppCompatActivity {
                     }
                     compressQuality -= 5;
                     cameraBitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, outputStream);
-                    photoBArray = outputStream.toByteArray();
-                    streamLength = photoBArray.length;
+                    photoBytes = outputStream.toByteArray();
+                    streamLength = photoBytes.length;
                     if (BuildConfig.DEBUG) {
                         Log.d("Test upload", "Quality: " + compressQuality);
                         Log.d("Test upload", "Size: " + streamLength);
                     }
                 }
 
-                photoUris.add(Base64.encodeToString(photoBArray, Base64.DEFAULT));
+                photoUris.add(Base64.encodeToString(photoBytes, Base64.DEFAULT));
 
-                adapter.addItem(cameraBitmap);
+                photosAdapter.addItem(cameraBitmap);
             }
 
             /**
@@ -272,17 +262,17 @@ public class CreateTaskActivity extends AppCompatActivity {
                         }
                         compressQuality -= 5;
                         galleryBitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, outputStream);
-                        photoBArray = outputStream.toByteArray();
-                        streamLength = photoBArray.length;
+                        photoBytes = outputStream.toByteArray();
+                        streamLength = photoBytes.length;
                         if (BuildConfig.DEBUG) {
                             Log.d("Test upload", "Quality: " + compressQuality);
                             Log.d("Test upload", "Size: " + streamLength);
                         }
                     }
 
-                    photoUris.add(Base64.encodeToString(photoBArray, Base64.DEFAULT));
+                    photoUris.add(Base64.encodeToString(photoBytes, Base64.DEFAULT));
 
-                    adapter.addItem(galleryBitmap);
+                    photosAdapter.addItem(galleryBitmap);
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -291,6 +281,25 @@ public class CreateTaskActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    /**
+     * @see ViewTaskActivity
+     * @return
+     */
+    private ArrayList<Bitmap> getBitmaps() {
+        Gson gson = new Gson();
+        PhotoList photoList = gson.fromJson(task.getPhotoUriString(), PhotoList.class);
+
+        ArrayList<Bitmap> bitmaps = new ArrayList<>();
+        for (int i = 0 ; i < photoList.getCount() ; i++) {
+            photoUris.add(photoList.getPhoto(i));
+
+            byte[] barray = Base64.decode(photoList.getPhoto(i), Base64.DEFAULT);
+            bitmaps.add(BitmapFactory.decodeByteArray(barray, 0, barray.length));
+        }
+
+        return bitmaps;
     }
 
     /**
@@ -311,63 +320,29 @@ public class CreateTaskActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             String newDate = String.format("%d/%d/%d", year, month + 1, dayOfMonth);
-            dateField.setText(newDate);
+            dateText.setText(newDate);
             dateString = newDate;
         }
     };
 
     /**
-     * This will check input fields before posting UserTask.
-     * @return
+     * @see CreateTaskActivity
+     * @return boolean
      */
     private Boolean checkFields() {
-        if (titleField.getText().length() <= 0 || descriptionField.getText().length() <= 0){
-            Log.d("title check", titleField.getText() + (titleField.getText().equals("") ? "empty" : "non empty"));
-            Toast.makeText(thisActivity, "Please fill empty fields.", Toast.LENGTH_LONG).show();
+        if (titleText.getText().length() <= 0 || descriptionText.getText().length() <= 0){
+            Log.d("title check", titleText.getText() + (titleText.getText().equals("") ? "empty" : "non empty"));
+            Toast.makeText(this, "Please fill empty fields.", Toast.LENGTH_LONG).show();
             return false;
-        } else if (titleField.getText().length() > 30) {
-            Toast.makeText(thisActivity, "Title is too long.", Toast.LENGTH_LONG).show();
+        } else if (titleText.getText().length() > 30) {
+            Toast.makeText(this, "Title is too long.", Toast.LENGTH_LONG).show();
             return false;
-        } else if (descriptionField.getText().length() > 300) {
-            Toast.makeText(thisActivity, "Description too long.", Toast.LENGTH_LONG).show();
+        } else if (descriptionText.getText().length() > 300) {
+            Toast.makeText(this, "Description too long.", Toast.LENGTH_LONG).show();
             return false;
-        } /*else if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))
-                || bitmaps.isEmpty()) {
-            return openCreateTaskWarning();
-        } */
+        }
 
+        Log.d("Check input fields", "All fields have valid inputs.");
         return true;
     }
-/*
-    private Boolean openCreateTaskWarning() {
-        final Boolean[] alertRetVal = new Boolean[1];
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(thisActivity);
-
-        String alertMessage = "Your task will:\n";
-        if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))){
-            alertMessage = String.format(alertMessage + "\t* Be set to finish today.\n");
-        } else if (bitmaps.isEmpty()) {
-            alertMessage = String.format(alertMessage + "\t* Have no photos to show.\n");
-        }
-        mBuilder.setMessage(alertMessage);
-
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertRetVal[0] = true;
-                Log.d("change RetVal", alertRetVal[0].toString());
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertRetVal[0] = false;
-            }
-        });
-
-        AlertDialog fieldsAlert = mBuilder.create();
-        fieldsAlert.show();
-
-//        Log.d(" xRetVal", alertRetVal[0].toString());
-        return alertRetVal[0];
-    } */
 }

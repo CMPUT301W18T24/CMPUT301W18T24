@@ -67,8 +67,8 @@ public class EditDialog extends Dialog {
         descriptionText = findViewById(R.id.editText_descriptionContent);
         descriptionText.setText(task.getDescription());
 
-        confirmButton = findViewById(R.id.button_edit1);
-        cancelButton = findViewById(R.id.button_edit2);
+        confirmButton = findViewById(R.id.edit_confirm_button);
+        cancelButton = findViewById(R.id.edit_cancel_button);
 
     }
 

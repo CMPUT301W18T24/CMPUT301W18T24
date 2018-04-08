@@ -162,7 +162,9 @@ public class ViewTaskActivity extends AppCompatActivity {
                     if (task.allowEditing()) {
                         task.setEditing(true);      //lock the task for editing
                         fmanager.editTask(task);
-                        editDialog.show();
+                        Intent editIntent = new Intent(getApplicationContext(), EditTaskActivity.class);
+                        editIntent.putExtra("UserTask", task);
+                        startActivity(editIntent);
 
                     } else {
                         //shows message that you're not allowed to edit this task
@@ -270,12 +272,6 @@ public class ViewTaskActivity extends AppCompatActivity {
 
             }
         });
-        /*
-        if (task.getPhoto() != null) {
-            photo.setImageBitmap(task.getPhoto().getImage());
-        }
-        */
-
     }
 
     /**
@@ -298,6 +294,9 @@ public class ViewTaskActivity extends AppCompatActivity {
     private ImageView[] dots;
 
 
+    /**
+     * This method opens a dialog with a slider with all the task's photos.
+     */
     //https://www.youtube.com/watch?v=GqcFEvBCnIk       4/April/2018
     //https://www.youtube.com/watch?v=plnLs6aST1M       4/April/2018
     //https://www.youtube.com/watch?v=Q2M30NriSsE       5/April/2018
@@ -351,6 +350,10 @@ public class ViewTaskActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * This method decodes the byte arrays in the task's PhotoList and returns them in an array list of bitmaps
+     * @return
+     */
     private ArrayList<Bitmap> getBitmaps(){
         Gson gson = new Gson();
         PhotoList photoList = gson.fromJson(task.getPhotoUriString(), PhotoList.class);

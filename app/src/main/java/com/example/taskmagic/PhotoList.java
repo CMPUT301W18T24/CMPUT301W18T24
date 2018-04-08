@@ -35,6 +35,7 @@ public class PhotoList {
      * @param photoUri
      */
     public void remove(String photoUri) {   uriList.remove(photoUri);   }
+    public void remove (int position) { uriList.remove(position);   }
 
     /**
      * Takes in a String uri and checks if the list has that uri
