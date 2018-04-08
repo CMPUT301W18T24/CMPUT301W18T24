@@ -91,6 +91,7 @@
         </service>
 
         <activity android:name=".BidDetailsActivity"></activity>
+        <activity android:name=".EditTaskActivity"></activity>
     </application>
 
 </manifest>

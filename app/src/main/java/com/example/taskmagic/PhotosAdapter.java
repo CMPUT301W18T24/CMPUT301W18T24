@@ -33,10 +33,12 @@ import java.util.ArrayList;
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
 
     private ArrayList<Bitmap> bitmaps;
+    private PhotoList photoUris;
     private Context context;
 
-    public PhotosAdapter(ArrayList<Bitmap> bitmaps, Context context) {
+    public PhotosAdapter(ArrayList<Bitmap> bitmaps, PhotoList photoUris, Context context) {
         this.bitmaps = bitmaps;
+        this.photoUris = photoUris;
         this.context = context;
     }
 
@@ -58,6 +60,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 bitmaps.remove(position);
+                photoUris.remove(position);
                 notifyDataSetChanged();
             }
         });
