@@ -68,5 +68,8 @@ TESTSSSSS
 UML
 Release planning
 Address feedbacks
+video
+javadocs
 
 DONT FORGET TO PUT NOTIFICATIONS BACK IN
+APK
