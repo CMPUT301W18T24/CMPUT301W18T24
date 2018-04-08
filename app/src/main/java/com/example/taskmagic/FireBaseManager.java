@@ -1,10 +1,12 @@
 package com.example.taskmagic;
 
 import android.content.Context;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -395,6 +397,33 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
             @Override
             public void onFailure(@NonNull Exception e) {
                 e.printStackTrace();
+            }
+        });
+    }
+
+    public void searchViaGeoOnTask(final Location position, final OnGetTaskLsitGeo listener) {
+        database.child(taskTag).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TaskList taskList = new TaskList();
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    UserTask task = ds.getValue(UserTask.class);
+                    try {
+                        Location taskLocation = new Location("");
+                        taskLocation.setLatitude(task.getLatitude());
+                        taskLocation.setLongitude(task.getLongtitude());
+                        if (position.distanceTo(taskLocation) <= 5000f) {
+                            taskList.add(task);
+                        }
+                    } catch (Exception e) {}
+
+                }
+                listener.onSuccess(taskList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

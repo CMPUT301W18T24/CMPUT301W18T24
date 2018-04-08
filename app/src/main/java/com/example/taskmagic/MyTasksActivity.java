@@ -16,9 +16,7 @@ import com.google.firebase.storage.StorageReference;
  * This activity is used to display the current user's requested tasks.
  */
 public class MyTasksActivity extends AppCompatActivity {
-
     private FireBaseManager fmanager;
-    private DatabaseReference db;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
     private FirebaseAuth auth;
@@ -34,8 +32,6 @@ public class MyTasksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_tasks);
-
-        db = FirebaseDatabase.getInstance().getReference();
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
 
         listener(singleton.getUserId());

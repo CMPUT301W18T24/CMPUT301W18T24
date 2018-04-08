@@ -12,9 +12,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -43,6 +45,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -88,7 +92,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-    private static final float DEFAULT_ZOOM = 15f;
+    private static final float DEFAULT_ZOOM = 11.8f;
     private static final int PLACE_PICKER_REQUEST = 1;
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(
             new LatLng(-40, -168), new LatLng(71, 136));
@@ -97,7 +101,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //widgets
     private AutoCompleteTextView mSearchText;
     private ImageView mGps;
-
 
     //vars
     private Boolean mLocationPermissionsGranted = false;
@@ -109,11 +112,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Marker mMarker;
     private LatLng latLng;
     private boolean viewTask = false;
+    private FireBaseManager fmanager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        final UserSingleton singleton = UserSingleton.getInstance();
+        fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         //mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
         if(isServicesOK()) {
             Toast.makeText(this, "Perfect!", Toast.LENGTH_SHORT).show();
@@ -243,7 +249,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                             "My Location");
                                     Toast.makeText(getApplicationContext(),"Unable get Location", Toast.LENGTH_LONG).show();
                                 }
-
+                                showNearbyTasks(currentLocation);
                             }
 
                         }else{
@@ -256,6 +262,36 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }catch (SecurityException e){
             Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
         }
+    }
+
+    private void showNearbyTasks(Location location) {
+        Circle circle = mMap.addCircle(new CircleOptions()
+                .center(new LatLng(location.getLatitude(), location.getLongitude()))
+                .radius(5000)
+                .strokeWidth(1)
+                .fillColor(Color.parseColor("#3f79c3e5")));
+
+        fmanager.searchViaGeoOnTask(location, new OnGetTaskLsitGeo() {
+            @Override
+            public void onSuccess(TaskList taskList) {
+                for (int i = 0; i < taskList.getCount(); i++) {
+                    UserTask task = taskList.getTask(i);
+                    MarkerOptions options = new MarkerOptions()
+                            .draggable(false)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+                            .position(new LatLng(task.getLatitude(), task.getLongtitude()))
+                            .title(task.getTitle())
+                            .snippet(task.getStatus());
+                    mMap.addMarker(options);
+                }
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
     }
 /*
     private void moveCamera(LatLng latLng, float zoom, PlaceInfo placeInfo){

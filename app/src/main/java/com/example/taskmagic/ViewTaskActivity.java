@@ -38,8 +38,6 @@ import static java.lang.Float.valueOf;
 
 public class ViewTaskActivity extends AppCompatActivity {
     private FireBaseManager fmanager;
-    private DatabaseReference db;
-    private FirebaseAuth auth;
     private TextView titleText;
     private TextView descriptionText;
     private TextView dateText;
@@ -61,8 +59,6 @@ public class ViewTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
         final UserSingleton singleton = UserSingleton.getInstance();
-        db = FirebaseDatabase.getInstance().getReference();
-        auth = singleton.getmAuth();
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         mProgress = new ProgressDialog(this);
 
@@ -129,25 +125,7 @@ public class ViewTaskActivity extends AppCompatActivity {
             }
 
         });
-
-        builder = new AlertDialog.Builder(this);
-        builder.setTitle("WARNING!");
-        builder.setMessage("Are you sure to delete this task?");
-        builder.setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                fmanager.removeTask(task.getId());
-                finish();
-            }
-        });
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                task.setEditing(false);      //unlock the task for editing
-                fmanager.editTask(task);
-            }
-        });
-        final AlertDialog alertDialog = builder.create();
+        final AlertDialog alertDialog = buildAlertDialog();
 
         initView();
 
@@ -360,5 +338,27 @@ public class ViewTaskActivity extends AppCompatActivity {
         }
 
         return bitmaps;
+    }
+
+    protected AlertDialog buildAlertDialog() {
+
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle("WARNING!");
+        builder.setMessage("Are you sure to delete this task?");
+        builder.setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                fmanager.removeTask(task.getId());
+                finish();
+            }
+        });
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                task.setEditing(false);      //unlock the task for editing
+                fmanager.editTask(task);
+            }
+        });
+        return builder.create();
     }
 }
