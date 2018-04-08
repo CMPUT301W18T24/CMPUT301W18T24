@@ -2,7 +2,6 @@ package com.example.taskmagic;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,12 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -53,7 +47,7 @@ public class ViewTaskActivity extends AppCompatActivity {
     private boolean assignedTask = false;
     private BidList bidList = new BidList();
     private RecyclerView bids;
-    private RecyclerView.Adapter adapter;
+    private BidsViewAdapter bidsAdapter;
     private ImageButton photoButton;
     private ArrayList<Bitmap> bitmaps;
     private AlertDialog.Builder builder;
@@ -96,7 +90,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         final BidDialog bidDialog = new BidDialog(this, task, new BidDialog.onDialogListener() {
             @Override
             public void onEnsure(String amount) {
-                Bid bid = new Bid(task.getId(), valueOf(amount), singleton.getUserId());
+                Bid bid = new Bid(task.getId(), valueOf(amount), singleton.getUserId(), task.getRequester());
                 bid.setTaskTitle(task.getTitle());
                 bid.setRequestor(task.getRequester());
                 bidOnTask(bid);
@@ -112,26 +106,6 @@ public class ViewTaskActivity extends AppCompatActivity {
             }
         });
 
-        // @See EditDialog.java
-        final EditDialog editDialog = new EditDialog(this, task, new EditDialog.onDialogListener() {
-            @Override
-            public void onEnsure(String title, String date, String description) {
-                //UPDATE EDITING
-                task.setDate(date);
-                task.setDescription(description);
-                task.setTitle(title);
-                //task.setPhoto(image);
-                task.setEditing(false);
-                fmanager.editTask(task);
-            }
-
-            @Override
-            public void onCancel() {
-                task.setEditing(false);
-                fmanager.editTask(task);
-            }
-
-        });
         final AlertDialog alertDialog = buildAlertDialog();
 
         initView();
@@ -146,10 +120,10 @@ public class ViewTaskActivity extends AppCompatActivity {
                     if (task.allowEditing()) {
                         task.setEditing(true);      //lock the task for editing
                         fmanager.editTask(task);
-                        editDialog.show();
+                        Intent editIntent = new Intent(getApplicationContext(), EditTaskActivity.class);
+                        editIntent.putExtra("UserTask", task);
+                        startActivity(editIntent);
 
-                    } else {
-                        //shows message that you're not allowed to edit this task
                     }
                 } else if (assignedTask) {          //Complete task
                     task.setStatus("Done");
@@ -161,9 +135,7 @@ public class ViewTaskActivity extends AppCompatActivity {
                         task.setBidding(true);      //lock the task for bidding
                         fmanager.editTask(task);
                         bidDialog.show();
-                    } //else {
-//                        //shows message that the task is done or assigned.
-//                    }
+                    }
                 }
             }
         });
@@ -222,6 +194,9 @@ public class ViewTaskActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method will show the User Profile in a Dialog
+     */
     private void showProfile() {
         fmanager.getUserInfo(task.getRequester(), new OnGetUserInfoListener() {
             @Override
@@ -276,9 +251,9 @@ public class ViewTaskActivity extends AppCompatActivity {
                 } else {
                     bidList = Bids;
                     bidList.sortList();
-                    adapter = new BidsAdapter(bidList, getApplicationContext());
-                    bids.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    bidsAdapter = new BidsViewAdapter(bidList, getApplicationContext());
+                    bids.setAdapter(bidsAdapter);
+                    bidsAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -287,7 +262,6 @@ public class ViewTaskActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     /**
@@ -310,6 +284,9 @@ public class ViewTaskActivity extends AppCompatActivity {
     private ImageView[] dots;
 
 
+    /**
+     * This method opens a dialog with a slider with all the task's photos.
+     */
     //https://www.youtube.com/watch?v=GqcFEvBCnIk       4/April/2018
     //https://www.youtube.com/watch?v=plnLs6aST1M       4/April/2018
     //https://www.youtube.com/watch?v=Q2M30NriSsE       5/April/2018
@@ -363,6 +340,10 @@ public class ViewTaskActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * This method decodes the byte arrays in the task's PhotoList and returns them in an array list of bitmaps
+     * @return
+     */
     private ArrayList<Bitmap> getBitmaps(){
         Gson gson = new Gson();
         PhotoList photoList = gson.fromJson(task.getPhotoUriString(), PhotoList.class);
@@ -376,6 +357,10 @@ public class ViewTaskActivity extends AppCompatActivity {
         return bitmaps;
     }
 
+    /**
+     * This method initializes and AlertDialog that will warn the User before task deletion
+     * @return
+     */
     protected AlertDialog buildAlertDialog() {
 
         builder = new AlertDialog.Builder(this);

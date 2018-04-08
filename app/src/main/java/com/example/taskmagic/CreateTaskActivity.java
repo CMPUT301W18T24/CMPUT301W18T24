@@ -147,7 +147,7 @@ public class CreateTaskActivity extends AppCompatActivity {
          */
         displayRecycler = findViewById(R.id.display_recycler);
         displayRecycler.setLayoutManager(new LinearLayoutManager(thisActivity, LinearLayoutManager.HORIZONTAL, false));
-        adapter = new PhotosAdapter(bitmaps, thisActivity);
+        adapter = new PhotosAdapter(bitmaps, photoUris,thisActivity);
         displayRecycler.setAdapter(adapter);
 
         /**
@@ -167,9 +167,8 @@ public class CreateTaskActivity extends AppCompatActivity {
                     String uris = gson.toJson(photoUris);
 
                     // save userTask to database
-                    //UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
                     Log.d("userfullname", "onClick: " + requesterFullname);
-                    UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, requesterFullname, uris);
+                    UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, requesterFullname, uris, dateString);
                     Log.d("UserTask created", newTask.getTitle() + db + fmanager);
                     fmanager.addTask(newTask);
 
