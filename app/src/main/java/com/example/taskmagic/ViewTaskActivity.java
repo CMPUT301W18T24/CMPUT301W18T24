@@ -51,7 +51,7 @@ public class ViewTaskActivity extends AppCompatActivity {
     private boolean assignedTask = false;
     private BidList bidList = new BidList();
     private RecyclerView bids;
-    private RecyclerView.Adapter adapter;
+    private BidsViewAdapter bidsAdapter;
     private ImageButton photoButton;
     private ArrayList<Bitmap> bitmaps;
     private AlertDialog.Builder builder;
@@ -94,7 +94,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         final BidDialog bidDialog = new BidDialog(this, task, new BidDialog.onDialogListener() {
             @Override
             public void onEnsure(String amount) {
-                Bid bid = new Bid(task.getId(), valueOf(amount), singleton.getUserId());
+                Bid bid = new Bid(task.getId(), valueOf(amount), singleton.getUserId(), task.getRequester());
                 bid.setTaskTitle(task.getTitle());
                 bid.setRequestor(task.getRequester());
                 bidOnTask(bid);
@@ -108,27 +108,6 @@ public class ViewTaskActivity extends AppCompatActivity {
                 task.setBidding(false);
                 fmanager.editTask(task);
             }
-        });
-
-        // @See EditDialog.java
-        final EditDialog editDialog = new EditDialog(this, task, new EditDialog.onDialogListener() {
-            @Override
-            public void onEnsure(String title, String date, String description) {
-                //UPDATE EDITING
-                task.setDate(date);
-                task.setDescription(description);
-                task.setTitle(title);
-                //task.setPhoto(image);
-                task.setEditing(false);
-                fmanager.editTask(task);
-            }
-
-            @Override
-            public void onCancel() {
-                task.setEditing(false);
-                fmanager.editTask(task);
-            }
-
         });
 
         builder = new AlertDialog.Builder(this);
@@ -261,9 +240,9 @@ public class ViewTaskActivity extends AppCompatActivity {
                 } else {
                     bidList = Bids;
                     bidList.sortList();
-                    adapter = new BidsAdapter(bidList, getApplicationContext());
-                    bids.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    bidsAdapter = new BidsViewAdapter(bidList, getApplicationContext());
+                    bids.setAdapter(bidsAdapter);
+                    bidsAdapter.notifyDataSetChanged();
                 }
             }
 

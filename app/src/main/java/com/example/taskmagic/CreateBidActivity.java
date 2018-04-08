@@ -68,7 +68,7 @@ public class CreateBidActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bid bid = new Bid(task.getId(), Float.valueOf(amountText.getText().toString().trim()), singleton.getUserId());
+                Bid bid = new Bid(task.getId(), Float.valueOf(amountText.getText().toString().trim()), singleton.getUserId(), task.getRequester());
                 addBid(bid);
                 startActivity(new Intent(getApplicationContext(), HomeFeed.class));
             }

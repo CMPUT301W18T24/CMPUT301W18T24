@@ -29,10 +29,11 @@ class Bid implements Serializable, Comparable<Bid> {
      * @param amount
      * @param provider
      */
-    public Bid(String taskID, float amount, String provider) {
+    public Bid(String taskID, float amount, String provider, String requestorName) {
         this.taskID = taskID;
         this.amount = amount;
         this.provider = provider;
+        this.requestorName = requestorName;
         this.accepted=false;
         this.declined=false;
         this.status = "Processing";
@@ -72,23 +73,6 @@ class Bid implements Serializable, Comparable<Bid> {
 
     }
 
- /*   public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
-        updateStatus();
-
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
-    }
-
-    public void setDeclined(boolean declined) {
-        this.declined = declined;
-    }
-
-    public void setDeclined(boolean declined) {
-        this.declined = declined;
-        updateStatus();
-    } */
-
     /**
      * Returns the Id String if the Bidder
      * @return Id String of provider
@@ -112,17 +96,6 @@ class Bid implements Serializable, Comparable<Bid> {
     public void setProvider(String provider) {
         this.provider = provider;
     }
-
-/*
-    private void updateStatus() {
-        if (accepted && !declined) {
-            this.status = "Accepted";
-        } else if (!accepted && declined) {
-            this.status = "Declined";
-        } else if (accepted && declined) {
-            Log.d("Status Error", "Double status.");
-        }
-    }*/
 
     /**
      * Takes a String and changes the status of current Bid into the String
