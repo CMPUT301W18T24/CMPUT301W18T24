@@ -55,7 +55,7 @@ public class Messages_Frag extends Fragment {
                 Log.d("Assigned frag item: ", "clicked " + position);
                 ChatMessage message= values.get(position);
                 Intent myIntent = new Intent(getActivity(), MessageActivity.class);
-                myIntent.putExtra("id",message.getSenderId());
+                myIntent.putExtra("id",message.getReceiverId());
                 startActivity(myIntent);
             }
         }));
@@ -70,11 +70,15 @@ public class Messages_Frag extends Fragment {
                 HashMap<String,ChatMessage> map =new HashMap<String,ChatMessage>();
                 for(DataSnapshot snap : dataSnapshot.getChildren()){
                     ChatMessage message=snap.getValue(ChatMessage.class);
-                    if(message.getReceiverId().equals(sender) && !map.containsKey(message.getSenderId())){
+                    if((message.getReceiverId().equals(sender)) && !map.containsKey(message.getSenderId())){
                         map.put(message.getSenderId(),message);
                     }
                     else if(message.getReceiverId().equals(sender) && map.containsKey(message.getSenderId())){
                         map.put(message.getSenderId(),message);
+                    } else if(message.getSenderId().equals(sender) && !map.containsKey(message.getReceiverId())) {
+                        map.put(message.getReceiverId(), message);
+                    } else if (message.getSenderId().equals(sender) && map.containsKey(message.getReceiverId())) {
+                        map.put(message.getReceiverId(), message);
                     }
                 }
                 updateView(map);
@@ -91,6 +95,7 @@ public class Messages_Frag extends Fragment {
     public void updateView(HashMap<String,ChatMessage> map){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         values = new ArrayList<>(map.values());
+        Log.d("log", "updateView: "+map.size());
         adapter=new ChatRoomsAdapter(values,getActivity());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

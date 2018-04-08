@@ -19,16 +19,14 @@
         android:orientation="horizontal">
 
         <CheckBox
-            android:checked="true"
-            android:id="@+id/checkbox_all"
+            android:id="@+id/checkbox_assigned"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="All" />
+            android:text="Assigned" />
 
 
         <CheckBox
-            android:checked="true"
             android:id="@+id/checkbox_requested"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +35,6 @@
 
 
         <CheckBox
-            android:checked="true"
             android:id="@+id/checkbox_bidded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

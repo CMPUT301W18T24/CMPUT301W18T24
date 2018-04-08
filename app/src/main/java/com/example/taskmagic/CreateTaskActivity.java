@@ -56,7 +56,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     private FireBaseManager fmanager;
     private DatabaseReference db;
-    private UserSingleton singleton = UserSingleton.getInstance();
+    private UserSingleton singleton;
     private final Gson gson = new Gson();
 
     private String newTitle;
@@ -91,8 +91,8 @@ public class CreateTaskActivity extends AppCompatActivity {
         descriptionField = findViewById(R.id.task_description);
 
         db = FirebaseDatabase.getInstance().getReference();
+        singleton = UserSingleton.getInstance();
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
-
         final Calendar cal = Calendar.getInstance();
         currYear = cal.get(Calendar.YEAR);
         currMonth = cal.get(Calendar.MONTH);
@@ -162,12 +162,14 @@ public class CreateTaskActivity extends AppCompatActivity {
                     newTitle = titleField.getText().toString().trim();
                     newDescription = descriptionField.getText().toString().trim();
                     taskRequester = singleton.getUserId();
+                    String requesterFullname = singleton.getUserName();
                     //Jsonify photoUris for saving
                     String uris = gson.toJson(photoUris);
 
                     // save userTask to database
                     //UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
-                    UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, uris);
+                    Log.d("userfullname", "onClick: " + requesterFullname);
+                    UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, requesterFullname, uris);
                     Log.d("UserTask created", newTask.getTitle() + db + fmanager);
                     fmanager.addTask(newTask);
 

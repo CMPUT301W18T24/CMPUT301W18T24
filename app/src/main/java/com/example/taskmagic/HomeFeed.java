@@ -50,6 +50,17 @@ public class HomeFeed extends AppCompatActivity {
         mHomeNav=(BottomNavigationView)findViewById(R.id.home_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mHomeNav);
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
+        fmanager.getUserInfo(singleton.getUserId(), new OnGetUserInfoListener() {
+            @Override
+            public void onSuccess(User user) {
+                singleton.setUserName(user.getFullName());
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
         listener(singleton.getUserId());
         mHomeNav.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {

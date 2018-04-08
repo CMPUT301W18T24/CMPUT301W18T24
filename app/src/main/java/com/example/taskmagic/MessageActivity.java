@@ -44,13 +44,11 @@ public class MessageActivity extends AppCompatActivity {
     private FirebaseDatabase mMessagesDBRef;
     private FireBaseManager fmanager;
     private User receiver;
-    private User sender;
-    private String userId;
     private UserSingleton singleton;
     private ChatAdapter adapter;
     private Toolbar mChatToolBar;
     private Set<String> users;
-
+    private String userId;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,15 +63,13 @@ public class MessageActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mChatsRecyclerView.setLayoutManager(mLayoutManager);
         singleton = UserSingleton.getInstance();
-        users=new HashSet<String>();
         auth = singleton.getmAuth();
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         Intent intent = getIntent();
-        userId = intent.getExtras().getString("id");
+        userId = intent.getStringExtra("id");
+        this.getWindow().setSoftInputMode(
+               WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         getUser(userId);
-        getUser(singleton.getUserId());
-        //this.getWindow().setSoftInputMode(
-               // WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mSendImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,10 +79,10 @@ public class MessageActivity extends AppCompatActivity {
                 } else {
                     String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                     Log.d("yo", "onClick: "+singleton.getUserName());
-                    ChatMessage chatMessage = new ChatMessage(message, singleton.getUserId(), receiver.getId(), currentDateTimeString,receiver.getUserName(),sender.getUserName());
+                    ChatMessage chatMessage = new ChatMessage(message, singleton.getUserId(), receiver.getId(), currentDateTimeString,receiver.getUserName(),singleton.getUserName());
                     fmanager.addChatMessage(chatMessage);
                     mMessageEditText.setText(null);
-                    //hideSoftKeyboard();
+                    hideSoftKeyboard();
                 }
             }
         });
@@ -112,8 +108,8 @@ public class MessageActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        chatListener(singleton.getUserId(), userId);
         super.onStart();
+        chatListener(singleton.getUserId(), userId);
     }
 
     public void updateView(final ArrayList<ChatMessage> chatList) {
@@ -134,14 +130,8 @@ public class MessageActivity extends AppCompatActivity {
         fmanager.getUserInfo(userid, new OnGetUserInfoListener() {
             @Override
             public void onSuccess(User user) {
-                if (user.getId().equals(singleton.getUserId())) {
-                    sender = user;
-                }
-                else{
                     receiver=user;
                     getSupportActionBar().setTitle(receiver.getUserName());
-                }
-
             }
 
             @Override

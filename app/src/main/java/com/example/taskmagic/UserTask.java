@@ -28,6 +28,7 @@ public class UserTask implements Serializable {
     private String provider;
     private Double latitude;
     private Double longtitude;
+    private String requesterName;
     private String uri;
     private ArrayList<String> photoUris;
     private float lowestBid = -1f;
@@ -43,13 +44,14 @@ public class UserTask implements Serializable {
      * @param userID
      * @param photo
      */
-    public UserTask(String title, String description, String userID, String photo) {
+    public UserTask(String title, String description, String userID, String requesterName, String photo) {
         this.id = "-1";
         this.title = title;
         this.description = description;
         this.requester = userID;
         this.uri=photo;
         this.provider="";
+        this.requesterName = requesterName;
         this.photoUriString = photo; // if this is anything like BidsList, photo can just contain owner ID which can be retrieved *******
         // https://stackoverflow.com/questions/8654990/how-can-i-get-current-date-in-android -> 2018-Mar-13
         this.date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
@@ -298,7 +300,6 @@ public class UserTask implements Serializable {
         this.latitude = latitude;
     }
 
-
     /**
      * see setLongtitude()
      * @return
@@ -313,5 +314,21 @@ public class UserTask implements Serializable {
      */
     public void setLongtitude(Double longtitude) {
         this.longtitude = longtitude;
+    }
+
+    /**
+     * see setRequesterName
+     * @return
+     */
+    public String getRequesterName() {
+        return requesterName;
+    }
+
+    /**
+     * takes a String and sets the providerName of this UserTask
+     * @param requesterName
+     */
+    public void setRequesterName(String requesterName) {
+        this.requesterName = requesterName;
     }
 }

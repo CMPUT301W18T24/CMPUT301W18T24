@@ -2,6 +2,7 @@ package com.example.taskmagic;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import static java.lang.Float.valueOf;
@@ -41,6 +44,7 @@ public class ViewTaskActivity extends AppCompatActivity {
     private TextView titleText;
     private TextView descriptionText;
     private TextView dateText;
+    private TextView usernameText;
     private Button button;
     private Button button_delete;
     private UserTask task;
@@ -53,6 +57,7 @@ public class ViewTaskActivity extends AppCompatActivity {
     private ImageButton photoButton;
     private ArrayList<Bitmap> bitmaps;
     private AlertDialog.Builder builder;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         button_delete = (Button) findViewById(R.id.button_delete);
         titleText = (TextView) findViewById(R.id.textView_titleContent);
         descriptionText = (TextView) findViewById(R.id.textView_descriptionContent);
+        usernameText = (TextView) findViewById(R.id.textView_username);
         dateText = (TextView) findViewById(R.id.textView_dateContent);
         bids = (RecyclerView) findViewById(R.id.bidList);
         bids.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -205,6 +211,38 @@ public class ViewTaskActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+
+        usernameText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Jump to profile page
+                showProfile();
+                Toast.makeText(getApplicationContext(), "Cliked", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void showProfile() {
+        fmanager.getUserInfo(task.getRequester(), new OnGetUserInfoListener() {
+            @Override
+            public void onSuccess(User u) {
+                user = u;
+                final ProfileDialog profileDialog = new ProfileDialog(ViewTaskActivity.this, user, new ProfileDialog.onDialogListener() {
+                    @Override
+                    public void onEnsure() {
+                        Intent myIntent = new Intent(ViewTaskActivity.this, MessageActivity.class);
+                        myIntent.putExtra("id",user.getId());
+                        startActivity(myIntent);
+                    }
+                });
+                profileDialog.show();
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
     }
 
 
@@ -222,6 +260,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         }else {
             button.setText("BID");
         }
+        usernameText.setText(task.getRequesterName());
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
         dateText.setText(task.getDate());
@@ -248,11 +287,6 @@ public class ViewTaskActivity extends AppCompatActivity {
 
             }
         });
-        /*
-        if (task.getPhoto() != null) {
-            photo.setImageBitmap(task.getPhoto().getImage());
-        }
-        */
 
     }
 
