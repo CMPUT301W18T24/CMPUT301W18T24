@@ -96,14 +96,14 @@ public class BidDetailsActivity extends AppCompatActivity {
         provider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProfile(bid.getProvider());
+                showProfile(bid.getProvider(), singleton.getUserId());
             }
         });
 
         requester.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProfile(task.getRequester());
+                showProfile(task.getRequester(), singleton.getUserId());
             }
         });
     }
@@ -111,11 +111,11 @@ public class BidDetailsActivity extends AppCompatActivity {
     /**
      * This methods shows a profile dialog of the username clicked on
      */
-    private void showProfile(final String userID) {
+    private void showProfile(final String userID, final String currentUserId) {
         fmanager.getUserInfo(userID, new OnGetUserInfoListener() {
             @Override
             public void onSuccess(User u) {
-                final ProfileDialog profileDialog = new ProfileDialog(BidDetailsActivity.this, u, new ProfileDialog.onDialogListener() {
+                final ProfileDialog profileDialog = new ProfileDialog(BidDetailsActivity.this, u, currentUserId, new ProfileDialog.onDialogListener() {
                     @Override
                     public void onEnsure() {
                         Intent myIntent = new Intent(BidDetailsActivity.this, MessageActivity.class);

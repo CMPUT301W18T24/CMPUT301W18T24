@@ -188,7 +188,7 @@ public class ViewTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Jump to profile page
-                showProfile();
+                showProfile(singleton.getUserId());
                 Toast.makeText(getApplicationContext(), "Cliked", Toast.LENGTH_LONG).show();
             }
         });
@@ -197,12 +197,12 @@ public class ViewTaskActivity extends AppCompatActivity {
     /**
      * This method will show the User Profile in a Dialog
      */
-    private void showProfile() {
+    private void showProfile(final String currentUserId) {
         fmanager.getUserInfo(task.getRequester(), new OnGetUserInfoListener() {
             @Override
             public void onSuccess(User u) {
                 user = u;
-                final ProfileDialog profileDialog = new ProfileDialog(ViewTaskActivity.this, user, new ProfileDialog.onDialogListener() {
+                final ProfileDialog profileDialog = new ProfileDialog(ViewTaskActivity.this, user, currentUserId, new ProfileDialog.onDialogListener() {
                     @Override
                     public void onEnsure() {
                         Intent myIntent = new Intent(ViewTaskActivity.this, MessageActivity.class);
