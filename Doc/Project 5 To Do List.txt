@@ -52,3 +52,21 @@ ADD APK TO REPOSITORY
 wiki
 UML
 reuse statement
+
+_________________________
+ULTRA CRUNCH
+
+link from bid details to task details
+full names on bid details
+decline bid ??
+reset task
+search keyword
+messages
+edit Location
+
+TESTSSSSS
+UML
+Release planning
+Address feedbacks
+
+DONT FORGET TO PUT NOTIFICATIONS BACK IN
