@@ -68,6 +68,7 @@ FULL NAME everywhere - partially done
 accept bid and decline others   -Done, but need test
 set status from assigned to done
 geolocation search: show only bidded/requested tasks -DONE (not tested)
+Unique Username test
 
 TESTSSSSS
 UML
