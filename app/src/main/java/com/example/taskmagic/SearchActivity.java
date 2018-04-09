@@ -1,11 +1,7 @@
 package com.example.taskmagic;
 
-import android.app.Activity;
-import android.app.Notification;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,17 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import java.util.ArrayList;
 
-import com.google.android.gms.gcm.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-
-import java.util.HashMap;
 
 /**
  * Created by hyusuf on 2018-03-11.
@@ -114,7 +105,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
                 adapter.notifyDataSetChanged();
-                adapter = new SearchActivityAdapter(taskList1,getApplicationContext());
+                adapter = new TaskRecyclerAdapter(taskList1,getApplicationContext());
                 recyclerView.setAdapter(adapter);
             }
 
@@ -126,7 +117,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
                     //set up the adapter
-                    adapter = new SearchActivityAdapter(taskList1,getApplicationContext());
+                    adapter = new TaskRecyclerAdapter(taskList1,getApplicationContext());
                     recyclerView.setAdapter(adapter);
                 }
             }
@@ -169,7 +160,7 @@ public class SearchActivity extends AppCompatActivity {
      */
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter=new SearchActivityAdapter(taskList,getApplicationContext());
+        adapter=new TaskRecyclerAdapter(taskList,getApplicationContext());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

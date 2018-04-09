@@ -1,10 +1,6 @@
 package com.example.taskmagic;
 
-import android.app.Activity;
-import android.app.Notification;
-
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -157,7 +153,7 @@ public class HomeFeed extends AppCompatActivity {
      */
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter=new HomeFeedAdapter(taskList,getApplicationContext());
+        adapter=new TaskRecyclerAdapter(taskList,getApplicationContext());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

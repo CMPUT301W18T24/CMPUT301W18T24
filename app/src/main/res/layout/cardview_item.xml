@@ -20,34 +20,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/cardview_shadow_start_color"
-            android:padding="16dp">
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@id/taskThumbnail"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@mipmap/ic_launcher"/>
 
             <TextView
                 android:id="@+id/taskTitle"
-                android:layout_width="match_parent"
+                android:layout_width="235dp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/taskThumbnail"
+                android:layout_marginLeft="8dp"
                 android:text="Title"
                 android:textAppearance="?android:textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/taskRequester"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/taskTitle"
+                android:layout_alignStart="@id/taskTitle"
+                android:layout_below="@id/taskTitle"
+                android:text="Requester name"
+                android:textAppearance="?android:textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/taskTitle"
+                android:layout_alignEnd="@id/taskRequester"
+                android:layout_alignStart="@id/taskRequester"
+                android:layout_below="@+id/taskRequester"
                 android:text="Status"
                 android:textAppearance="?android:textAppearanceMedium" />
 
-
             <TextView
-                android:id="@+id/textOption"
+                android:id="@+id/lowestText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:paddingLeft="16dp"
-                android:text="&#8942;"
-                android:textAppearance="?android:textAppearanceLarge" />
+                android:layout_marginTop="8dp"
+                android:layout_alignStart="@id/taskLowest"
+                android:text="Lowest Bid:"
+                android:textSize="12sp" />
 
+            <TextView
+                android:id="@+id/taskLowest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lowestText"
+                android:layout_toEndOf="@id/taskTitle"
+                android:text="$ss.ss"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 

@@ -82,4 +82,12 @@ public class PhotoList {
         return photos;
     }
 
+    /**
+     * Returns true if the ArrayList has no elements
+     * @return
+     */
+    public Boolean isEmpty() {
+        return (uriList.isEmpty());
+    }
+
 }
