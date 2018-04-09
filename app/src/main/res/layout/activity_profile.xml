@@ -47,12 +47,12 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dp"
             android:layout_marginTop="10dp"
-            android:hint="Password"
             android:background="#E0E0E0"
+            android:hint="Password"
             android:inputType="textPassword"
-           />
+            android:padding="10dp"
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/editTextEmail"

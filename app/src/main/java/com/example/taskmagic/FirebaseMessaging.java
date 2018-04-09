@@ -49,6 +49,8 @@ public class FirebaseMessaging extends FirebaseMessagingService {
     private static final String data_receiver = "receiverId";
     private UserSingleton singleton;
     private Intent intent;
+    private FireBaseManager fmanager;
+    private UserTask task;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -59,8 +61,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
                 String sender= remoteMessage.getData().get(data_sender);
                 String receiver=remoteMessage.getData().get(data_receiver);
                 String taskid= remoteMessage.getData().get(data_taskId);
-                String title= remoteMessage.getData().get(data_title);
-                sendBidNotification(message,sender,receiver,taskid,title);
+                sendBidNotification(message,sender,receiver,taskid);
             } else if (identifyDataType.equals(data_type_chat) && (!isAppInForeground(this,getPackageName()))){
                 String message = remoteMessage.getData().get(data_message);
                 String receiver= remoteMessage.getData().get(data_receiver);
@@ -104,13 +105,10 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         super.onDeletedMessages();
     }
 
-    public void sendBidNotification(String message,String sender,String receiverId,String taskid,String taskTitle) {
+    public void sendBidNotification(String message,String sender,String receiverId,String taskid) {
         Log.d(TAG, "sendBidNotification: building bid Notification");
         if (!isAppInForeground(this,getPackageName())){
-            intent = new Intent(this, MainActivity.class);
-        }
-        else {
-            intent = new Intent(this, NotificationActivity.class);
+            intent = new Intent(this, ViewTaskActivity.class);
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent resultIntent = PendingIntent.getActivity(this, 0, intent,
@@ -129,8 +127,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0, mNotificationBuilder.build());
-        NotificationMSG nMessage= new NotificationMSG(sender,receiverId,message,taskid,taskTitle);
-        saveNotification(nMessage);
+
     }
 
     //https://stackoverflow.com/questions/41735755/in-android-how-to-prevent-firebase-push-notification-when-app-is-in-foreground
@@ -159,20 +156,20 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         return activePackages.toArray(new String[activePackages.size()]);
     }
 
-    public void saveNotification(NotificationMSG notificationMSG) {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        database.child("Notifications").child(notificationMSG.getReceiverId()).setValue(notificationMSG).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "onSuccess: " + "Notification sucessfully saved");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                  Log.d(TAG, "onFailure: " + "Failed to save notification");
-            }
-        });
-    }
+//    public void getTask(String taskid){
+//        fmanager.getTaskInfo(taskid, new OnGetATaskListener() {
+//            @Override
+//            public void onSuccess(UserTask task) {
+//                userTask=task;
+//            }
+//            }
+//            @Override
+//            public void onFailure(String message) {
+//
+//            }
+//
+//        });
+
 
 }
 

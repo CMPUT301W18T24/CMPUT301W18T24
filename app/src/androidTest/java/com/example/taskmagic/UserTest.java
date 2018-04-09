@@ -1,88 +1,68 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
+
 package com.example.taskmagic;
 
 import android.test.ActivityInstrumentationTestCase2;
-
-import java.util.ArrayList;
+import com.example.taskmagic.UserProfileFrag;
 
 /**
- * Created by Yipu on 21/02/2018.
+ * Created by Fanjie on 2018-04-08.
  */
 
-public class UserTest extends ActivityInstrumentationTestCase2 {
-    public UserTest() {
-        super(MainActivity.class);
+public class UserTest extends ActivityInstrumentationTestCase2{
+    public User testUser;
+    public UserTest(){
+        super(UserProfileFrag.class);
+        this.testUser = new User("a", "b", "c", "d", "e", "f");
     }
 
-    public void testAddUser() {
-        String firstname = "firstname";
-        String lastname = "lastname";
-        String email = "user@ua.ca";
-        String username = "username";
-        String password = "password";
-        int phoneNumber = 123456789;
-        Photo photo = new Photo();
-        User user = new User(firstname, lastname, email, username, password, phoneNumber, photo);
+    public void testFullname(){
+        String test = "a";
+        String result =testUser.getFullName();
 
-        assertEquals(user.getFirstName(), firstname);
-        assertEquals(user.getLastName(), lastname);
-        assertEquals(user.getEmailAddress(), email);
-        assertEquals(user.getUserName(), username);
-        assertEquals(user.getPassword(), password);
-        assertEquals(user.getPhoneNumber(), phoneNumber);
-        assertEquals(user.getPhoto(), photo);
-
+        assertEquals(test, result);
     }
 
-    public void testEditUser() {
-        String firstname = "firstname";
-        String lastname = "lastname";
-        String email = "user@ua.ca";
-        String username = "username";
-        String password = "password";
-        int phoneNumber = 123456789;
-        Photo photo = new Photo();
-        User user = new User(firstname, lastname, email, username, password, phoneNumber, photo);
+    public void testEmail(){
+        String test = "b";
+        String result = testUser.getEmailAddress();
 
-        String newFirstName = "newFirst";
-        String newLastName = "newLast";
-        String newEmail = "newEmail";
-        String newUsername = "newUsername";
-        String newPassword = "newPassword";
-        int newPhoneNumber = 987654321;
-        Photo photo2 = new Photo();
+        assertEquals(test, result);
+    }
+    public void testUsername(){
+        String test = "c";
+        String result = testUser.getUserName();
 
-        user.setFirstName(newFirstName);
-        assertEquals(user.getFirstName(), newFirstName);
-        user.setLastName(newLastName);
-        assertEquals(user.getLastName(), newLastName);
-        user.setEmailAddress(newEmail);
-        assertEquals(user.getEmailAddress(), newEmail);
-        user.setUserName(newUsername);
-        assertEquals(user.getUserName(), newUsername);
-        user.setPassword(newPassword);
-        assertEquals(user.getPassword(), newPassword);
-        user.setPhoneNumber(newPhoneNumber);
-        assertEquals(user.getPhoneNumber(), newPhoneNumber);
-        user.setPhoto(photo2);
-        assertEquals(user.getPhoto(), photo2);
+        assertEquals(test, result);
     }
 
-    public void testGetTasksList() {
-        ArrayList<Task> taskList = new ArrayList<Task>();
-        Task taskA = new Task(1,"TaskA", "Creating a task.", "requeste1");
-        Task taskB = new Task(2,"TaskB", "Creating a task.", "requeste2");
-        Task taskC = new Task(2,"TaskC", "Creating a task.", "requeste3");
-        User user = new User("firstname", "lastname", "user@ua.ca",
-                "username", "password", 123456789, new Photo());
+    public void testPassword(){
+        String test = "d";
+        String result = testUser.getPassword();
 
-        user.addTask(taskA);
-        taskList.add(taskA);
-        user.addTask(taskB);
-        taskList.add(taskB);
-        user.addTask(taskC);
-        taskList.add(taskC);
-
-        assertEquals(user.getTasksList(), taskList);
+        assertEquals(test, result);
     }
+
+    public void testphoneNumber(){
+        String test = "e";
+        String result = testUser.getPhoneNumber();
+
+        assertEquals(test, result);
+    }
+    public void testphoto(){
+        String test = "f";
+        String result = testUser.getphotoUri();
+
+        assertEquals(test, result);
+    }
+
+
+
+
 
 }

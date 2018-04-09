@@ -141,8 +141,14 @@ public class ViewTaskActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UserTask t) {
                         Log.d("tag", "onSuccess: " + t.getId());
-                        LatLng latLng = new LatLng(t.getLatitude(), t.getLongtitude());
-                        startActivity(new Intent(getApplicationContext(), MapsActivity.class).putExtra("LatLng", latLng));
+                        if (!t.getLongtitude().equals(null) && !t.getLatitude().equals(null)) {
+                            LatLng latLng = new LatLng(t.getLatitude(), t.getLongtitude());
+                            Intent mIntent = new Intent(getApplicationContext(), MapsActivity.class).putExtra("LatLng", latLng);
+                            mIntent.putExtra("Mode", "View");
+                            startActivity(mIntent);
+                        } else {
+                            Toast.makeText(ViewTaskActivity.this, "This task does not have a specified location.", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -459,7 +465,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         BidDialog bidDialog = new BidDialog(this, task, new BidDialog.onDialogListener() {
             @Override
             public void onEnsure(String amount) {
-                Bid bid = new Bid(task.getId(), valueOf(amount), singleton.getUserId(), task.getRequester());
+                Bid bid = new Bid(task.getId(), valueOf(amount), singleton.getUserId(), singleton.getUserName(), task.getRequester());
                 bid.setTaskTitle(task.getTitle());
                 bid.setRequestor(task.getRequester());
                 bidOnTask(bid);

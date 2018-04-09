@@ -29,10 +29,11 @@ class Bid implements Serializable, Comparable<Bid> {
      * @param amount
      * @param provider
      */
-    public Bid(String taskID, float amount, String provider, String requestorName) {
+    public Bid(String taskID, float amount, String provider, String providerName, String requestorName) {
         this.taskID = taskID;
         this.amount = amount;
         this.provider = provider;
+        this.providerName = providerName;
         this.requestorName = requestorName;
         this.accepted=false;
         this.declined=false;

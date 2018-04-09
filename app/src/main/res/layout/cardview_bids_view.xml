@@ -54,7 +54,7 @@
                 android:layout_alignStart="@id/bid_view_value"
                 android:layout_marginTop="8dp"
                 android:textSize="10sp"
-                android:text="Your bid:" />
+                android:text="Bid Amount:" />
 
             <TextView
                 android:id="@+id/bid_view_value"

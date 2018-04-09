@@ -61,30 +61,29 @@
         android:layout_marginTop="10dp"
         android:textColor="@android:color/white"
         android:text="Login" />
-        <TextView
-            android:id="@+id/textViewNewUser"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            android:clickable="true"
-            android:text="New User?"
-            android:textColor="@android:color/background_light"
-            android:textSize="14sp"
-            android:gravity="center"
-            />
 
-        <TextView
-            android:id="@+id/textViewForgot"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Forgot Password"
-            android:textColor="@android:color/background_light"
-            />
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center" />
+    <TextView
+        android:id="@+id/textViewNewUser"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:text="New User?"
+        android:textColor="@android:color/background_light"
+        android:textSize="14sp"
+        android:gravity="center"
+        />
+
+
     </LinearLayout>
 
 </RelativeLayout>
