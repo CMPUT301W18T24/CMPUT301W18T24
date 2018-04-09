@@ -286,7 +286,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
      * @param listener
      */
     public void getTaskInfo(final String taskId, final OnGetATaskListener listener) {
-        database.child(taskTag).child(taskId).addValueEventListener(new ValueEventListener() {
+        database.child(taskTag).child(taskId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserTask task = dataSnapshot.getValue(UserTask.class);
