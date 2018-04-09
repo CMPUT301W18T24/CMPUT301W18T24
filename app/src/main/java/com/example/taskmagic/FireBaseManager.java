@@ -3,6 +3,7 @@ package com.example.taskmagic;
 import android.content.Context;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,7 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -33,6 +36,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
     private Context context;
     private String notificationTag = "Notifications";
     private FirebaseAuth.AuthStateListener listener;
+    private ArrayMap<DatabaseReference, ValueEventListener> repeatListener;
 
 
     /**
@@ -47,7 +51,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
         this.context = context;
         database.keepSynced(true);
 
-
+        repeatListener = new ArrayMap<DatabaseReference, ValueEventListener>();
     }
 
     @Override
@@ -380,6 +384,111 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
         });
     }
 
+    /**
+     * this method takes a bidlist and updates all bids in the bidlist
+     * @param bidId
+     * @param listener
+     */
+    public void updateBidList(final String taskid) {
+        database.child(bidTag).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Bid bid = ds.getValue(Bid.class);
+                        if (bid.getTaskID().equals(taskid) && bid.getStatus().equals("Declined")) {
+                            HashMap<String, Object> result = new HashMap<>();
+                            Log.d("IAM", "onDataChange: " + "YOOOOOOOOOOOO");
+                            result.put("accepted", false);
+                            result.put("declined", false);
+                            result.put("status", "Processing");
+                            Log.d("Hello", "onDataChange: " + result + taskid);
+                            database.child(bidTag).child(String.valueOf(ds.getKey())).updateChildren(result).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(context.getApplicationContext(), "yo", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else if (bid.getStatus().equals("Accepted") && bid.getTaskID().equals(taskid)) {
+                            HashMap<String, Object> result = new HashMap<>();
+                            result.put("status", "Declined");
+                            result.put("declined", true);
+                            result.put("accepted", false);
+                            database.child(bidTag).child(String.valueOf(ds.getKey())).updateChildren(result).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(context.getApplicationContext(), "YOOOOOOO", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void acceptBid(final Bid b) {
+        database.child(bidTag).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Bid bid = ds.getValue(Bid.class);
+                        if (bid.getTaskID().equals(b.getTaskID()) && bid.getProvider().equals(b.getProvider())) {
+                            HashMap<String, Object> result = new HashMap<>();
+                            Log.d("IAM", "onDataChange: " + "YOOOOOOOOOOOO");
+                            result.put("accepted", true);
+                            result.put("declined", false);
+                            result.put("status", "Accepted");
+                            Log.d("Hello", "onDataChange: " + result);
+                            database.child(bidTag).child(String.valueOf(ds.getKey())).updateChildren(result).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    //Toast.makeText(context.getApplicationContext(),"yo",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else if (bid.getTaskID().equals(b.getTaskID()) && bid.getStatus().equals("Processing")) {
+                            HashMap<String, Object> result = new HashMap<>();
+                            result.put("status", "Declined");
+                            result.put("declined", true);
+                            result.put("accepted", false);
+                            database.child(bidTag).child(String.valueOf(ds.getKey())).updateChildren(result).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(context.getApplicationContext(), "nOOOOOOO", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                    }
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void stopRepeatListener() {
+        for (Map.Entry<DatabaseReference, ValueEventListener> entry: this.repeatListener.entrySet()) {
+            DatabaseReference ref = entry.getKey();
+            ValueEventListener val = entry.getValue();
+
+            ref.removeEventListener(val);
+        }
+
+        this.repeatListener.clear();
+    }
 
     public void retrieveChatMessages(final String sender, final String receiver, final OnGetChatMessagesListener listener) {
         database.child(messageTag).child(sender).addValueEventListener(new ValueEventListener() {
@@ -534,5 +643,6 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
             }
         });
     }
+
 }
 
