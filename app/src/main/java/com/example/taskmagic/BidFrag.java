@@ -5,7 +5,6 @@ package com.example.taskmagic;
  */
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 public class BidFrag extends Fragment {
     private RecyclerView.Adapter adapter;
@@ -63,6 +61,7 @@ public class BidFrag extends Fragment {
     }
 
     private void getTasks(BidList bidList) {
+        slowBidlist = new BidList();
         for (int i = 0 ; i < bidList.getCount() ; i++) {
             slowBidlist.add(bidList.getBid(i));
             getTaskListener(bidList.getBid(i).getTaskID());
