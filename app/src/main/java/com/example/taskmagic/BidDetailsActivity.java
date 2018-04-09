@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
  * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
@@ -47,6 +48,7 @@ public class BidDetailsActivity extends AppCompatActivity {
         auth = singleton.getmAuth();
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
 
+        //init Views
         title = (TextView) findViewById(R.id.textView_titleContent);
         description = (TextView) findViewById(R.id.textView_descriptionContent);
         provider = (TextView) findViewById(R.id.textView_userContent);
@@ -54,15 +56,17 @@ public class BidDetailsActivity extends AppCompatActivity {
         amount = (TextView) findViewById(R.id.textView_amountContent);
         lowestAmount = (TextView) findViewById(R.id.textView_lowestBidContent);
         bidStatus = (TextView) findViewById(R.id.textView_statusContent);
+        final Button button = (Button) findViewById(R.id.button_accept);
+        button_decline = (Button) findViewById(R.id.button_decline);
 
+        //Recieved extra
         bid = (Bid)getIntent().getSerializableExtra("Bid");
 
         if (bid.getProvider().equals(singleton.getUserId())) {
-            owner = true;
+            owner = true;       //indicating if the logged in user is the bid owner
         }
 
-        final Button button = (Button) findViewById(R.id.button_accept);
-        button_decline = (Button) findViewById(R.id.button_decline);
+        //Set bid status color
         bidStatus.setText(bid.getStatus());
         if (bid.getStatus().equals("Accepted")) {
             bidStatus.setTextColor(0xff00ff00);
@@ -71,10 +75,10 @@ public class BidDetailsActivity extends AppCompatActivity {
         }
 
         button.setVisibility(View.VISIBLE);
-        if (owner) {
-            button.setText("CANCEL");
+        if (owner) {                                //If logged in user is the bid owner
+            button.setText("CANCEL");                   //show the cancel button
         } else if (!bid.getRequestor().equals(singleton.getUserId())) {
-            button.setVisibility(View.GONE);
+            button.setVisibility(View.GONE);            //hide cancel button otherwise
         }
 
         initView();
@@ -90,6 +94,9 @@ public class BidDetailsActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * decline the bid
+         */
         button_decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +117,9 @@ public class BidDetailsActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * clicking on usernames show user profile
+         */
         provider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,39 +200,12 @@ public class BidDetailsActivity extends AppCompatActivity {
      * This method accepts the chosen bid on task
      */
     private void acceptBid() {
-//        bid.acceptBid();
-//        task.setStatus("Assigned");
-//        task.setProvider(bid.getProvider());
-//        task.setAssigned(true);
-//        fmanager.getBidsListOnTask(task.getId(), new OnGetBidsListListener() {
-//            @Override
-//            public void onSuccess(BidList Bids) {
-//                for (int i = 0; i < Bids.getCount(); i++) {
-//                    Bid b = Bids.getBid(i);
-//                    if (!b.getProvider().equals(bid.getProvider())) {
-//                        b.setStatus("Declined");
-//                        b.setDeclined(true);
-//                        fmanager.editBid(b);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String message) {
-//
-//            }
-//        });
         fmanager.acceptBid(bid);
         task.setAssigned(true);
         task.setProvider(bid.getProvider());
         task.setStatus("Assigned");
         fmanager.editTask(task);
-        Toast.makeText(getApplicationContext(), "Accepted.", Toast.LENGTH_LONG).show();
         finish();
-//
-//        Intent intent = new Intent(this, ViewTaskActivity.class);
-//        intent.putExtra("UserTask", task);
-//        startActivity(intent);
     }
 
     /**

@@ -14,6 +14,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="102dp"
+        android:layout_marginStart="5dp"
         android:textColor="@color/colorWhite"
         android:text="@string/title" />
 
@@ -21,8 +22,7 @@
         android:id="@+id/textView_titleContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
         android:layout_below="@+id/textView_title"
         android:textColor="@color/colorWhite"
         android:text="TextView" />
@@ -31,8 +31,7 @@
         android:id="@+id/textView_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
         android:layout_below="@+id/textView_titleContent"
         android:textColor="@color/colorWhite"
         android:layout_marginTop="10dp"
@@ -43,8 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
         android:layout_below="@+id/textView_descriptionContent"
         android:textColor="@color/colorWhite"
         android:text="Date" />
@@ -53,8 +51,6 @@
         android:id="@+id/textView_bidList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/textView_dateContent"
         android:gravity="center"
@@ -66,8 +62,7 @@
         android:id="@+id/textView_dateContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
         android:layout_below="@+id/textView_date"
         android:textColor="@color/colorWhite"
         android:text="TextView" />
@@ -76,8 +71,7 @@
         android:id="@+id/textView_descriptionContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
         android:layout_below="@+id/textView_description"
         android:textColor="@color/colorWhite"
         android:text="TextView" />

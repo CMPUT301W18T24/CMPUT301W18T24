@@ -1,3 +1,10 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
+
 package com.example.taskmagic;
 
 /**
@@ -57,13 +64,13 @@ public class RequestedFrag extends Fragment {
         assignedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (assignedCheckBox.isChecked()) {
-                    biddedCheckBox.setChecked(false);
+                if (assignedCheckBox.isChecked()) {             //If assigned checkbox is checked
+                    biddedCheckBox.setChecked(false);                   //set the other two to be unchecked
                     requestedCheckBox.setChecked(false);
                     listToShow = assignedList;
-                    updateView(assignedList);
+                    updateView(assignedList);                   //Update view with the assigned list
                 } else if (!assignedCheckBox.isChecked() && !biddedCheckBox.isChecked() &&
-                        !requestedCheckBox.isChecked()) {
+                        !requestedCheckBox.isChecked()) {       //If all checkboxes are unchecked, update with empty list
                     updateView(new TaskList());
                 }
             }
@@ -72,13 +79,13 @@ public class RequestedFrag extends Fragment {
         requestedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (requestedCheckBox.isChecked()) {
-                    biddedCheckBox.setChecked(false);
+                if (requestedCheckBox.isChecked()) {            //If requested checkbox is checked
+                    biddedCheckBox.setChecked(false);                   //set the other two to be unchecked
                     assignedCheckBox.setChecked(false);
                     listToShow = requestedList;
-                    updateView(requestedList);
+                    updateView(requestedList);                  //Update view with the requested list
                 } else if (!assignedCheckBox.isChecked() && !biddedCheckBox.isChecked() &&
-                        !requestedCheckBox.isChecked()) {
+                        !requestedCheckBox.isChecked()) {       //If all checkboxes are unchecked, update with empty list
                     updateView(new TaskList());
                 }
             }
@@ -87,13 +94,13 @@ public class RequestedFrag extends Fragment {
         biddedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (biddedCheckBox.isChecked()) {
-                    requestedCheckBox.setChecked(false);
+                if (biddedCheckBox.isChecked()) {               //If bidded checkbox is checked
+                    requestedCheckBox.setChecked(false);                //set the other two to be unchecked
                     assignedCheckBox.setChecked(false);
                     listToShow = biddedList;
-                    updateView(biddedList);
+                    updateView(biddedList);                     //Update view with the bidded list
                 } else if (!assignedCheckBox.isChecked() && !biddedCheckBox.isChecked() &&
-                        !requestedCheckBox.isChecked()) {
+                        !requestedCheckBox.isChecked()) {       //If all checkboxes are unchecked, update with empty list
                     updateView(new TaskList());
                 }
             }
@@ -102,6 +109,11 @@ public class RequestedFrag extends Fragment {
         return view;
 
     }
+
+    /**
+     * This listener gets the whole taskList and set lists with three status (assigned, bidded, requested)
+     * @param requestor
+     */
     private void listener(final String requestor) {
         fmanager.getMyTaskData(requestor, new OnGetMyTaskListener() {
             @Override
@@ -135,6 +147,10 @@ public class RequestedFrag extends Fragment {
         });
     }
 
+    /**
+     * This method takes a TaskList and update the view using that list
+     * @param taskList
+     */
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter=new TaskRecyclerAdapter(taskList,getActivity());

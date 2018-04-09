@@ -54,7 +54,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
@@ -110,14 +109,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         //mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
         if(isServicesOK()) {
-            Toast.makeText(this, "Perfect!", Toast.LENGTH_SHORT).show();
             String mode = (String) getIntent().getExtras().get("Mode");
 
             if (mode.equals("View")) {
                 try {
                     latLng = (LatLng) getIntent().getExtras().get("LatLng");
                     viewTask = true;
-                    Toast.makeText(getApplicationContext(),"got LatLng", Toast.LENGTH_SHORT).show();
                 } catch (Exception e){}
             } else if (mode.equals("Search")) {
                 searchGeo = true;
@@ -181,8 +178,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked gps icon");
                 getDeviceLocation();
-               // Toast.makeText(getApplicationContext(),""+mMarker.getPosition(), Toast.LENGTH_LONG).show();
-
             }
         });
 
@@ -361,7 +356,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker marker) {
-                Toast.makeText(getApplicationContext(),"start",Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -373,7 +367,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onMarkerDragEnd(Marker marker) {
                 setResult(Activity.RESULT_OK, new Intent().putExtra("Location", marker.getPosition()));
                 finish();
-                Toast.makeText(getApplicationContext(),"" + marker.getPosition(),Toast.LENGTH_LONG).show();
 
             }
         });

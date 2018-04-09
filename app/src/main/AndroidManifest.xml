@@ -48,9 +48,7 @@
         <activity
             android:name=".ProfileActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
-        <activity android:name=".ViewPhotoActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".CreateBidActivity" />
         <activity
             android:name=".ViewProfileActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
@@ -62,7 +60,7 @@
         <activity android:name=".CreateTaskActivity" />
         <activity android:name=".ViewTaskActivity" />
         <activity android:name=".MessageActivity"
-            android:theme="@style/Theme.Design.NoActionBar" />
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
