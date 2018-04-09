@@ -113,7 +113,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         addLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent locationIntent = new Intent(thisActivity, MapsActivity.class);
+                Intent locationIntent = new Intent(thisActivity, MapsActivity.class).putExtra("Mode", "Create");
                 startActivityForResult(locationIntent, LOCATION_REQUEST);
                 // location is processed in onActivityResult()
             }
@@ -169,7 +169,8 @@ public class CreateTaskActivity extends AppCompatActivity {
                     // save userTask to database
                     Log.d("userfullname", "onClick: " + requesterFullname);
                     UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, requesterFullname, uris, dateString);
-                    Log.d("UserTask created", newTask.getTitle() + db + fmanager);
+                    newTask.setLatitude(location.latitude);
+                    newTask.setLongtitude(location.longitude);
                     fmanager.addTask(newTask);
 
                     Intent intent = new Intent(thisActivity, HomeFeed.class);
