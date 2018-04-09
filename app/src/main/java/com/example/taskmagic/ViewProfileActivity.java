@@ -1,3 +1,10 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
+
 package com.example.taskmagic;
 
 import android.app.ActionBar;
@@ -29,6 +36,8 @@ import misc.BottomNavigationViewHelper;
 
 /**
  * Created by steve on 2018-03-11.
+ * This activity shows details of the current logged in user
+ * The current logged in user can modify his own profile on this activity
  */
 
 public class ViewProfileActivity extends AppCompatActivity {

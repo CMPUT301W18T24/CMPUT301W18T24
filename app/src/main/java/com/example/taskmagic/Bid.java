@@ -1,3 +1,9 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
 package com.example.taskmagic;
 
 import android.support.annotation.NonNull;
@@ -7,6 +13,9 @@ import java.io.Serializable;
 
 /**
  * Created by Yipu on 22/02/2018.
+ * Bid holds the monetary amount that the user chose to bid on
+ * a task and information of requester and provider
+ * @see UserTask
  */
 
 class Bid implements Serializable, Comparable<Bid> {

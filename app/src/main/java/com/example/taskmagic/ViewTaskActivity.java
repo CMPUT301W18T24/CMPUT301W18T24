@@ -1,3 +1,10 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
+
 package com.example.taskmagic;
 
 import android.app.AlertDialog;
@@ -31,6 +38,8 @@ import static java.lang.Float.valueOf;
 
 /**
  * Created by hyusuf on 2018-03-11.
+ * This activity shows details of a specific task
+ *
  */
 
 public class ViewTaskActivity extends AppCompatActivity {
@@ -81,10 +90,11 @@ public class ViewTaskActivity extends AppCompatActivity {
         if (!bitmaps.isEmpty())
             photoButton.setImageBitmap(bitmaps.get(0));
 
-
+        //Check if task belongs to user
         if (task.getRequester().equals(singleton.getUserId())) {
             taskOwner = true;
         }
+        //Check if task is assigned
         if (task.getAssigned()) {
             assignedTask = true;
         }
@@ -110,7 +120,6 @@ public class ViewTaskActivity extends AppCompatActivity {
                         editIntent.putExtra("UserTask", task);
                         startActivity(editIntent);
                     } else if (task.getAssigned()){
-                        Toast.makeText(getApplicationContext(), "Clicked!", Toast.LENGTH_LONG).show();
                         resetTask(task);
                     }
                 } else {                            //Bid on task
@@ -123,6 +132,9 @@ public class ViewTaskActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * This button allows user to complete an assigned task
+         */
         button_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,20 +170,24 @@ public class ViewTaskActivity extends AppCompatActivity {
             }
         });
 
-
+        /**
+         * Clicking this button shows photo slider of the task
+         */
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bitmaps.size() > 0) {
-                    Log.d("Photo count", task.getPhotoUriString().toString());
                     openPhotoSlider();
                 } else {
-                    Log.d("Photo count", task.getPhotoUriString().toString());
                     Toast.makeText(getApplicationContext(), "This Task has no Photos", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
+        /**
+         * Clicking this button pops up an alert dialog and delete the task if user clicks
+         * confirm button
+         */
         button_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,6 +205,11 @@ public class ViewTaskActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This methods reset the task back to be requested or bidded according to its bidlist
+     * The task to be reset has to be assigned but not completed
+     * @param task
+     */
     private void resetTask( UserTask task) {
         fmanager.updateBidList(task.getId());
 
@@ -207,10 +228,12 @@ public class ViewTaskActivity extends AppCompatActivity {
 
             }
         });
+
+        //If there's other bid on task
         if (bidList.getCount() > 1) {
             task.setStatus("Bidded");
             task.setBidded(true);
-        } else {
+        } else {  //If there's only one bid that was accepted previously
             task.setStatus("Requested");
             task.setBidded(false);
         }
@@ -220,14 +243,9 @@ public class ViewTaskActivity extends AppCompatActivity {
         finish();
     }
 
-    private void updateBids(BidList bidList) {
-        for (int i = 0; i < bidList.getCount(); i++) {
-            Bid bid = bidList.getBid(i);
-            //fmanager.editBid(bid);
-            Log.d("Speed bump" , String.format("count: %d", i));
-        }
-    }
-
+    /**
+     * This method completes a task
+     */
     private void completeTask() {
         task.setStatus("DONE");
         //MAYBE RATING
@@ -267,43 +285,31 @@ public class ViewTaskActivity extends AppCompatActivity {
      */
     private void initView() {
         assignedTask = task.getAssigned();
-//        fmanager.getTaskInfo(task.getId(), new OnGetATaskListener() {
-//            @Override
-//            public void onSuccess(UserTask task) {
-//                if (task.getAssigned()) {
-//                    assignedTask = true;
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String message) {
-//
-//            }
-//        });
 
-        if (taskOwner) {
-            if (assignedTask) {
-                button.setText("RESET");
+        if (taskOwner) {                                         //If user is the task owner
+            if (assignedTask) {                                     //If task is assigned
+                button.setText("RESET");                                //show reset button
                 button.setTextColor(0xffff0000);
                 button_delete.setVisibility(View.GONE);
-            } else {
-                button_complete.setVisibility(View.GONE);
-                button.setText("EDIT");
+            } else {                                                //If task is not assigned
+                button_complete.setVisibility(View.GONE);               //hide complete button
+                button.setText("EDIT");                                 //show edit button
 
-                if (task.getStatus().equals("Bidded")) {
-                    button.setEnabled(false);
+                if (task.getStatus().equals("Bidded")) {                //If task is bidded
+                    button.setEnabled(false);                               //disable edit button
                 }
-                if (task.getStatus().equals("Requested")) {
-                    button_delete.setVisibility(View.VISIBLE);
+                if (task.getStatus().equals("Requested")) {             //If task is requested
+                    button_delete.setVisibility(View.VISIBLE);              //show delete button
                 }
             }
 
-        } else {
-            button_complete.setVisibility(View.GONE);
-            button_delete.setVisibility(View.GONE);
+        } else {                                                //If not the task owner, show bid on task button
+            button_complete.setVisibility(View.GONE);           //hide complete button
+            button_delete.setVisibility(View.GONE);             //hide delete button
             button.setText("BID");
         }
 
+        //Set task detail info
         usernameText.setText(task.getRequesterName());
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
@@ -312,15 +318,15 @@ public class ViewTaskActivity extends AppCompatActivity {
         fmanager.getBidsListOnTask(task.getId(), new OnGetBidsListListener() {
             @Override
             public void onSuccess(BidList Bids) {
-                if (assignedTask) {
-                    Bid acceptedBid = Bids.getAcceptedBid();
+                if (assignedTask) {                                     //If task is assigned
+                    Bid acceptedBid = Bids.getAcceptedBid();            //Show the accepted bid
                     bidList = new BidList();
                     bidList.add(acceptedBid);
                     TextView bidTitle = (TextView) findViewById(R.id.textView_bidList);
                     bidTitle.setText("Accepted Bid");
-                } else {
-                    bidList = Bids;
-                    bidList.sortList();
+                } else {                                                //If task is not assigned
+                    bidList = Bids;                                     //Show all bids on the task if any
+                    bidList.sortList();                                 //Sort Bidlist in an ascending order
                 }
                 bidsAdapter = new BidsViewAdapter(bidList, getApplicationContext());
                 bids.setAdapter(bidsAdapter);
@@ -479,6 +485,10 @@ public class ViewTaskActivity extends AppCompatActivity {
         initView();
     }
 
+    /**
+     * @see BidDialog
+     * @return
+     */
     private BidDialog buildBidDialog() {
         BidDialog bidDialog = new BidDialog(this, task, new BidDialog.onDialogListener() {
             @Override
