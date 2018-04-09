@@ -45,8 +45,6 @@ public class ChatAdapter extends RecyclerView.Adapter  {
                                                          int viewType) {
         View view;
         if (viewType == ITEM_TYPE_SENT) {
-           // RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-          //  params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_sent,parent,false);
 
             return new SentMessageHolder(view);

@@ -18,13 +18,17 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import misc.BottomNavigationViewHelper;
 
@@ -47,8 +51,9 @@ public class HomeFeed extends AppCompatActivity {
     private String personName;
     private String personId;
     private String email;
+    private DatabaseReference reference;
     private GoogleApiClient mGoogleApiClient;
-    //private Uri personPhoto;
+    final UserSingleton singleton = UserSingleton.getInstance();
     /**
      * this function sets up the home feed
      * @param savedInstanceState
@@ -56,35 +61,17 @@ public class HomeFeed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homefeed);
-        final UserSingleton singleton = UserSingleton.getInstance();
+
         auth = singleton.getmAuth();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mHomeNav=(BottomNavigationView)findViewById(R.id.home_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mHomeNav);
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
-        googleUser();
-        fmanager.getUserInfo(singleton.getUserId(), new OnGetUserInfoListener() {
-            @Override
-            public void onSuccess(User user) {
-                if (user.getUserName()==null){
-                    Intent intent=new Intent(getApplicationContext(),ProfileActivity.class);
-                    intent.putExtra("userName",userName);
-                    intent.putExtra("name",personName);
-                    intent.putExtra("id",singleton.getUserId());
-                    intent.putExtra("email",email);
-                    startActivity(intent);
-                }
-                else {
-                    singleton.setUserName(user.getFullName());
-                }
-            }
-
-            @Override
-            public void onFailure(String message) {
-
-            }
-        });
+        reference= FirebaseDatabase.getInstance().getReference();
+        if(singleton.getmGoogleApiClient()!=null) {
+            googleUser();
+        }
         listener(singleton.getUserId());
         mHomeNav.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -180,14 +167,30 @@ public class HomeFeed extends AppCompatActivity {
         super.onResume();
 
     }
+
+    /**
+     * retrieves google user thats signed in
+     */
     private void googleUser(){
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
         if (acct != null) {
-            userName = acct.getDisplayName();
-            personName = acct.getGivenName();
-            email = acct.getEmail();
-            personId = acct.getId();
-            //personPhoto = acct.getPhotoUrl();
+            User user=new User();
+            user.setEmailAddress(acct.getEmail());
+            user.setFullName(acct.getGivenName());
+            user.setUserName(acct.getDisplayName());
+            user.setId(singleton.getUserId());
+            reference.child("users").child(user.getId()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(getApplicationContext(),"Hello",Toast.LENGTH_LONG).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(),"fail",Toast.LENGTH_LONG).show();
+                }
+            });
+
         }
     }
 

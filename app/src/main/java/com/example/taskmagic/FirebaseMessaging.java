@@ -54,7 +54,9 @@ public class FirebaseMessaging extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         try {
             String identifyDataType = remoteMessage.getData().get(data_type);
+
             if (identifyDataType.equals(data_type_bid)) {
+                Log.d(TAG, "onMessageReceived: "+"yo");
                 String message = remoteMessage.getData().get(data_message);
                 String taskid= remoteMessage.getData().get(data_taskId);
                 sendBidNotification(message,taskid);
@@ -75,24 +77,17 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         Intent intent = new Intent(this, MessageActivity.class);
         intent.putExtra("id",receiver);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent resultIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-
-        Uri notificationSoundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder(this)
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("TaskMagic")
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setSound(notificationSoundURI)
-                .setContentIntent(resultIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0, mNotificationBuilder.build());
-
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+        notificationManager.notify(0, notificationBuilder.build());
 
     }
 
@@ -100,29 +95,22 @@ public class FirebaseMessaging extends FirebaseMessagingService {
     public void onDeletedMessages() {
         super.onDeletedMessages();
     }
-
+    //
     public void sendBidNotification(String message,String taskid) {
-        Log.d(TAG, "sendBidNotification: building bid Notification");
-        if (!isAppInForeground(this,getPackageName())){
-            intent = new Intent(this, ViewTaskActivity.class);
-        }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent resultIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri notificationSoundURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0 /* request code */, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle("TaskMagic")
                 .setContentText(message)
-                .setAutoCancel(true)
-                .setSound(notificationSoundURI)
-                .setContentIntent(resultIntent);
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0, mNotificationBuilder.build());
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        getApplicationContext().startActivity(intent);
 
     }
 

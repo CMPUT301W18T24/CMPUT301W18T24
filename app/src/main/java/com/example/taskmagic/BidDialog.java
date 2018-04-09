@@ -26,6 +26,11 @@ public class BidDialog extends Dialog {
     private Context context;
     private onDialogListener listener;
     private UserTask task;
+    private EditText amount;
+    private TextView title;
+    private TextView description;
+    private Button confirmButton;
+    private Button cancelButton;
 
     // This interface sends the amount value back
     public interface onDialogListener {
@@ -46,11 +51,7 @@ public class BidDialog extends Dialog {
         this.task = task;
     }
 
-    EditText amount;
-    TextView title;
-    TextView description;
-    Button confirmButton;
-    Button cancelButton;
+
 
     @Override
     protected void onCreate(Bundle SaveInstanceState) {

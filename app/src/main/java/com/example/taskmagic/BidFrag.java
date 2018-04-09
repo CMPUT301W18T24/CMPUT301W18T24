@@ -66,6 +66,12 @@ public class BidFrag extends Fragment {
         getTasks(bidList);
     }
 
+    // Filtering the retrieved bidlist from firebase
+
+    /**
+     *
+     * @param bidList
+     */
     private void getTasks(BidList bidList) {
         slowBidlist = new BidList();
         for (int i = 0 ; i < bidList.getCount() ; i++) {
@@ -74,6 +80,10 @@ public class BidFrag extends Fragment {
         }
     }
 
+    /**
+     * This retrieves the task info from firebase
+     * @param taskId
+     */
     private void getTaskListener(String taskId) {
         fmanager.getTaskInfo(taskId, new OnGetATaskListener() {
             @Override

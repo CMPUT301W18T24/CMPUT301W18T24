@@ -40,7 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyTasksActivity" />
         <activity
             android:name=".HomeFeed"
             android:label="Home Feed"
@@ -72,6 +71,9 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBL-h6gtoER5iQukOoBL0yyE_QCU4jHOqs" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
 
         <activity
             android:name=".MapsActivity"

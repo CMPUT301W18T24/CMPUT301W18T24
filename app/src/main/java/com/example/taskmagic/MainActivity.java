@@ -42,6 +42,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
+/***
+ * Google fireBase login
+ * https://www.youtube.com/watch?v=Duz_0XkWP2I
+ */
+
+
 public class MainActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword;
@@ -59,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 234;
     private GoogleApiClient mGoogleApiClient;
     private boolean googleUser;
+
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,14 +125,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 email=mEmail.getText().toString().trim();
                 password=mPassword.getText().toString().trim();
+                if (email.isEmpty()|| password.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"You Entered blank fields Please Try Again",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 login(email,password);
+
             }
         });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+                if(mGoogleSignInClient!=null) {
+                    mGoogleSignInClient.signOut();
+                    startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                }
             }
         });
 
@@ -129,8 +148,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
+    /**
+     * Helper function to sign in with google
+     */
     private void signIn() {
         //getting the google signin intent
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -139,12 +159,19 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    /**
+     * retrieves device token to send notifications
+     */
     private void init(){
         String token= FirebaseInstanceId.getInstance().getToken();
         Log.d("MainActivity", "init: "+token);
         sendRegistrationToServer(token);
     }
 
+    /**
+     * Save device token to firebase
+     * @param Token
+     */
     private void sendRegistrationToServer(String Token){
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
         UserSingleton singleton= UserSingleton.getInstance();
@@ -159,11 +186,15 @@ public class MainActivity extends AppCompatActivity {
         // Google sign out
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
     }
-    // This function logs the user into the app
+
+    /**
+     * This function logs the user into the app
+      */
     public void login(String email,String password){
         progress.setMessage("Please Wait");
         progress.show();
@@ -189,6 +220,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * get the result for activity result for the google sigin in
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -207,7 +245,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-    ///google sign in authorization
+
+    /**
+     * firebase Auth with google
+     * @param account
+     */
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
 
         //getting the auth credential
