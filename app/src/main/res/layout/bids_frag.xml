@@ -3,6 +3,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/thirdcolor"
     android:orientation="vertical">
 
     <TextView
@@ -10,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Bids List"
         android:gravity="center"
+        android:textColor="@android:color/white"
         android:typeface="normal"
         android:textSize="25sp"/>
 
@@ -17,26 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="All" />
-
-
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Accepted" />
-
-
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Processing" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

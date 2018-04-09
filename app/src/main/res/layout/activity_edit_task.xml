@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@drawable/secondcolor"
     android:layout_height="match_parent">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:textColor="@color/colorWhite"
         android:text="@string/title" />
 
     <EditText
@@ -20,6 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
         android:layout_below="@+id/textView_title"
         android:text="TextView" />
 
@@ -30,6 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
+        android:textColor="@color/colorWhite"
         android:layout_below="@+id/editText_titleContent"
         android:text="@string/description" />
 
@@ -37,9 +42,10 @@
         android:id="@+id/editLocation_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
         android:layout_below="@+id/editText_descriptionContent"
+        android:background="@drawable/white_rounded_button"
         android:text="Edit Location" />
 
     <TextView
@@ -48,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:textColor="@color/colorWhite"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/editLocation_button"
         android:text="@string/date" />
@@ -58,9 +65,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
         android:paddingLeft="4dp"
         android:textSize="20sp"
-        android:textColor="@color/colorBlack"
         android:layout_below="@+id/textView_date"
         android:text="@string/date_hint" />
 
@@ -70,6 +78,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
         android:layout_below="@+id/textView_description"
         android:text="TextView" />
 
@@ -79,8 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editText_dateContent"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorGray">
+        android:layout_marginTop="8dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/edit_display_recycler"
@@ -105,6 +114,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
+            android:backgroundTint="@color/wallet_holo_blue_light"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_camera" />
 
@@ -115,6 +125,7 @@
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/edit_camera_button"
+            android:backgroundTint="@color/wallet_holo_blue_light"
             app:srcCompat="@android:drawable/ic_menu_gallery" />
     </android.support.constraint.ConstraintLayout>
 
@@ -122,22 +133,20 @@
         android:id="@+id/edit_confirm_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView_description"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textView_description"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
+        android:layout_toEndOf="@+id/textView_description"
+        android:background="@drawable/white_rounded_button"
         android:text="@string/confirm" />
 
     <Button
         android:id="@+id/edit_cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBaseline="@+id/edit_confirm_button"
+        android:layout_alignBottom="@+id/edit_confirm_button"
+        android:background="@drawable/white_rounded_button"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="26dp"
-        android:layout_marginRight="26dp"
+        android:layout_marginEnd="77dp"
         android:text="@string/cancel" />
 
 

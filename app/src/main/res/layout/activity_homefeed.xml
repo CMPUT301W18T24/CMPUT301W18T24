@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/secondcolor"
     tools:context="com.example.taskmagic.HomeFeed">
 
     <!-- Content Container -->
@@ -15,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
-        android:background="#FFCC80"
+        android:background="#1B5E20"
         app:itemIconTint="#FFF"
         app:itemTextColor="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"

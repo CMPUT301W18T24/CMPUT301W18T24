@@ -11,7 +11,7 @@
 
     <!-- View background color -->
     <solid
-        android:color="@color/lightGrey" >
+        android:color="@color/wallet_holo_blue_light" >
     </solid>
 
     <!-- The radius makes the corners rounded -->

@@ -316,7 +316,7 @@ public class CreateTaskActivity extends AppCompatActivity {
             return false;
         } else if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))
                 || bitmaps.isEmpty()
-                || location.equals(null)) {
+                || location == null) {
             openCreateTaskWarning();
             return false;
         }

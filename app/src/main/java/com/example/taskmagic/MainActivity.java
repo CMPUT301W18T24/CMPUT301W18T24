@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).addApi(auth.GOOGLE_SIGN_IN_API,gso).build();
         singleton.setmGoogleApiClient(mGoogleApiClient);
-        
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
