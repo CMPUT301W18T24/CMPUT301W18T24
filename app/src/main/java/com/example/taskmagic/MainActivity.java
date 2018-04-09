@@ -55,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mEmail=(EditText)findViewById(R.id.editTextEmail);
-        mEmail.setText("pp1212@gmail.com");
         mPassword=(EditText)findViewById(R.id.editTextpassword);
-        mPassword.setText("pp1212");
         mLogin=(Button) findViewById(R.id.buttonlogin);
         register=(TextView)findViewById(R.id.textViewNewUser);
         mAuth=FirebaseAuth.getInstance();
@@ -76,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).addApi(auth.GOOGLE_SIGN_IN_API,gso).build();
-
+        singleton.setmGoogleApiClient(mGoogleApiClient);
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
