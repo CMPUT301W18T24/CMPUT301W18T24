@@ -60,7 +60,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
                 String receiver=remoteMessage.getData().get(data_receiver);
                 String taskid= remoteMessage.getData().get(data_taskId);
                 String title= remoteMessage.getData().get(data_title);
-                sendBidNotification(message,sender,receiver,taskid,title);
+                //sendBidNotification(message,sender,receiver,taskid,title);
             } else if (identifyDataType.equals(data_type_chat) && (!isAppInForeground(this,getPackageName()))){
                 String message = remoteMessage.getData().get(data_message);
                 String receiver= remoteMessage.getData().get(data_receiver);
@@ -109,9 +109,9 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         if (!isAppInForeground(this,getPackageName())){
             intent = new Intent(this, MainActivity.class);
         }
-        else {
-            intent = new Intent(this, NotificationActivity.class);
-        }
+    //    else {
+     //       intent = new Intent(this, NotificationActivity.class);
+     //   }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent resultIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

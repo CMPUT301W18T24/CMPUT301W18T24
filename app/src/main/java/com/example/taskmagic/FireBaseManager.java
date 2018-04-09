@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 
-public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsListListener,OnGetAssignedTaskListener,OnGetChatMessagesListener,OnGetNotificationsListener {
+public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsListListener,OnGetAssignedTaskListener,OnGetChatMessagesListener {
     private FirebaseAuth mAuth;
     private DatabaseReference database;
     private String taskTag = "task";
@@ -73,11 +73,11 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
     public void onSuccess(ArrayList<ChatMessage> messageList) {
 
     }
-
+/*
     @Override
     public void onSuccess(List<NotificationMSG> nList) {
 
-    }
+    } */
 
     @Override
     public void onFailure(String message) {
@@ -430,7 +430,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
         });
 
     }
-
+/*
     public void retrieveNotifications(final String receiver, final OnGetNotificationsListener listener) {
         database.child(notificationTag).addValueEventListener(new ValueEventListener() {
             @Override
@@ -451,7 +451,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
                 listener.onFailure(databaseError.toString());
             }
         });
-    }
+    } */
 
     /**
      * This function get the lowest bid for a given task in the database

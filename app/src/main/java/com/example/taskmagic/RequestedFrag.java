@@ -128,7 +128,7 @@ public class RequestedFrag extends Fragment {
 
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter=new RequestedTaskAdapter(taskList,getActivity());
+        adapter=new TaskRecyclerAdapter(taskList,getActivity());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
