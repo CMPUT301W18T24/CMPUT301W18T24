@@ -90,7 +90,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         final BidDialog bidDialog = new BidDialog(this, task, new BidDialog.onDialogListener() {
             @Override
             public void onEnsure(String amount) {
-                Bid bid = new Bid(task.getId(), valueOf(amount), singleton.getUserId(), task.getRequester());
+                Bid bid = new Bid(task.getId(), valueOf(amount), singleton.getUserId(), singleton.getUserName(), task.getRequesterName());
                 bid.setTaskTitle(task.getTitle());
                 bid.setRequestor(task.getRequester());
                 bidOnTask(bid);

@@ -73,7 +73,7 @@ public class AssignedFrag extends Fragment {
      */
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter=new AssignedTaskAdapter(taskList,getActivity());
+        adapter=new TaskRecyclerAdapter(taskList,getActivity());
         recyclerView.setAdapter(adapter);
     }
 }

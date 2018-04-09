@@ -62,8 +62,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignStart="@id/bidded_current_own"
                 android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                android:text="Your bid:" />
+                android:textSize="10sp"
+                android:text="Bid Amount:" />
 
             <TextView
                 android:id="@+id/bidded_current_own"
@@ -71,7 +71,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/lowest_text"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="24dp"
+                android:textSize="20sp"
                 android:text="$ss.ss" />
 
             <TextView
@@ -80,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/bidded_current_own"
                 android:layout_alignStart="@id/bidded_current_own"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:text="Lowest:" />
 
             <TextView
@@ -91,6 +92,7 @@
                 android:layout_below="@id/own_text"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="4dp"
+                android:textSize="20sp"
                 android:text="$ss.ss" />
 
         </RelativeLayout>

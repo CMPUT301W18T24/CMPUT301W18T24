@@ -427,6 +427,7 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
 
     }
 
+
     /**
      * This function get the lowest bid for a given task in the database
      *
