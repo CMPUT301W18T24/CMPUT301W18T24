@@ -60,7 +60,7 @@ public class aaSignupTest {
         }
 
 
-        onView(withId(R.id.editTextPass)).perform(replaceText("123456"), closeSoftKeyboard());
+         onView(withId(R.id.editTextPass)).perform(replaceText("123456"), closeSoftKeyboard());
         //check if text has been successfully typed in editTextPass
         allOf(withId(R.id.editTextPass), withText("123456"), isDisplayed());
 
