@@ -11,6 +11,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/secondcolor"
     tools:context="com.example.taskmagic.BidDetailsActivity">
 
     <TextView
@@ -22,6 +23,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
+        android:textColor="@android:color/white"
         android:text="@string/title" />
 
     <TextView
@@ -33,6 +35,7 @@
         android:layout_marginLeft="5dp"
         android:textSize="20sp"
         android:layout_below="@+id/textView_title"
+        android:textColor="@android:color/white"
         android:text="TextView" />
 
     <TextView
@@ -44,6 +47,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="5dp"
         android:layout_below="@+id/textView_titleContent"
+        android:textColor="@android:color/white"
         android:text="@string/description" />
 
     <TextView
@@ -55,6 +59,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="5dp"
         android:layout_below="@+id/textView_descriptionContent"
+        android:textColor="@android:color/white"
         android:text="Provider" />
 
     <TextView
@@ -67,6 +72,7 @@
         android:layout_marginLeft="5dp"
         android:textSize="20sp"
         android:layout_below="@+id/textView_user"
+        android:textColor="@android:color/white"
         android:text="TextView" />
 
     <TextView
@@ -78,6 +84,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="5dp"
         android:layout_below="@+id/textView_userContent"
+        android:textColor="@android:color/white"
         android:text="Requester" />
 
     <TextView
@@ -90,6 +97,7 @@
         android:layout_marginLeft="5dp"
         android:textSize="20sp"
         android:layout_below="@+id/textView_requester"
+        android:textColor="@android:color/white"
         android:text="TextView" />
 
     <TextView
@@ -101,6 +109,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="5dp"
         android:layout_below="@+id/textView_requesterContent"
+        android:textColor="@android:color/white"
         android:text="Amount" />
 
     <TextView
@@ -112,6 +121,7 @@
         android:layout_marginLeft="5dp"
         android:textSize="20sp"
         android:layout_below="@+id/textView_amount"
+        android:textColor="@android:color/white"
         android:text="TextView" />
 
 
@@ -124,6 +134,7 @@
         android:layout_marginLeft="5dp"
         android:textSize="20sp"
         android:layout_below="@+id/textView_description"
+        android:textColor="@android:color/white"
         android:text="TextView" />
 
     <TextView
@@ -135,6 +146,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/textView_amountContent"
+        android:textColor="@android:color/white"
         android:text="Lowest Bid on Task" />
 
 
@@ -147,6 +159,7 @@
         android:layout_marginLeft="5dp"
         android:textSize="20sp"
         android:layout_below="@+id/textView_lowestBid"
+        android:textColor="@android:color/white"
         android:text="TextView" />
 
 
@@ -159,6 +172,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/textView_lowestBidContent"
+        android:textColor="@android:color/white"
         android:text="Status of bid" />
 
 
@@ -171,6 +185,7 @@
         android:layout_marginLeft="5dp"
         android:textSize="20sp"
         android:layout_below="@+id/textView_status"
+        android:textColor="@android:color/white"
         android:text="TextView" />
 
 
@@ -183,6 +198,8 @@
         android:layout_marginLeft="5dp"
         android:visibility="gone"
         android:layout_above="@id/button_accept"
+        android:background="@drawable/white_rounded_button"
+        android:textColor="#F44336"
         android:text="DECLINE" />
 
     <Button
@@ -191,7 +208,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Accept" />
+        android:background="@drawable/white_rounded_button"
+        android:textColor="#2E7D32"
+        android:text="ACCEPT" />
 
 
 </RelativeLayout>

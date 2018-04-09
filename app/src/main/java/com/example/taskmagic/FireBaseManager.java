@@ -33,7 +33,7 @@ import java.util.Map;
  */
 
 
-public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsListListener,OnGetAssignedTaskListener,OnGetChatMessagesListener {
+public class    FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsListListener,OnGetAssignedTaskListener,OnGetChatMessagesListener {
     private FirebaseAuth mAuth;
     private DatabaseReference database;
     private String taskTag = "task";
