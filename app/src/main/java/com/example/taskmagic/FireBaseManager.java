@@ -121,7 +121,7 @@ public class    FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoList
         database.child(taskTag).child(task.getId()).setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Succesfully edited Task", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Succesfully edited Task", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -232,7 +232,7 @@ public class    FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoList
         database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Bid Successfully Saved", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Bid Successfully Saved", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -245,7 +245,7 @@ public class    FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoList
         database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Succesfully edited Bid", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Succesfully edited Bid", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

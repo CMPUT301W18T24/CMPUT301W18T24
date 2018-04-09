@@ -200,7 +200,6 @@ public class ViewTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Jump to profile page
                 showProfile(singleton.getUserId());
-                Toast.makeText(getApplicationContext(), "Cliked", Toast.LENGTH_LONG).show();
             }
         });
     }

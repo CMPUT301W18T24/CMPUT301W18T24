@@ -108,7 +108,6 @@ public class ProfileDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 listener.onEnsure();
-                Toast.makeText(getContext(),"Messeging.", Toast.LENGTH_LONG).show();
             }
         });
     }

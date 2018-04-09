@@ -205,7 +205,6 @@ public class BidDetailsActivity extends AppCompatActivity {
         task.setProvider(bid.getProvider());
         task.setStatus("Assigned");
         fmanager.editTask(task);
-        Toast.makeText(getApplicationContext(), "Accepted.", Toast.LENGTH_LONG).show();
         finish();
     }
 

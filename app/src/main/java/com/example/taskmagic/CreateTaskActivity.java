@@ -201,7 +201,6 @@ public class CreateTaskActivity extends AppCompatActivity {
              */
             if (requestCode == LOCATION_REQUEST) {
                 location = (LatLng) data.getExtras().get("Location");
-                Toast.makeText(getApplicationContext(), "into"+location, Toast.LENGTH_LONG).show();
             }
 
             /**
