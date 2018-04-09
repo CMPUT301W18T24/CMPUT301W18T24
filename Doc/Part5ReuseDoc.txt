@@ -1,0 +1,86 @@
+Getting Device Location:
+https://www.youtube.com/watch?v=fPFr0So1LmI
+
+
+Google Map GitHub:
+https://github.com/mitchtabian/Google-Maps-Google-Places/tree/e8ad8f165c7df3f25b6a9128c70f4c0e3ed84f94
+
+
+Making latitude and longitude values:
+
+https://stackoverflow.com/questions/17983865/making-a-location-object-in-android-with-latitude-and-longitude-values
+
+
+For the marker:
+
+https://www.youtube.com/watch?v=k253ec4m33A&list=PL0ROAEfVIuWUOIwiVbSzHI2xsrOhl5AH5&index=4
+
+
+Adding Marker to Map:
+https://www.youtube.com/watch?v=s_6xxTjoLGY
+
+
+To enable location:
+
+https://stackoverflow.com/questions/25175522/how-to-enable-location-access-programmatically-in-android
+
+
+For the return null:
+
+https://stackoverflow.com/questions/218384/what-is-a-nullpointerexception-and-how-do-i-fix-it
+
+
+Getting last location:
+https://stackoverflow.com/questions/29441384/fusedlocationapi-getlastlocation-always-null/29854418#29854418
+
+
+For the circle in map:
+
+https://www.c-sharpcorner.com/article/xamarin-android-create-google-map-draw-circle-around-marker
+
+Color References:
+https://developer.android.com/reference/android/R.color.html
+
+
+Messaging UI for Android:
+https://blog.sendbird.com/android-chat-tutorial-building-a-messaging-ui
+
+Checking if application is in the foreground:
+//https://stackoverflow.com/questions/41735755/in-android-how-to-prevent-firebase-push-notification-when-app-is-in-foreground
+
+get active packages of the project:
+//https://stackoverflow.com/questions/41735755/in-android-how-to-prevent-firebase-push-notification-when-app-is-in-foreground
+
+Google sign in firebase:
+https://www.youtube.com/watch?v=Duz_0XkWP2I
+
+Alert Dialog builder:
+https://stackoverflow.com/questions/13675822/android-alertdialog-builder
+
+Open DatePickerDialog and return date:
+https://www.youtube.com/watch?v=czKLAx750N0
+
+Get compressed bitmap from camera:
+https://stackoverflow.com/questions/28760941/compress-image-file-from-camera-to-certain-size 
+
+Convert Bitmap to Base64 String:
+https://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string 
+
+Recieves bitmap from another activity as a result:
+https://www.youtube.com/watch?v=wBuWqqBWziU 
+
+Opens gallery as an activity:
+https://www.youtube.com/watch?v=wBuWqqBWziU
+
+Custom alert dialog:
+https://www.youtube.com/watch?v=plnLs6aST1M
+
+Show Image Slider using ViewPager:
+https://www.youtube.com/watch?v=GqcFEvBCnIk
+
+Dots inidicator on the slider:
+https://www.youtube.com/watch?v=Q2M30NriSsE
+
+Implementing single item click:
+https://medium.com/@harivigneshjayapalan/android-recyclerview-implementing-single-item-click-and-long-press-part-ii-b43ef8cb6ad8
+
