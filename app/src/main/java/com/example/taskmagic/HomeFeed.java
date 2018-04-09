@@ -91,7 +91,7 @@ public class HomeFeed extends AppCompatActivity {
                                 startActivity(intent);
                                 return true;
                             case R.id.map:
-                                startActivity(new Intent(HomeFeed.this, MapsActivity.class));
+                                startActivity(new Intent(HomeFeed.this, MapsActivity.class).putExtra("Mode", "Search"));
                                 return true;
                             case R.id.addTask:
                                 startActivity(new Intent(HomeFeed.this, CreateTaskActivity.class));

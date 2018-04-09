@@ -19,19 +19,22 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class UserSingleton {
-    private final static UserSingleton obj=new UserSingleton();
+    private final static UserSingleton obj = new UserSingleton();
     private FirebaseAuth mAuth;
     private String userName;
-    private UserSingleton(){}
+
+    private UserSingleton() {
+    }
+
     private GoogleApiClient mGoogleApiClient;
 
 
-    public static UserSingleton getInstance(){
+    public static UserSingleton getInstance() {
         return obj;
     }
 
-    public void setAuth(FirebaseAuth auth){
-        this.mAuth=auth;
+    public void setAuth(FirebaseAuth auth) {
+        this.mAuth = auth;
     }
 
     public void setmGoogleApiClient(GoogleApiClient mGoogleApiClient) {
@@ -50,19 +53,21 @@ public class UserSingleton {
         this.userName = userName;
     }
 
-    public FirebaseAuth getmAuth(){
+    public FirebaseAuth getmAuth() {
         return mAuth;
     }
-    public String getUserId(){
+
+    public String getUserId() {
         return mAuth.getCurrentUser().getUid();
     }
+
     public void logout() {
         mGoogleApiClient.connect();
         mGoogleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
             @Override
             public void onConnected(@Nullable Bundle bundle) {
                 mAuth.signOut();
-                if(mGoogleApiClient.isConnected()) {
+                if (mGoogleApiClient.isConnected()) {
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
                         @Override
                         public void onResult(@NonNull Status status) {

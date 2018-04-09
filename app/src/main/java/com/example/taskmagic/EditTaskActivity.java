@@ -30,6 +30,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -42,6 +43,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.taskmagic.CreateTaskActivity.LOCATION_REQUEST;
 import static com.example.taskmagic.CreateTaskActivity.MAX_IMG_SIZE;
 import static com.example.taskmagic.CreateTaskActivity.maxHeight;
 import static com.example.taskmagic.CreateTaskActivity.maxWidth;
@@ -68,10 +70,12 @@ public class EditTaskActivity extends AppCompatActivity {
     private int currMonth;
     private int currDay;
     private String dateString;
+    private LatLng location;
 
     EditText titleText;
     EditText descriptionText;
     TextView dateText;
+    Button editLocationButton;
     Button confirmButton;
     Button cancelButton;
     RecyclerView displayRecycler;
@@ -99,9 +103,26 @@ public class EditTaskActivity extends AppCompatActivity {
         titleText = findViewById(R.id.editText_titleContent);
         descriptionText = findViewById(R.id.editText_descriptionContent);
         dateText = findViewById(R.id.editText_dateContent);
+        location = new LatLng(task.getLatitude(), task.getLongtitude());
 
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
+
+        editLocationButton = findViewById(R.id.editLocation_button);
+        editLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent locationIntent = new Intent(EditTaskActivity.this, MapsActivity.class).putExtra("Mode", "Edit");
+                if (location == null) {
+                    Log.d("Coord", (location == null ? "" : String.format("%l", location.latitude)));
+                    locationIntent.putExtra("LatLng", location);
+                } else {
+                    locationIntent.putExtra("LatLng", location);
+                }
+                startActivityForResult(locationIntent, LOCATION_REQUEST);
+                // location is processed in onActivityResult()
+            }
+        });
 
         dateText.setText(task.getDate());
         dateText.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +170,8 @@ public class EditTaskActivity extends AppCompatActivity {
                 if (checkFields().equals(true)) {
                     task.setTitle(titleText.getText().toString().trim());
                     task.setDescription(descriptionText.getText().toString().trim());
+                    task.setLatitude(location.latitude);
+                    task.setLongtitude(location.longitude);
                     task.setDate(dateText.getText().toString().trim());
                     //Jsonify photoUris for saving
                     task.setPhotoUriString(gson.toJson(photoUris));
@@ -205,9 +228,17 @@ public class EditTaskActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
 
             /**
+             * process LOCATION_REQUEST returns
+             */
+            if (requestCode == LOCATION_REQUEST) {
+                location = (LatLng) data.getExtras().get("Location");
+                Toast.makeText(getApplicationContext(), "into" + location, Toast.LENGTH_LONG).show();
+            }
+
+            /**
              * process CAMERA_REQUEST returns
              */
-            if (requestCode == CAMERA_REQUEST) {
+            else if (requestCode == CAMERA_REQUEST) {
                 Bitmap cameraBitmap = (Bitmap) data.getExtras().get("data");
                 cameraBitmap = Bitmap.createScaledBitmap(cameraBitmap, maxWidth, maxHeight, true);
                 // https://stackoverflow.com/questions/9224056/android-bitmap-to-base64-string
