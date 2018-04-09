@@ -146,12 +146,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void init(){
         Log.d(TAG, "init: initializing");
 
-        mGoogleApiClient = new GoogleApiClient
-                .Builder(this)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .enableAutoManage(this, this)
-                .build();
+        //mGoogleApiClient = new GoogleApiClient
+          //      .Builder(this)
+            //    .addApi(Places.GEO_DATA_API)
+              //  .addApi(Places.PLACE_DETECTION_API)
+                //.enableAutoManage(this, this)
+                //.build();
 
         // mSearchText.setOnItemClickListener(mAutocompleteClickListener);
 

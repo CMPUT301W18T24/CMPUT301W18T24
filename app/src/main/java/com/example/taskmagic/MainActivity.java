@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).addApi(auth.GOOGLE_SIGN_IN_API,gso).build();
+        singleton.setmGoogleApiClient(mGoogleApiClient);
 
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
