@@ -22,31 +22,52 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     private Context context;
     private UserTask chosenTask;
 
-
+    /**
+     *
+     * @param position
+     * @return position
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     *
+     * @param position
+     * @return position
+     */
     @Override
     public int getItemViewType(int position) {
         return position;
     }
 
-
+    /**
+     *
+     * @param taskList
+     * @param context
+     */
     public TaskRecyclerAdapter(TaskList taskList, Context context) {
         this.taskList = taskList;
         this.context = context;
     }
 
 
-
+    /**
+     *
+     * @param parent
+     * @param viewType
+     * @return ViewHolder
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item,parent,false);
         return  new ViewHolder(view);
     }
-    //binds the data to the view
+
+    /**
+     *  binds the data to the view
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final UserTask task=taskList.getTask(position);

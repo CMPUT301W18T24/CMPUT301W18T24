@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.*;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -96,9 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
             mFullName.setText(intent.getStringExtra("name"));
             userId=intent.getStringExtra("id");
             mEmail.setText(intent.getStringExtra("email"));
-            mPassword.setVisibility(View.GONE);
             googleUser=true;
-
 
         }catch (Exception e){
 
@@ -132,19 +131,8 @@ public class ProfileActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Sorry That UserName Is In Use", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
-                if (googleUser){
-                    User user = new User(FullName, Email, UserName, PhoneNumber);
-                    user.setId(userId);
-                    String token= FirebaseInstanceId.getInstance().getToken();
-                    user.setToken(token);
-                    createGoogleUser(user);
-                }else{
-                    User user1 = new User(FullName, Email, UserName, PassWord, PhoneNumber);
-                    emailUser(user1);
-                }
-
+                User user1 = new User(FullName, Email, UserName, PassWord, PhoneNumber);
+                emailUser(user1);
             }
         });
 

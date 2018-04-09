@@ -15,13 +15,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
+/**
+ * This Fragement is responsible for showing the you the task requestors list of Assigned tasks
+ */
+
 public class AssignedFrag extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView recyclerView;
     private FireBaseManager fmanager;
-
     private TaskList listUserTask;
 
+
+    /**
+     * this function show the creates the view of the fragment to be displayed
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,7 +43,7 @@ public class AssignedFrag extends Fragment {
         UserSingleton singleton=UserSingleton.getInstance();
         fmanager = new FireBaseManager(singleton.getmAuth(), getActivity());
         listener(singleton.getUserId());
-
+        //listens to any touches on the recyleview list items
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {

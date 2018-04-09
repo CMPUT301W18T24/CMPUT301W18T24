@@ -9,6 +9,11 @@ package com.example.taskmagic;
 
 import java.util.Date;
 
+/**
+ * This Class is responsible for holding a users chat message
+ *
+ */
+
 public class ChatMessage {
     private String message;
     private String senderId;
@@ -17,9 +22,18 @@ public class ChatMessage {
     private String senderName;
     private String date;
 
+
     public ChatMessage(){}
 
-
+    /**
+     * Initializing the chat message variables
+     * @param message
+     * @param senderId
+     * @param receiverId
+     * @param date
+     * @param receiverName
+     * @param senderName
+     */
     public ChatMessage(String message,String senderId, String receiverId,String date,String receiverName,String senderName){
         this.message=message;
         this.senderId=senderId;
@@ -30,50 +44,98 @@ public class ChatMessage {
 
     }
 
+    /**
+     *
+     * @return String
+     */
     public String getSenderName() {
         return senderName;
     }
 
+    /**
+     *
+     * @param senderName
+     */
     public void setSenderName(String senderName) {
         this.senderName = senderName;
     }
 
+    /**
+     *
+     * @return receiverName
+     */
     public String getReceiverName() {
         return receiverName;
     }
 
+    /**
+     *
+     * @param receiverName
+     */
     public void setReceiverName(String receiverName) {
         this.receiverName = receiverName;
     }
 
+    /**
+     *
+     * @return date
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     *
+     * @param date
+     */
     public void setDate(String date) {
         this.date = date;
     }
 
+    /**
+     *
+     * @return message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     *
+     * @param message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSenderId() {
         return senderId;
     }
 
+    /**
+     *
+     * @param senderId
+     */
     public void setSenderId(String senderId) {
         this.senderId = senderId;
     }
 
+    /**
+     *
+     * @return receiverId
+     */
     public String getReceiverId() {
         return receiverId;
     }
 
+    /**
+     *
+     * @param receiverId
+     */
     public void setReceiverId(String receiverId) {
         this.receiverId = receiverId;
     }

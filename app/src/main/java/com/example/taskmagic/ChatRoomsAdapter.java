@@ -24,11 +24,8 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
     private Context mContext;
 
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         public TextView userName;
         public TextView message;
 
@@ -40,7 +37,6 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public ChatRoomsAdapter(List<ChatMessage> messages, Context context) {
         chatList = messages;
         mContext = context;
@@ -58,8 +54,6 @@ public class ChatRoomsAdapter extends RecyclerView.Adapter<ChatRoomsAdapter.View
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ChatRoomsAdapter.ViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
 
         ChatMessage chatmessage = chatList.get(position);
         holder.userName.setText(chatmessage.getSenderName());

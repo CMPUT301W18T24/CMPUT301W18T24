@@ -49,6 +49,11 @@ public class MessageActivity extends AppCompatActivity {
     private Toolbar mChatToolBar;
     private Set<String> users;
     private String userId;
+
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +72,7 @@ public class MessageActivity extends AppCompatActivity {
         fmanager = new FireBaseManager(singleton.getmAuth(), getApplicationContext());
         Intent intent = getIntent();
         userId = intent.getStringExtra("id");
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST);
         getUser(userId);
         mSendImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +95,11 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * listens to changes in the database
+     * @param sender
+     * @param receiver
+     */
     public void chatListener(final String sender, final String receiver) {
         fmanager.retrieveChatMessages(sender, receiver, new OnGetChatMessagesListener() {
             @Override
@@ -105,12 +115,17 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
         chatListener(singleton.getUserId(), userId);
     }
 
+    /**
+     * update the view of a the chat
+     * @param chatList
+     */
     public void updateView(final ArrayList<ChatMessage> chatList) {
         adapter = new ChatAdapter(chatList, this);
         mChatsRecyclerView.setAdapter(adapter);
@@ -118,6 +133,9 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * assists with keyboard format
+     */
     public void hideSoftKeyboard() {
         if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -125,6 +143,10 @@ public class MessageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This function get the userinformation from the database
+     * @param userid
+     */
     public void getUser(String userid) {
         fmanager.getUserInfo(userid, new OnGetUserInfoListener() {
             @Override
@@ -139,6 +161,12 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     *
+     * @param item
+     * @return boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

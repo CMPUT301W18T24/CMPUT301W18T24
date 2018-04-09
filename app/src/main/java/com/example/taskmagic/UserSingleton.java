@@ -18,49 +18,87 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by hyusuf on 2018-03-10.
  */
 
+/**
+ * This is used to hold the contents of the authenticated user
+ *
+ */
 public class UserSingleton {
     private final static UserSingleton obj = new UserSingleton();
     private FirebaseAuth mAuth;
     private String userName;
+    private GoogleApiClient mGoogleApiClient;
 
     private UserSingleton() {
     }
 
-    private GoogleApiClient mGoogleApiClient;
 
-
+    /**
+     *
+     * @return UserSingleton obj
+     */
     public static UserSingleton getInstance() {
         return obj;
     }
 
+    /**
+     *
+     * @param auth
+     */
     public void setAuth(FirebaseAuth auth) {
         this.mAuth = auth;
     }
 
+    /**
+     *
+     * @param mGoogleApiClient
+     */
     public void setmGoogleApiClient(GoogleApiClient mGoogleApiClient) {
         this.mGoogleApiClient = mGoogleApiClient;
     }
 
+    /**
+     *
+     * @return mGooogleAPiClient
+     */
     public GoogleApiClient getmGoogleApiClient() {
         return mGoogleApiClient;
     }
 
+    /**
+     *
+     * @return uesrName
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     *
+     * @param userName
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    /**
+     *
+     * @return auth
+     */
     public FirebaseAuth getmAuth() {
         return mAuth;
     }
 
+    /**
+     *
+     * @return userAuth
+     */
     public String getUserId() {
         return mAuth.getCurrentUser().getUid();
     }
 
+    /**
+     * logs out a user
+     */
     public void logout() {
         mGoogleApiClient.connect();
         mGoogleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {

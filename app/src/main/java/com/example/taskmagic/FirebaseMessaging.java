@@ -78,7 +78,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         intent.putExtra("id",receiver);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -87,12 +87,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
-
-        Log.d(TAG, "chatNotification: "+"y");
-
 
     }
 
@@ -100,22 +95,23 @@ public class FirebaseMessaging extends FirebaseMessagingService {
     public void onDeletedMessages() {
         super.onDeletedMessages();
     }
-
+    //
     public void sendBidNotification(String message,String taskid) {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0 /* request code */, intent,PendingIntent.FLAG_UPDATE_CURRENT);
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle("TaskMagic")
                 .setContentText(message)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
         getApplicationContext().startActivity(intent);
+
     }
 
     //https://stackoverflow.com/questions/41735755/in-android-how-to-prevent-firebase-push-notification-when-app-is-in-foreground

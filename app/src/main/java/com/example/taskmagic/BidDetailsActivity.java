@@ -42,6 +42,7 @@ public class BidDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bid_details);
+        // Initializing Variables
         singleton = UserSingleton.getInstance();
         db = FirebaseDatabase.getInstance().getReference();
         auth = singleton.getmAuth();
