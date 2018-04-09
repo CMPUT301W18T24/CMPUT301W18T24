@@ -1,4 +1,4 @@
-/*package com.example.taskmagic;
+package com.example.taskmagic;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Yipu on 22/02/2018.
  */
-/*
+
 public class BidListTest extends ActivityInstrumentationTestCase2 {
     public BidListTest() {
         super(MainActivity.class);
@@ -15,7 +15,7 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testAddBid() {
         BidList bidList= new BidList();
-        Bid bid = new Bid("1", 100.00f, "user1");
+        Bid bid = new Bid("123ab", 100.00f, "user1", "John Doe", "Jane Doe");
 
         bidList.add(bid);
         assertTrue(bidList.hasBid(bid));
@@ -23,7 +23,7 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testRemoveBid() {
         BidList bidList= new BidList();
-        Bid bid = new Bid("1", 100.00f, "user1");
+        Bid bid = new Bid("123ab", 100.00f, "user1", "John Doe", "Jane Doe");
 
         bidList.add(bid);
         assertTrue(bidList.hasBid(bid));
@@ -33,7 +33,7 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testHasBid() {
         BidList bidList= new BidList();
-        Bid bid = new Bid("1", 100.00f, "user1");
+        Bid bid = new Bid("123ab", 100.00f, "user1", "John Doe", "Jane Doe");
 
         bidList.add(bid);
         assertEquals(bidList.getBid(0), bid);
@@ -41,8 +41,8 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testGetBid() {
         BidList bidList= new BidList();
-        Bid bid1 = new Bid("1", 100.00f, "user1");
-        Bid bid2 = new Bid("2", 30.00f, "user2");
+        Bid bid1 = new Bid("123ab", 100.00f, "user1", "John Doe", "Jane Doe");
+        Bid bid2 = new Bid("123ab", 100.00f, "user2", "Jane Doe", "John Doe");
 
         bidList.add(bid1);
         bidList.add(bid2);
@@ -52,9 +52,9 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
     public void testGetBidList() {
         ArrayList<Bid> bids = new ArrayList<Bid>();
-        Bid bidA = new Bid("1", 100.00f, "user1");
-        Bid bidB = new Bid("2", 30.00f, "user2");
-        Bid bidC = new Bid("3", 50.00f, "user3");
+        Bid bidA = new Bid("123ab", 100.00f, "user1", "John Doe", "Jane Doe");
+        Bid bidB = new Bid("123ab", 100.00f, "user2", "Jane Doe", "Jesse Doe");
+        Bid bidC = new Bid("123ab", 100.00f, "user3", "Jesse Doe", "John Doe");
         BidList bidList = new BidList();
 
         bidList.add(bidA);
@@ -68,9 +68,9 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testGetCount() {
-        Bid bidA = new Bid("1", 100.00f, "user1");
-        Bid bidB = new Bid("2", 30.00f, "user2");
-        Bid bidC = new Bid("3", 50.00f, "user3");
+        Bid bidA = new Bid("123ab", 100.00f, "user1", "John Doe", "Jane Doe");
+        Bid bidB = new Bid("123ab", 100.00f, "user2", "Jane Doe", "Jesse Doe");
+        Bid bidC = new Bid("123ab", 100.00f, "user3", "Jesse Doe", "John Doe");
         BidList bidList = new BidList();
 
         bidList.add(bidA);
@@ -79,23 +79,4 @@ public class BidListTest extends ActivityInstrumentationTestCase2 {
 
         assertEquals(bidList.getCount(), 3);
     }
-
-    public void testGetLowestBid() {
-        ArrayList<Bid> bids = new ArrayList<Bid>();
-        Bid bid1 = new Bid("1", 100.00f, "user1");
-        Bid bid2 = new Bid("2", 20.00f, "user2");
-        Bid bid3 = new Bid("3", 150.00f, "user3");
-        Bid bid4 = new Bid("4", 70.00f, "user4");
-
-        Bid lowestBid = bid2;
-
-        bids.add(bid1);
-        bids.add(bid2);
-        bids.add(bid3);
-        bids.add(bid4);
-
-        assertNotSame(bids.get(0), lowestBid);
-
-        //assertSame(bids.getLowestBid(), lowestBid);       /*I don't get what is wrong please check*/
-  /*  }
-} */
+}
