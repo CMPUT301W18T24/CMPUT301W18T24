@@ -141,7 +141,7 @@ public class ViewTaskActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UserTask t) {
                         Log.d("tag", "onSuccess: " + t.getId());
-                        if (!t.getLongtitude().equals(null) && !t.getLatitude().equals(null)) {
+                        if (!(t.getLongtitude() == null) && !(t.getLatitude() == null)) {
                             LatLng latLng = new LatLng(t.getLatitude(), t.getLongtitude());
                             Intent mIntent = new Intent(getApplicationContext(), MapsActivity.class).putExtra("LatLng", latLng);
                             mIntent.putExtra("Mode", "View");

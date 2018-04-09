@@ -62,6 +62,9 @@ public class RequestedFrag extends Fragment {
                     requestedCheckBox.setChecked(false);
                     listToShow = assignedList;
                     updateView(assignedList);
+                } else if (!assignedCheckBox.isChecked() && !biddedCheckBox.isChecked() &&
+                        !requestedCheckBox.isChecked()) {
+                    updateView(new TaskList());
                 }
             }
         });
@@ -74,7 +77,10 @@ public class RequestedFrag extends Fragment {
                     assignedCheckBox.setChecked(false);
                     listToShow = requestedList;
                     updateView(requestedList);
-                };
+                } else if (!assignedCheckBox.isChecked() && !biddedCheckBox.isChecked() &&
+                        !requestedCheckBox.isChecked()) {
+                    updateView(new TaskList());
+                }
             }
         });
 
@@ -86,6 +92,9 @@ public class RequestedFrag extends Fragment {
                     assignedCheckBox.setChecked(false);
                     listToShow = biddedList;
                     updateView(biddedList);
+                } else if (!assignedCheckBox.isChecked() && !biddedCheckBox.isChecked() &&
+                        !requestedCheckBox.isChecked()) {
+                    updateView(new TaskList());
                 }
             }
         });

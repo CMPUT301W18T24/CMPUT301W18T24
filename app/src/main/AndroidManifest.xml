@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <permission
         android:name="com.example.taskmagic.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -61,7 +62,7 @@
         <activity android:name=".CreateTaskActivity" />
         <activity android:name=".ViewTaskActivity" />
         <activity android:name=".MessageActivity"
-            android:theme="@style/Theme.Design.Light.NoActionBar" />
+            android:theme="@style/Theme.Design.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

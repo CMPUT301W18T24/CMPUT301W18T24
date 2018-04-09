@@ -21,6 +21,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.*;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -55,9 +57,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mEmail=(EditText)findViewById(R.id.editTextEmail);
-        mEmail.setText("pp1212@gmail.com");
         mPassword=(EditText)findViewById(R.id.editTextpassword);
-        mPassword.setText("pp1212");
         mLogin=(Button) findViewById(R.id.buttonlogin);
         register=(TextView)findViewById(R.id.textViewNewUser);
         mAuth=FirebaseAuth.getInstance();
@@ -77,8 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).addApi(auth.GOOGLE_SIGN_IN_API,gso).build();
         singleton.setmGoogleApiClient(mGoogleApiClient);
-
-
+        
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
@@ -96,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent myIntent = new Intent(MainActivity.this, HomeFeed.class);
                     startActivity(myIntent);
                     Log.d("Main", "onAuthStateChanged: "+singleton.getmAuth()+googleUser);
-
                     if (!googleUser){
                         init();}
                 }
@@ -151,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        // Google sign out
 
     }
     @Override
