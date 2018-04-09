@@ -315,7 +315,8 @@ public class CreateTaskActivity extends AppCompatActivity {
             Toast.makeText(thisActivity, "Description too long.", Toast.LENGTH_LONG).show();
             return false;
         } else if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))
-                || bitmaps.isEmpty()) {
+                || bitmaps.isEmpty()
+                || location.equals(null)) {
             openCreateTaskWarning();
             return false;
         }
@@ -328,14 +329,13 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         String alertMessage = "Your task will:\n";
         if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))) {
-            Log.d("Dialog", alertMessage);
             alertMessage = String.format(alertMessage + "\t* Be set to finish today.\n");
-            Log.d("Dialog", alertMessage);
         }
         if (bitmaps.isEmpty()) {
-            Log.d("Dialog", alertMessage);
             alertMessage = String.format(alertMessage + "\t* Have no photos to show.\n");
-            Log.d("Dialog", alertMessage);
+        }
+        if (location.equals(null)) {
+            alertMessage = String.format(alertMessage + "\t* Not have a specified location.");
         }
         mBuilder.setMessage(alertMessage);
 

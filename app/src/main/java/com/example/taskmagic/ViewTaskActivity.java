@@ -151,10 +151,14 @@ public class ViewTaskActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UserTask t) {
                         Log.d("tag", "onSuccess: " + t.getId());
-                        LatLng latLng = new LatLng(t.getLatitude(), t.getLongtitude());
-                        Intent mIntent = new Intent(getApplicationContext(), MapsActivity.class).putExtra("LatLng", latLng);
-                        mIntent.putExtra("Mode","View");
-                        startActivity(mIntent);
+                        if (!t.getLongtitude().equals(null) && !t.getLatitude().equals(null)) {
+                            LatLng latLng = new LatLng(t.getLatitude(), t.getLongtitude());
+                            Intent mIntent = new Intent(getApplicationContext(), MapsActivity.class).putExtra("LatLng", latLng);
+                            mIntent.putExtra("Mode", "View");
+                            startActivity(mIntent);
+                        } else {
+                            Toast.makeText(ViewTaskActivity.this, "This task does not have a specified location.", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override

@@ -98,6 +98,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Marker mMarker;
     private LatLng latLng;
     private boolean viewTask = false;
+    private boolean editTask = false;
     private boolean searchGeo = false;
     private FireBaseManager fmanager;
 
@@ -116,12 +117,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 try {
                     latLng = (LatLng) getIntent().getExtras().get("LatLng");
                     viewTask = true;
-                    Toast.makeText(getApplicationContext(),"got LatLng", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"got LatLng", Toast.LENGTH_SHORT).show();
                 } catch (Exception e){}
             } else if (mode.equals("Search")) {
                 searchGeo = true;
             } else if (mode.equals("Create")) {
 
+            } else if (mode.equals("Edit")) {
+                try {
+                    latLng = (LatLng) getIntent().getExtras().get("LatLng");
+                    if (latLng == null) {
+                        Log.d("map", "loc is null");
+                    } else {
+                        editTask = true;
+                        Log.d("map", "loc is not null" + editTask);
+                    }
+                } catch (Exception e) {
+
+                }
             }
 
             mGps = (ImageView) findViewById(R.id.ic_gps);
@@ -230,7 +243,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
-                            if (viewTask) {
+                            if (viewTask || editTask) {
                                 moveCamera(latLng, DEFAULT_ZOOM,"task location");
                             } else {
                                 try{
@@ -241,7 +254,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     moveCamera(new LatLng(53.5244, -113.527),
                                             DEFAULT_ZOOM,
                                             "My Location");
-                                    Toast.makeText(getApplicationContext(),"Unable get Location", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(),"Unable get Location", Toast.LENGTH_SHORT).show();
                                 }
                                 if (searchGeo) {
                                     try {
@@ -340,6 +353,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                 .position(latLng)
                 .title(title);
+        if (viewTask) {
+            options.draggable(false);
+        }
         mMarker = mMap.addMarker(options);
 
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {

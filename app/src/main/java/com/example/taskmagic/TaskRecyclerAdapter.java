@@ -53,7 +53,11 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         holder.textTitle.setText(task.getTitle());
         holder.textStatus.setText("Status: "+task.getStatus());
         holder.textRequester.setText(task.getRequesterName());
-        holder.textLowest.setText(String.format("$%.2f", task.getLowestBid()));
+        if (task.getLowestBid() > 0) {
+            holder.textLowest.setText(String.format("$%.2f", task.getLowestBid()));
+        } else {
+            holder.textLowest.setText("$  -- --");
+        }
 
         Gson gson = new Gson();
         PhotoList photos = gson.fromJson(task.getPhotoUriString(), PhotoList.class);
