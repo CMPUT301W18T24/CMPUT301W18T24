@@ -49,7 +49,6 @@
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity android:name=".ViewPhotoActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".NotificationActivity" />
         <activity android:name=".CreateBidActivity" />
         <activity
             android:name=".ViewProfileActivity"
@@ -73,7 +72,7 @@
         -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDxq3t4XT23u4i_EUtlQrCWmtHdm_9vknA" />
+            android:value="AIzaSyBL-h6gtoER5iQukOoBL0yyE_QCU4jHOqs" />
 
         <activity
             android:name=".MapsActivity"

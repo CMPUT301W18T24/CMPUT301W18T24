@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
+
         mGoogleApiClient=new GoogleApiClient.Builder(this).enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
             @Override
             public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -89,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 if(mAuth.getCurrentUser()!=null){
                     singleton.setAuth(mAuth);
                     User user=new User();
-                    //user.setId("");
                     Intent myIntent = new Intent(MainActivity.this, HomeFeed.class);
-                    //myIntent.putExtra("id","gfozdHipBXQP1aaXsb9sQOYMLWW2");
                     startActivity(myIntent);
                     Log.d("Main", "onAuthStateChanged: "+singleton.getmAuth()+googleUser);
 
@@ -120,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
     private void signIn() {
         //getting the google signin intent
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -144,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.signOut();
         mAuth.addAuthStateListener(mAuthListener);
 
     }

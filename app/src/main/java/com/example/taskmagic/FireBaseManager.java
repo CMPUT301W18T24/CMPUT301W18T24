@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 
-public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsListListener,OnGetAssignedTaskListener,OnGetChatMessagesListener,OnGetNotificationsListener {
+public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListener,OnGetAllTaskReqListener,OnGetATaskListener,OnGetBidsListListener,OnGetAssignedTaskListener,OnGetChatMessagesListener {
     private FirebaseAuth mAuth;
     private DatabaseReference database;
     private String taskTag = "task";
@@ -74,10 +74,6 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
 
     }
 
-    @Override
-    public void onSuccess(List<NotificationMSG> nList) {
-
-    }
 
     @Override
     public void onFailure(String message) {
@@ -429,28 +425,6 @@ public class FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoListene
             }
         });
 
-    }
-
-    public void retrieveNotifications(final String receiver, final OnGetNotificationsListener listener) {
-        database.child(notificationTag).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<NotificationMSG> nList = new ArrayList<NotificationMSG>();
-                for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                    Log.d("Notification", "onDataChange: " + snap.getValue());
-                    NotificationMSG message = snap.getValue(NotificationMSG.class);
-                    if (message.getReceiverId().equals(receiver)) {
-                        nList.add(message);
-                    }
-                }
-                listener.onSuccess(nList);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                listener.onFailure(databaseError.toString());
-            }
-        });
     }
 
     /**
