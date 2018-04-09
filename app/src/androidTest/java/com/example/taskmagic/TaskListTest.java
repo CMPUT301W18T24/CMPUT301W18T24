@@ -3,20 +3,20 @@ package com.example.taskmagic;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.ArrayList;
-/*
+
 /**
  * Created by Yipu on 22/02/2018.
  */
-/*
+
 public class TaskListTest extends ActivityInstrumentationTestCase2 {
     public TaskListTest() {
         super(MainActivity.class);
     }
 
     public void testGetCount() {
-        Task taskA = new Task(1,"TaskA", "Creating a task.", "requeste1");
-        Task taskB = new Task(2,"TaskB", "Creating a task.", "requeste2");
-        Task taskC = new Task(2,"TaskC", "Creating a task.", "requeste3");
+        UserTask taskA = new UserTask("TaskA", "Creating a task.", "123ab", "John Doe", "3nc0d3dbyt35", "2018/04/26");
+        UserTask taskB = new UserTask("TaskB", "Creating a task.", "123bc", "Jane Doe", "3nc0d3dbyt35", "2018/04/26");
+        UserTask taskC = new UserTask("TaskC", "Creating a task.", "123cd", "Jesse Doe", "3nc0d3dbyt35", "2018/04/26");
 
         TaskList taskList = new TaskList();
         taskList.add(taskA);
@@ -29,7 +29,7 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAddTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "requester1");
+        UserTask task = new UserTask("TaskA", "Creating a task.", "123ab", "John Doe", "3nc0d3dbyt35", "2018/04/26");
         TaskList taskList = new TaskList();
 
         taskList.add(task);
@@ -38,7 +38,7 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testRemoveTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "requester1");
+        UserTask task = new UserTask("TaskA", "Creating a task.", "123ab", "John Doe", "3nc0d3dbyt35", "2018/04/26");
         TaskList taskList = new TaskList();
 
         taskList.add(task);
@@ -50,18 +50,19 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testGetTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "requester1");
+        UserTask task = new UserTask("TaskA", "Creating a task.", "123ab", "John Doe", "3nc0d3dbyt35", "2018/04/26");
+        task.setId("1a2b3c");
         TaskList taskList = new TaskList();
 
         taskList.add(task);
-        assertEquals(taskList.getTask(0).getID(), task.getID());
+        assertEquals(taskList.getTask(0).getId(), task.getId());
     }
 
     public void testGetTaskList() {
-        ArrayList<Task> tasks = new ArrayList<Task>();
-        Task taskA = new Task(1,"TaskA", "Creating a task.", "requeste1");
-        Task taskB = new Task(2,"TaskB", "Creating a task.", "requeste2");
-        Task taskC = new Task(2,"TaskC", "Creating a task.", "requeste3");
+        ArrayList<UserTask> tasks = new ArrayList<UserTask>();
+        UserTask taskA = new UserTask("TaskA", "Creating a task.", "123ab", "John Doe", "3nc0d3dbyt35", "2018/04/26");
+        UserTask taskB = new UserTask("TaskB", "Creating a task.", "123bc", "Jane Doe", "3nc0d3dbyt35", "2018/04/26");
+        UserTask taskC = new UserTask("TaskC", "Creating a task.", "123cd", "Jesse Doe", "3nc0d3dbyt35", "2018/04/26");
         TaskList taskList = new TaskList();
 
         taskList.add(taskA);
@@ -75,7 +76,7 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testHasTask() {
-        Task task = new Task(1,"TaskA", "Creating a task.", "requester1");
+        UserTask task = new UserTask("TaskA", "Creating a task.", "123ab", "John Doe", "3nc0d3dbyt35", "2018/04/26");
         TaskList taskList = new TaskList();
 
         assertFalse(taskList.hasTask(task));
@@ -83,4 +84,4 @@ public class TaskListTest extends ActivityInstrumentationTestCase2 {
         assertTrue(taskList.hasTask(task));
     }
 
-} */
+}

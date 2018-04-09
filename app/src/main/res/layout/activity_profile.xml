@@ -2,37 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#E0E0E0"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/secondcolor">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:orientation="vertical"
-            android:background="@color/colorPrimary">
+            >
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/imageview"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                app:civ_border_color="#FFFFFF"
-                app:civ_border_width="2dp"
-                android:src="@drawable/ic_action_name"/>
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:layout_marginTop="60dp"
+                android:contentDescription="Board"
+                app:srcCompat="@drawable/logo" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
-            android:orientation="vertical"
-            android:background="@drawable/border_shadow">
+            android:orientation="vertical">
             <EditText
                 android:id="@+id/editTextUserName"
                 android:layout_width="300dp"
@@ -41,6 +38,8 @@
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:hint="UserName"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:background="@drawable/border_color"
                 android:inputType="textPersonName"
                 />
@@ -53,6 +52,8 @@
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
                 android:hint="Password"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:background="@drawable/border_color"
                 android:inputType="textPassword"
                 />
@@ -65,6 +66,8 @@
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
                 android:hint="Email"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:background="@drawable/border_color"
                 android:inputType="textPersonName"
                 />
@@ -77,6 +80,8 @@
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:hint="PhoneNumber"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:background="@drawable/border_color"
                 android:inputType="textPersonName"
                 />
@@ -88,6 +93,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:padding="10dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:background="@drawable/border_color"
                 android:hint="Full Name"
                 />

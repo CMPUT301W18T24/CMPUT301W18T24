@@ -1,3 +1,10 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
+
 package com.example.taskmagic;
 
 import android.content.Context;
@@ -114,7 +121,7 @@ public class    FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoList
         database.child(taskTag).child(task.getId()).setValue(task).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Succesfully edited Task", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Succesfully edited Task", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -225,7 +232,7 @@ public class    FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoList
         database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Bid Successfully Saved", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Bid Successfully Saved", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -238,7 +245,7 @@ public class    FireBaseManager implements OnGetMyTaskListener,OnGetUserInfoList
         database.child(bidTag).child(bid.getTaskID() + bid.getProvider()).setValue(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Succesfully edited Bid", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Succesfully edited Bid", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

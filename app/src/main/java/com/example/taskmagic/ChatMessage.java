@@ -45,15 +45,24 @@ public class ChatMessage {
     }
 
     /**
+<<<<<<< HEAD
      *
      * @return String
+=======
+     * This method returns the sender's name
+     * @return senderName
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      */
     public String getSenderName() {
         return senderName;
     }
 
     /**
+<<<<<<< HEAD
      *
+=======
+     * This method takes a String and sets it as the sender's name
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      * @param senderName
      */
     public void setSenderName(String senderName) {
@@ -61,15 +70,24 @@ public class ChatMessage {
     }
 
     /**
+<<<<<<< HEAD
      *
      * @return receiverName
+=======
+     * This method returns the receiver's name
+     * @return
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      */
     public String getReceiverName() {
         return receiverName;
     }
 
     /**
+<<<<<<< HEAD
      *
+=======
+     * This method takes a String and sets it as the reciever's name
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      * @param receiverName
      */
     public void setReceiverName(String receiverName) {
@@ -77,15 +95,24 @@ public class ChatMessage {
     }
 
     /**
+<<<<<<< HEAD
      *
      * @return date
+=======
+     * This method gets the date of the message as a String
+     * @return
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      */
     public String getDate() {
         return date;
     }
 
     /**
+<<<<<<< HEAD
      *
+=======
+     * Thi method takes a String and set it to be the date of the message
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      * @param date
      */
     public void setDate(String date) {
@@ -93,15 +120,24 @@ public class ChatMessage {
     }
 
     /**
+<<<<<<< HEAD
      *
      * @return message
+=======
+     * This method retrurns the bodyText of the message
+     * @return
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      */
     public String getMessage() {
         return message;
     }
 
     /**
+<<<<<<< HEAD
      *
+=======
+     * This method takes a String and sets it to message
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      * @param message
      */
     public void setMessage(String message) {
@@ -109,7 +145,11 @@ public class ChatMessage {
     }
 
     /**
+<<<<<<< HEAD
      *
+=======
+     * This method returns Id of the sender
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      * @return
      */
     public String getSenderId() {
@@ -117,7 +157,11 @@ public class ChatMessage {
     }
 
     /**
+<<<<<<< HEAD
      *
+=======
+     * This method take a String and set it to senderId
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      * @param senderId
      */
     public void setSenderId(String senderId) {
@@ -125,15 +169,24 @@ public class ChatMessage {
     }
 
     /**
+<<<<<<< HEAD
      *
      * @return receiverId
+=======
+     * This method returns the reciever's id
+     * @return
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      */
     public String getReceiverId() {
         return receiverId;
     }
 
     /**
+<<<<<<< HEAD
      *
+=======
+     * This method takes a String and sets it as the reciever's id
+>>>>>>> 9bd5af42e2e58e237d0529a15984f22eb568be60
      * @param receiverId
      */
     public void setReceiverId(String receiverId) {

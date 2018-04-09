@@ -47,7 +47,6 @@
         <activity
             android:name=".ProfileActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
-        <activity android:name=".ViewPhotoActivity" />
         <activity android:name=".SearchActivity" />
         <activity
             android:name=".ViewProfileActivity"

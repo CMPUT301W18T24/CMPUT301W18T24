@@ -1,3 +1,10 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
+
 package com.example.taskmagic;
 
 import android.graphics.Bitmap;
@@ -11,6 +18,9 @@ import java.util.Locale;
 
 /**
  * Created by Yipu on 21/02/2018.
+ * UserTask represents an task object.
+ * Each task can have one of the four states (requested, bidded, assigned, DONE)
+ * They are used to organized any user activity
  */
 
 public class UserTask implements Serializable {
@@ -58,23 +68,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * This setter takes a String and changes date of this UserTask to the String
-     * @param date
-     */
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    /**
-     * @see
-     * @return description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @see
+     * @see setStatus()
      * @return
      */
     public String getStatus() {
@@ -105,6 +99,15 @@ public class UserTask implements Serializable {
         this.title = title;
     }
 
+
+    /**
+     * @see setDescription()
+     * @return description
+     */
+    public String getDescription() {
+        return description;
+    }
+
     /**
     * Takes a String and changes the description of this UserTask to the String
     * @param description
@@ -114,7 +117,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see
+     * @see setRequester()
      * @return
      */
     public String getRequester() {
@@ -138,7 +141,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see
+     * @see setId()
      * @return
      */
     public String getId() {
@@ -154,7 +157,15 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * @see
+     * This setter takes a String and changes date of this UserTask to the String
+     * @param date
+     */
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    /**
+     * @see setDate()
      * @return
      */
     public String getDate() {
@@ -263,12 +274,16 @@ public class UserTask implements Serializable {
      */
     public void setLowestBid(float amount) {
         if (lowestBid < 0) {
-            lowestBid = amount;
+            this.lowestBid = amount;
         } else if (lowestBid > amount) {
             this.lowestBid = amount;
         }
     }
 
+    /**
+     * @see setLowestBid()
+     * @return
+     */
     public float getLowestBid() {
         return lowestBid;
     }
@@ -291,7 +306,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * see setLongtitude()
+     * @see setLongtitude()
      * @return
      */
     public Double getLongtitude() {
@@ -307,7 +322,7 @@ public class UserTask implements Serializable {
     }
 
     /**
-     * see setRequesterName
+     * @see setRequesterName
      * @return
      */
     public String getRequesterName() {
