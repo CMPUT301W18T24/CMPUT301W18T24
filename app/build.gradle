@@ -36,9 +36,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:11.8.0'
     compile 'com.google.firebase:firebase-firestore:11.8.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-
-
-    compile "com.android.support:design:26.+"
+    compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-v4:26.1.0'
     compile 'com.google.android.gms:play-services-auth:11.8.0'
     compile 'com.google.android.gms:play-services:11.8.0'
@@ -53,6 +51,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:11.8.0'
     compile 'com.google.android.gms:play-services-places:11.8.0'
     implementation 'com.google.code.gson:gson:2.2.4'
+    implementation files('lib/robotium-solo-5.6.3.jar')
 }
 apply plugin: 'com.google.gms.google-services'
 'com.android.application'

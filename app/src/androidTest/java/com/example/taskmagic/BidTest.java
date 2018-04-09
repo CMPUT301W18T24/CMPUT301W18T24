@@ -1,46 +1,70 @@
+/*
+ * Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
+ * You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
+ * You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
+ *
+ */
+
 package com.example.taskmagic;
 
 import android.test.ActivityInstrumentationTestCase2;
 
 /**
- * Created by Yipu on 22/02/2018.
+ * Created by Fanjie on 2018-04-08.
  */
-
+/*
 public class BidTest extends ActivityInstrumentationTestCase2 {
-    public BidTest() {
-        super(MainActivity.class);
-    }
+ /*   public Bid bid;
 
-    public void testAcceptBid() {
-        String testTaskID = "123";
-        float testAmount = 456.00f;
-        String testProvider = "Provider Test";
-
-        Bid newBid = new Bid(testTaskID, testAmount, testProvider);
-        assertEquals(newBid.getStatus(), "Processing");
-
-        newBid.acceptBid();
-        assertEquals(newBid.getStatus(), "Accepted");
-    }
-
-    public void testDeclineBid() {
-        String testTaskID = "123";
-        float testAmount = 456.00f;
-        String testProvider = "Provider Test";
-
-        Bid newBid = new Bid(testTaskID, testAmount, testProvider);
-        assertEquals(newBid.getStatus(), "Processing");
-    }
-
-    public void testSetStatus() {
-        Bid bid = new Bid("1", 50.00f, "user");
-
-        assertEquals(bid.getStatus(), "Processing");
-        bid.setBidStatus("Accepted");
-        assertEquals(bid.getStatus(), "Accepted");
-        bid.setBidStatus("Declined");
-        assertEquals(bid.getStatus(), "Declined");
+    public BidTest(){
+        super(Bid.class);
+        this.bid = new Bid("123456", 5.1f, "Team24", "301");
 
     }
 
-}
+    public void testAmount(){
+        double test = 5.1f;
+        double result = bid.getAmount();
+
+        assertEquals(test, result);
+    }
+
+    public void testTaskID(){
+        String test = "123456";
+        String result = bid.getTaskID();
+
+        assertEquals(test, result);
+    }
+
+    public void testProvider(){
+        String test = "Team24";
+        String result = bid.getProvider();
+
+        assertEquals(test, result);
+    }
+
+
+
+
+    public void testRequestorName(){
+        String test = "301";
+        String result = bid.getRequestorName();
+
+        assertEquals(test, result);
+    }
+
+    public void testStatus(){
+        String test = "Processing";
+        String result = bid.getStatus();
+
+        assertEquals(test, result);
+    }
+
+    public void testAcceptBid(){
+        String test = "Accepted";
+        bid.acceptBid();
+        String result = bid.getStatus();
+
+        assertEquals(test, result);
+    }
+} */
