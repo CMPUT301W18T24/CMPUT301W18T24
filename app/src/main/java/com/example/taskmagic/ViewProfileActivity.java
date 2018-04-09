@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -60,14 +61,14 @@ public class ViewProfileActivity extends AppCompatActivity {
         userFragment = new UserProfileFrag();
         requestFragment = new RequestedFrag();
         messagesFrag=new Messages_Frag();
-        image=(ImageView)findViewById(R.id.profileImage);
-        image.setOnClickListener(new View.OnClickListener() {
+//        image=(ImageView) userFragment.getView().findViewById(R.id.profileImage);
+ /*       image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder mbuilder= new AlertDialog.Builder(getApplicationContext());
                 View mView=getLayoutInflater().inflate(R.layout.dialog_selectphoto,null);
             }
-        });
+        }); */
 
         setFragment(userFragment);
 

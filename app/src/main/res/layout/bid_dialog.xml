@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_centerHorizontal="true"
+    android:background="@drawable/thirdcolor"
     android:layout_width="320dp"
     android:layout_height="480dp">
     <TextView
@@ -14,7 +15,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorWhite"
         android:text="@string/title" />
 
     <TextView
@@ -25,7 +26,7 @@
         android:layout_alignStart="@+id/textView_title"
         android:layout_below="@+id/textView_title"
         android:textSize="25sp"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorWhite"
         android:text="TextView" />
 
     <TextView
@@ -35,6 +36,7 @@
         android:layout_alignLeft="@+id/textView_titleContent"
         android:layout_alignStart="@+id/textView_titleContent"
         android:layout_below="@+id/textView_titleContent"
+        android:textColor="@color/colorWhite"
         android:layout_marginTop="20dp"
         android:text="@string/description" />
 
@@ -45,6 +47,7 @@
         android:layout_alignLeft="@+id/textView_description"
         android:layout_alignStart="@+id/textView_description"
         android:layout_below="@+id/textView_description"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
         android:text="TextView" />
 
@@ -54,9 +57,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_descriptionContent"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="146dp"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
         android:hint="$" />
 
     <TextView
@@ -66,6 +71,7 @@
         android:layout_alignBottom="@+id/editText_amount"
         android:layout_alignLeft="@+id/editText_amount"
         android:layout_alignStart="@+id/editText_amount"
+        android:textColor="@color/colorWhite"
         android:layout_marginBottom="44dp"
         android:text="@string/enterAmount" />
     <LinearLayout
@@ -83,6 +89,7 @@
             android:layout_weight="1"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
+            android:background="@drawable/white_rounded_button"
             android:text="@string/cancel"
             android:textColor="@color/colorRed"/>
 
@@ -93,6 +100,8 @@
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
+            android:background="@drawable/white_rounded_button"
+            android:textColor="#1B5E20"
             android:text="@string/confirm" />
     </LinearLayout>
 

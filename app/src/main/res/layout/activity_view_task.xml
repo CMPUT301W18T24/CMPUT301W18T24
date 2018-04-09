@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@drawable/secondcolor"
     android:layout_height="match_parent">
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="102dp"
+        android:textColor="@color/colorWhite"
         android:text="@string/title" />
 
     <TextView
@@ -22,6 +24,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_title"
+        android:textColor="@color/colorWhite"
         android:text="TextView" />
 
     <TextView
@@ -31,6 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_titleContent"
+        android:textColor="@color/colorWhite"
         android:layout_marginTop="10dp"
         android:text="@string/description" />
 
@@ -38,10 +42,12 @@
         android:id="@+id/textView_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_descriptionContent"
-        android:text="@string/date" />
+        android:textColor="@color/colorWhite"
+        android:text="Date" />
 
     <TextView
         android:id="@+id/textView_bidList"
@@ -51,6 +57,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/textView_dateContent"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp"
         android:text="Bids" />
 
     <TextView
@@ -60,6 +69,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_date"
+        android:textColor="@color/colorWhite"
         android:text="TextView" />
 
     <TextView
@@ -69,6 +79,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView_description"
+        android:textColor="@color/colorWhite"
         android:text="TextView" />
 
     <Button
@@ -77,6 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/white_rounded_button"
         android:text="Button" />
 
     <Button
@@ -85,6 +97,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/button_viewLocation"
+        android:background="@drawable/white_rounded_button"
+        android:textColor="#1B5E20"
         android:text="COMPLETE" />
 
     <Button
@@ -93,6 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/button_viewTask"
+        android:background="@drawable/white_rounded_button"
         android:text="VIEW LOCATION" />
     <Button
         android:id="@+id/button_delete"
@@ -102,6 +117,7 @@
         android:textColor="#f10505"
         android:visibility="gone"
         android:layout_above="@+id/button_viewLocation"
+        android:background="@drawable/white_rounded_button"
         android:text="DELETE" />
 
     <ImageButton
@@ -122,13 +138,22 @@
     </android.support.v7.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/textView_username"
+        android:id="@+id/textView_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView_title"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
+        android:text="Username" />
 
+    <TextView
+        android:id="@+id/textView_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_alignTop="@+id/textView_titleContent"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
         android:text="TextView" />
 
 

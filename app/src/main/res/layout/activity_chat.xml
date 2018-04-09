@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c)  2018 Team 24 CMPUT301 University of Alberta - All Rights Reserved.
-  ~ You may use distribute or modify this code under terms and conditions of COde of Student Behavious at University of Alberta.
-  ~ You can find a copy of the license ini this project. Otherwise, please contact harrold@ualberta.ca
-  ~
-  -->
 
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,30 +7,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/app_bar_layout" android:id="@+id/chat_bar"></include>
+    <include
+        android:id="@+id/chat_bar"
+        layout="@layout/app_bar_layout"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"></include>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messagesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="403dp"
-        android:layout_below="@+id/layout_chatbox"
-        android:layout_marginTop="4dp"
+        android:layout_width="385dp"
+        android:layout_height="630dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_chatbox"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat_bar" />
-    <View
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:background="#dfdfdf"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/messagesRecyclerView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintTop_toTopOf="@+id/chat_bar"></android.support.v7.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/layout_chatbox"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:minHeight="48dp"
@@ -45,25 +36,27 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
 
+
         <EditText
             android:id="@+id/messageEditText"
-            android:hint="Enter message..."
-            android:layout_height="wrap_content"
+            android:hint="Enter message"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:maxLines="6"/>
 
         <ImageButton
             android:id="@+id/sendMessageImagebutton"
+            android:src="@drawable/ic_send_message"
+            android:tint="@android:color/holo_blue_dark"
             android:layout_width="64dp"
+            android:layout_height="48dp"
             android:gravity="center"
-            android:layout_gravity="bottom"
-            android:src="@android:drawable/ic_menu_send"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_gravity="bottom" />
 
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

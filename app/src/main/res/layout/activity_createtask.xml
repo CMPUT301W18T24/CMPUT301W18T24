@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/secondcolor"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,6 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="8dp"
                 android:text="@string/create_task_title"
                 android:textSize="24sp" />
@@ -31,6 +33,8 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:ems="10"
                 android:hint="@string/task_title_hint"
                 android:inputType="textPersonName" />
@@ -42,6 +46,8 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:ems="10"
                 android:hint="@string/task_description_hint"
                 android:inputType="textMultiLine" />
@@ -51,6 +57,7 @@
                 android:layout_width="236dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:background="@drawable/white_rounded_button"
                 android:layout_marginTop="8dp"
                 android:text="@string/set_location" />
 
@@ -62,7 +69,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/colorGray"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
                 android:padding="12dp"
                 android:text="@string/date_hint"
                 android:textSize="18sp" />
@@ -73,8 +81,7 @@
                 android:id="@+id/photo_display"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:background="@color/colorGray">
+                android:layout_marginTop="8dp">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/display_recycler"
@@ -101,6 +108,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@android:drawable/ic_menu_camera"
+                    android:backgroundTint="@color/wallet_holo_blue_light"
                     android:contentDescription="@string/camera_button_desc" />
 
                 <ImageButton
@@ -111,6 +119,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/camera_button"
                     app:srcCompat="@android:drawable/ic_menu_gallery"
+                    android:backgroundTint="@color/wallet_holo_blue_light"
                     android:contentDescription="@string/gallery_button_desc" />
             </android.support.constraint.ConstraintLayout>
 
@@ -119,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:background="@drawable/white_rounded_button"
                 android:layout_marginBottom="24dp"
                 android:text="@string/post_task" />
         </LinearLayout>
