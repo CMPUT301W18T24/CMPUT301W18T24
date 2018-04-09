@@ -68,6 +68,8 @@ public class LoginTest {
             e.printStackTrace();
         }
 
+        onView(withId(R.id.logout)).perform(click());
+
     }
 
 }

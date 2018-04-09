@@ -51,11 +51,11 @@ public class CreateBidActivityTest extends ActivityInstrumentationTestCase2 {
         solo.clickOnView(solo.getView(R.id.search));
         solo.assertCurrentActivity("Wrong Activity", SearchActivity.class);
         solo.waitForActivity(SearchActivity.class, 2000);
-        solo.sleep(2000);
+        solo.sleep(200);
 
         solo.enterText((EditText) solo.getView(R.id.search_menu), "Task");
         solo.waitForActivity(SearchActivity.class, 2000);
-        solo.sleep(2000);
+        solo.sleep(200);
         solo.clickOnText("TaskTest1", 0, true);
         solo.assertCurrentActivity("Wrong Activity", ViewTaskActivity.class);
         solo.waitForActivity(ViewTaskActivity.class, 2000);
@@ -65,14 +65,15 @@ public class CreateBidActivityTest extends ActivityInstrumentationTestCase2 {
 
         solo.enterText((EditText) solo.getView(R.id.editText_amount), "10");
         solo.clickOnView(solo.getView(R.id.button_confirm));
-        solo.sleep(2000);
+        solo.assertCurrentActivity("Wrong Activity", ViewTaskActivity.class);
+        solo.sleep(200);
 
         solo.goBack();
-        solo.goBack();
-        solo.goBack();
-        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", SearchActivity.class);
 
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", HomeFeed.class);
 
-
+        solo.clickOnView(solo.getView(R.id.logout));
     }
 }

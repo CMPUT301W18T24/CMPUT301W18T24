@@ -1,6 +1,7 @@
 package com.example.taskmagic;
 
 import android.app.Activity;
+import android.support.test.espresso.action.PressBackAction;
 import android.support.v7.widget.RecyclerView;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
@@ -43,7 +44,7 @@ public class AddTaskActivityTest extends ActivityInstrumentationTestCase2 {
         solo.assertCurrentActivity("Wrong Activity", HomeFeed.class);
         solo.clickOnView(solo.getView(R.id.addTask));
         solo.assertCurrentActivity("Wrong Activity", CreateTaskActivity.class);
-        solo.waitForActivity(CreateTaskActivity.class, 2000);
+        solo.waitForActivity(CreateTaskActivity.class, 200);
 
         // Search for task Name EditText
         EditText task_name_EditText = (EditText) solo.getView(R.id.task_title);
@@ -56,6 +57,12 @@ public class AddTaskActivityTest extends ActivityInstrumentationTestCase2 {
         // Search for finish Date TextView
         TextView finishDate_TextView = (TextView) solo.getView(R.id.date_field);
         assertEquals("Finish By", finishDate_TextView.getText().toString());
+
+        solo.getCurrentActivity().finish();
+        solo.assertCurrentActivity("Wrong Activity", HomeFeed.class);
+
+        solo.clickOnView(solo.getView(R.id.logout));
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
     }
 
     public void testCreateTaskIndeed(){
@@ -77,11 +84,14 @@ public class AddTaskActivityTest extends ActivityInstrumentationTestCase2 {
         // click save button
         solo.clickOnView(solo.getView(R.id.post_task_button));
 
+        solo.clickOnText("Ok");
+
         // Go back to MyHabits Activity
-        solo.waitForActivity(HomeFeed.class, 10000);
+        solo.waitForActivity(HomeFeed.class, 2000);
         solo.assertCurrentActivity("Wrong Activity", HomeFeed.class);
 
-
+        solo.clickOnView(solo.getView(R.id.logout));
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
     }
 

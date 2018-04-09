@@ -39,20 +39,19 @@ public class MessageActivityTest extends ActivityInstrumentationTestCase2 {
         solo.enterText((EditText) solo.getView(R.id.editTextEmail),"12345@gmail.com");
         solo.enterText((EditText) solo.getView(R.id.editTextpassword),"123456");
         solo.clickOnView(solo.getView(R.id.buttonlogin));
-        solo.waitForActivity(HomeFeed.class, 2000);
+        solo.waitForActivity(HomeFeed.class, 200);
         solo.assertCurrentActivity("Wrong Activity", HomeFeed.class);
     }
-    public void testMeaage(){
+    public void testMessage(){
 
         login();
         solo.assertCurrentActivity("Wrong Activity", HomeFeed.class);
         solo.clickOnView(solo.getView(R.id.profile));
         solo.assertCurrentActivity("Wrong Activity", ViewProfileActivity.class);
-        solo.waitForActivity(ViewProfileActivity.class, 2000);
-        solo.sleep(2000);
+        solo.waitForActivity(ViewProfileActivity.class, 200);
 
         solo.clickOnView(solo.getView(R.id.requested_task));
-        solo.clickOnCheckBox(2);;
+        //solo.clickOnCheckBox(2);
 
         solo.clickOnText("TaskTest1", 0, true);
         // Search for task Name EditText
@@ -62,15 +61,21 @@ public class MessageActivityTest extends ActivityInstrumentationTestCase2 {
 
         solo.enterText((EditText) solo.getView(R.id.messageEditText), "hi");
         solo.clickOnView(solo.getView(R.id.sendMessageImagebutton));
-        solo.goBack();
-        solo.goBack();
-        solo.goBack();
-        solo.goBack();
-        solo.goBack();
+
+        solo.assertCurrentActivity("Wrong Activity", MessageActivity.class);
         solo.goBack();
         solo.goBack();
 
 
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", ViewTaskActivity.class);
 
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", ViewProfileActivity.class);
+
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", HomeFeed.class);
+
+        solo.clickOnView(solo.getView(R.id.logout));
     }
 }
