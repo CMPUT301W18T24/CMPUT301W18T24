@@ -370,9 +370,8 @@ public class CreateTaskActivity extends AppCompatActivity {
         String uris = gson.toJson(photoUris);
 
         // save userTask to database
-        Log.d("userfullname", "onClick: " + requesterFullname);
         UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, requesterFullname, uris, dateString);
-        Log.d("UserTask created", newTask.getTitle() + db + fmanager);
+        Log.d("xName", "message " + requesterFullname + " " + newTask.getRequesterName());
         if (location != null){
             newTask.setLongtitude(location.longitude);
             newTask.setLatitude(location.latitude);

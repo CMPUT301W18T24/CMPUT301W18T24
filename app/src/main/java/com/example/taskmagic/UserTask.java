@@ -326,7 +326,7 @@ public class UserTask implements Serializable {
      * @return
      */
     public String getRequesterName() {
-        return requesterName;
+        return this.requesterName;
     }
 
     /**

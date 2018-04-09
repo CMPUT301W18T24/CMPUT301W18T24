@@ -33,11 +33,24 @@ public class UserSingleton {
     private final static UserSingleton obj = new UserSingleton();
     private FirebaseAuth mAuth;
     private String userName;
+    private String fullName;
+    private String userId;
     private GoogleApiClient mGoogleApiClient;
 
     private UserSingleton() {
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     /**
      *

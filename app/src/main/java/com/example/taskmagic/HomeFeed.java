@@ -72,6 +72,19 @@ public class HomeFeed extends AppCompatActivity {
         if(singleton.getmGoogleApiClient()!=null) {
             googleUser();
         }
+        fmanager.getUserInfo(singleton.getUserId(), new OnGetUserInfoListener() {
+            @Override
+            public void onSuccess(User user) {
+                singleton.setFullName(user.getFullName());
+                singleton.setUserName(user.getUserName());
+                singleton.setUserId(user.getId());
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
         listener(singleton.getUserId());
         mHomeNav.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -151,6 +164,7 @@ public class HomeFeed extends AppCompatActivity {
     public void updateView(TaskList taskList){
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         adapter=new TaskRecyclerAdapter(taskList,getApplicationContext());
+        Log.d("xUserReqName", "message " + taskList.getTask(0).getRequesterName());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -182,12 +196,10 @@ public class HomeFeed extends AppCompatActivity {
             reference.child("users").child(user.getId()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Toast.makeText(getApplicationContext(),"Hello",Toast.LENGTH_LONG).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(),"fail",Toast.LENGTH_LONG).show();
                 }
             });
 
