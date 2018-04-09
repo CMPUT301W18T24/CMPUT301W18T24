@@ -158,25 +158,7 @@ public class CreateTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (checkFields().equals(true)) {
-
-                    newTitle = titleField.getText().toString().trim();
-                    newDescription = descriptionField.getText().toString().trim();
-                    taskRequester = singleton.getUserId();
-                    String requesterFullname = singleton.getUserName();
-                    //Jsonify photoUris for saving
-                    String uris = gson.toJson(photoUris);
-
-                    // save userTask to database
-                    Log.d("userfullname", "onClick: " + requesterFullname);
-                    UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, requesterFullname, uris, dateString);
-                    Log.d("UserTask created", newTask.getTitle() + db + fmanager);
-                    fmanager.addTask(newTask);
-
-                    Intent intent = new Intent(thisActivity, HomeFeed.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    thisActivity.startActivity(intent);
-                    //go back to homeFeed
-                    //https://stackoverflow.com/questions/14059810/go-back-to-mainactivity-when-ok-pressed-in-alertdialog-in-android
+                    postTask();
                 }
             }
         });
@@ -332,43 +314,63 @@ public class CreateTaskActivity extends AppCompatActivity {
         } else if (descriptionField.getText().length() > 300) {
             Toast.makeText(thisActivity, "Description too long.", Toast.LENGTH_LONG).show();
             return false;
-        } /*else if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))
+        } else if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))
                 || bitmaps.isEmpty()) {
-            return openCreateTaskWarning();
-        } */
+            openCreateTaskWarning();
+            return false;
+        }
 
         return true;
     }
-/*
-    private Boolean openCreateTaskWarning() {
-        final Boolean[] alertRetVal = new Boolean[1];
+
+    private void openCreateTaskWarning() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(thisActivity);
 
         String alertMessage = "Your task will:\n";
-        if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))){
+        if (dateString.equals(String.format("%d/%d/%d", currYear, currMonth + 1, currDay))) {
+            Log.d("Dialog", alertMessage);
             alertMessage = String.format(alertMessage + "\t* Be set to finish today.\n");
-        } else if (bitmaps.isEmpty()) {
+            Log.d("Dialog", alertMessage);
+        }
+        if (bitmaps.isEmpty()) {
+            Log.d("Dialog", alertMessage);
             alertMessage = String.format(alertMessage + "\t* Have no photos to show.\n");
+            Log.d("Dialog", alertMessage);
         }
         mBuilder.setMessage(alertMessage);
 
         mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                alertRetVal[0] = true;
-                Log.d("change RetVal", alertRetVal[0].toString());
+                postTask();
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                alertRetVal[0] = false;
+                dialog.cancel();
             }
         });
 
         AlertDialog fieldsAlert = mBuilder.create();
         fieldsAlert.show();
+    }
 
-//        Log.d(" xRetVal", alertRetVal[0].toString());
-        return alertRetVal[0];
-    } */
+    private void postTask() {
+        newTitle = titleField.getText().toString().trim();
+        newDescription = descriptionField.getText().toString().trim();
+        taskRequester = singleton.getUserId();
+        String requesterFullname = singleton.getUserName();
+        //Jsonify photoUris for saving
+        String uris = gson.toJson(photoUris);
+
+        // save userTask to database
+        Log.d("userfullname", "onClick: " + requesterFullname);
+        UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, requesterFullname, uris, dateString);
+        Log.d("UserTask created", newTask.getTitle() + db + fmanager);
+        fmanager.addTask(newTask);
+
+        Intent intent = new Intent(thisActivity, HomeFeed.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        thisActivity.startActivity(intent);
+    }
 }
