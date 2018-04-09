@@ -263,7 +263,7 @@ public class UserTask implements Serializable {
      */
     public void setLowestBid(float amount) {
         if (lowestBid < 0) {
-            lowestBid = amount;
+            this.lowestBid = amount;
         } else if (lowestBid > amount) {
             this.lowestBid = amount;
         }
