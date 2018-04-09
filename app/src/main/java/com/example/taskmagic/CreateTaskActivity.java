@@ -334,7 +334,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         if (bitmaps.isEmpty()) {
             alertMessage = String.format(alertMessage + "\t* Have no photos to show.\n");
         }
-        if (location.equals(null)) {
+        if (location == null) {
             alertMessage = String.format(alertMessage + "\t* Not have a specified location.");
         }
         mBuilder.setMessage(alertMessage);
@@ -367,8 +367,13 @@ public class CreateTaskActivity extends AppCompatActivity {
         Log.d("userfullname", "onClick: " + requesterFullname);
         UserTask newTask = new UserTask(newTitle, newDescription, taskRequester, requesterFullname, uris, dateString);
         Log.d("UserTask created", newTask.getTitle() + db + fmanager);
-        newTask.setLongtitude(location.longitude);
-        newTask.setLatitude(location.latitude);
+        if (location != null){
+            newTask.setLongtitude(location.longitude);
+            newTask.setLatitude(location.latitude);
+        } else {
+            newTask.setLongtitude(null);
+            newTask.setLatitude(null);
+        }
         fmanager.addTask(newTask);
 
         Intent intent = new Intent(thisActivity, HomeFeed.class);

@@ -103,7 +103,9 @@ public class EditTaskActivity extends AppCompatActivity {
         titleText = findViewById(R.id.editText_titleContent);
         descriptionText = findViewById(R.id.editText_descriptionContent);
         dateText = findViewById(R.id.editText_dateContent);
-        location = new LatLng(task.getLatitude(), task.getLongtitude());
+        if (!(task.getLongtitude() == null) && !(task.getLatitude() == null)){
+            location = new LatLng(task.getLatitude(), task.getLongtitude());
+        }
 
         titleText.setText(task.getTitle());
         descriptionText.setText(task.getDescription());
@@ -183,6 +185,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
                     Intent retIntent = new Intent(getApplicationContext(), ViewTaskActivity.class);
                     retIntent.putExtra("UserTask", task);
+                    retIntent.setFlags(retIntent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(retIntent);
                     //go back to homeFeed
                     //https://stackoverflow.com/questions/14059810/go-back-to-mainactivity-when-ok-pressed-in-alertdialog-in-android

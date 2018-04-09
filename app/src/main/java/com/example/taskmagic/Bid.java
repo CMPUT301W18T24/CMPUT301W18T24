@@ -163,4 +163,11 @@ class Bid implements Serializable, Comparable<Bid> {
         this.requestorName = requestorName;
     }
 
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public void setDeclined(boolean declined) {
+        this.declined = declined;
+    }
 }
