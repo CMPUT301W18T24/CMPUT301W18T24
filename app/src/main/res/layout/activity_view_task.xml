@@ -89,6 +89,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/white_rounded_button"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="Button" />
 
     <Button
@@ -98,6 +102,9 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/button_viewLocation"
         android:background="@drawable/white_rounded_button"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textColor="#1B5E20"
         android:text="COMPLETE" />
 
@@ -107,6 +114,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/button_viewTask"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/white_rounded_button"
         android:text="VIEW LOCATION" />
     <Button
@@ -118,6 +129,8 @@
         android:visibility="gone"
         android:layout_above="@+id/button_viewLocation"
         android:background="@drawable/white_rounded_button"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="DELETE" />
 
     <ImageButton

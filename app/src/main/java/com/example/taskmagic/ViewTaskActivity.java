@@ -140,8 +140,7 @@ public class ViewTaskActivity extends AppCompatActivity {
                 fmanager.getTaskInfo(task.getId(), new OnGetATaskListener() {
                     @Override
                     public void onSuccess(UserTask t) {
-                        Log.d("tag", "onSuccess: " + t.getId());
-                        if (!t.getLongtitude().equals(null) && !t.getLatitude().equals(null)) {
+                        if (!(t.getLongtitude() == null) && !(t.getLatitude() == null)) {
                             LatLng latLng = new LatLng(t.getLatitude(), t.getLongtitude());
                             Intent mIntent = new Intent(getApplicationContext(), MapsActivity.class).putExtra("LatLng", latLng);
                             mIntent.putExtra("Mode", "View");
@@ -441,7 +440,26 @@ public class ViewTaskActivity extends AppCompatActivity {
         builder.setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                fmanager.removeTask(task.getId());
+                fmanager.getBidsList(task.getId(), new OnGetBidsListListener() {
+                    @Override
+                    public void onSuccess(BidList Bids) {
+                        if (Bids.getCount() == 1) {
+                            Toast.makeText(getApplicationContext(), "You cant delete this task.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            for (int i = 0; i < Bids.getCount(); i++) {
+                                fmanager.removeBid(Bids.getBid(i));
+                            }
+                            fmanager.removeTask(task.getId());
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+
+                    }
+                });
+
                 finish();
             }
         });

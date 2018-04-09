@@ -105,6 +105,7 @@ public class BidDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ViewTaskActivity.class);
                 intent.putExtra("UserTask",task);
+                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -229,6 +230,7 @@ public class BidDetailsActivity extends AppCompatActivity {
      */
     private void declineBid() {
         bid.setStatus("Declined");
+        bid.setDeclined(true);
         fmanager.editBid(bid);
         finish();
     }

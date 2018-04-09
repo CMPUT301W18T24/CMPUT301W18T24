@@ -42,9 +42,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
     private static final String data_type = "data_type";
     private static final String data_type_bid = "bid";
     private static final String data_type_chat = "chat";
-    private static final String data_title = "taskTitle";
     private static final String data_message = "body";
-    private static final String data_sender = "senderId";
     private static final String data_taskId = "id";
     private static final String data_receiver = "receiverId";
     private UserSingleton singleton;
@@ -58,10 +56,8 @@ public class FirebaseMessaging extends FirebaseMessagingService {
             String identifyDataType = remoteMessage.getData().get(data_type);
             if (identifyDataType.equals(data_type_bid)) {
                 String message = remoteMessage.getData().get(data_message);
-                String sender= remoteMessage.getData().get(data_sender);
-                String receiver=remoteMessage.getData().get(data_receiver);
                 String taskid= remoteMessage.getData().get(data_taskId);
-                sendBidNotification(message,sender,receiver,taskid);
+                sendBidNotification(message,taskid);
             } else if (identifyDataType.equals(data_type_chat) && (!isAppInForeground(this,getPackageName()))){
                 String message = remoteMessage.getData().get(data_message);
                 String receiver= remoteMessage.getData().get(data_receiver);
@@ -105,7 +101,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         super.onDeletedMessages();
     }
 
-    public void sendBidNotification(String message,String sender,String receiverId,String taskid) {
+    public void sendBidNotification(String message,String taskid) {
         Log.d(TAG, "sendBidNotification: building bid Notification");
         if (!isAppInForeground(this,getPackageName())){
             intent = new Intent(this, ViewTaskActivity.class);

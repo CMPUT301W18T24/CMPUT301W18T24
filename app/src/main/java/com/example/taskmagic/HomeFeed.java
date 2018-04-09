@@ -12,8 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
@@ -38,6 +40,7 @@ public class HomeFeed extends AppCompatActivity {
     private String personName;
     private String personId;
     private String email;
+    private GoogleApiClient mGoogleApiClient;
     //private Uri personPhoto;
     /**
      * this function sets up the home feed
